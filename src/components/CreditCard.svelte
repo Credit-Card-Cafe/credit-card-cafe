@@ -15,6 +15,7 @@
     {#if card.annual_fee}
     <div id="annual-fee">{card.annual_fee}</div>
     {/if}
+    <a href="/contribute/update/{card.url}">Update Information</a>
 </div>
 
 <style>

@@ -1,3 +1,4 @@
+<!--Homepage-->
 <script lang="js">
 	import { cardList } from '../lib/firebase';
   let cards = [];

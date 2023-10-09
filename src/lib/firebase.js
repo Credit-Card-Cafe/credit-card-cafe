@@ -4,6 +4,7 @@ import {
   getDocs,
   getFirestore,
   setDoc,
+  updateDoc,
   doc,
 } from "firebase/firestore";
 import {
@@ -95,4 +96,8 @@ export async function addCard(name, bank, network, id) {
     network: network,
     url: id,
   });
+}
+export async function updateCard(card, id) {
+  const ccard = doc(db, "creditCards", id);
+  return updateDoc(ccard, card);
 }

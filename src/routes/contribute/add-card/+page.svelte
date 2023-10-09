@@ -27,10 +27,10 @@
 
 {#if submitted}
 <div id="form">
-    <div><label for="name">Credit Card Name</label><input id="name" name="name" type="text" required></div>
-    <div><label for="bank">Bank</label><input id="bank" name="bank" type="text" required></div>
+    <div><label for="name">Credit Card Name</label><input id="name" type="text" required></div>
+    <div><label for="bank">Bank</label><input id="bank" type="text" required></div>
     <div><label for="network">Network</label>
-        <select id="network" name="network" type="network" required>
+        <select id="network" type="network" required>
             <option value="Visa">Visa</option>
             <option value="MasterCard">MasterCard</option>
             <option value="American Express">American Express</option>
