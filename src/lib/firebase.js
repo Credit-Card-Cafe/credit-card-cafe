@@ -97,6 +97,8 @@ export async function addCard(name, bank, network, id) {
     url: id,
   });
 }
+
+//DATA NOT SANATIZED, so pretty please dont go live :)
 export async function updateCard(card, id) {
   const ccard = doc(db, "creditCards", id);
   return updateDoc(ccard, card);

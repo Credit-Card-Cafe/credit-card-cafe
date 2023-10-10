@@ -2,6 +2,9 @@
     import { updateCard } from "../../../../lib/firebase";
 	export let card;
     import { onMount } from "svelte";
+
+    var updateAuthorization = true;
+
     onMount(() => {
         const div = document.getElementById("card");
         const inputs = div.getElementsByTagName("input")
@@ -20,39 +23,53 @@
             }
         }
     });
+
+    function setUpdate() {
+        card.bank = document.getElementById("bank").value;
+        card.name = document.getElementById("name").value;
+        card.network = document.getElementById("network").value;
+        card.annual_fee = document.getElementById("annual_fee").value;
+        card.foreign_transaction_fee = document.getElementById("ftf").value;
+    }
     function sendUpdate() {
-        
-        //updateCard(update, card.url).then();
+        updateCard(card, card.url).then((data) => {
+            updateAuthorization = false; 
+            document.getElementById("after").innerHTML = JSON.stringify(data);
+        });
     }
 </script>
 
-<div id="card"><label for="bank">Bank: </label>
-    <input type="text" id="bank" value="{card.bank}" disabled>
-    <label for="name">Credit Card Title</label>
-    <input type="text" id="name" value="{card.name}" disabled>
-    <label for="network">Credit Card Network</label>
-    <select id="network" type="network" disabled>
-        <option value={card.network} selected>{card.network}</option>
-        <option value="Visa">Visa</option>
-        <option value="MasterCard">MasterCard</option>
-        <option value="American Express">American Express</option>
-        <option value="Discover">Discover</option>
-    </select>
-    <label for="annual-fee">Annual Fee</label>
-    <input type="text" id="annual-fee" value="{card.annual_fee}" disabled>
-    <label for="ftf">Foreign Transaction Fee</label>
-    <input type="text" id="ftf" value="{card.foreign_transaction_fee}" disabled>
+{#if updateAuthorization}
+<div id="card">
+    <label for="bank">Bank: <input class="input" type="text" id="bank" on:input={() => setUpdate()} value="{card.bank}" disabled></label>
+    
+    <label for="name">Credit Card Title: <input class="input" type="text" id="name" on:input={() => setUpdate()} value="{card.name}" disabled></label>
+    
+    <label for="network">Credit Card Network:
+        <select id="network" class="input" on:input={() => setUpdate()} disabled>
+            <option value={card.network} selected>{card.network}</option>
+            <option value="Visa">Visa</option>
+            <option value="MasterCard">MasterCard</option>
+            <option value="American Express">American Express</option>
+            <option value="Discover">Discover</option>
+        </select>
+    </label>
+
+    <label for="annual_fee">Annual Fee: <input class="input" type="text" id="annual_fee" on:input={() => setUpdate()} value="{card.annual_fee}" disabled></label>
+    
+    <label for="ftf">Foreign Transaction Fee: <input class="input" type="text" on:input={() => setUpdate()} id="ftf" value="{card.foreign_transaction_fee}" disabled></label>
+    
 </div>
-<button on:click={sendUpdate()}>Submit Changes</button>
+<button on:click|once|self={() => sendUpdate()}>Submit Changes</button>
+{:else}
+<div id="after">
+    Thx.
+</div>
+{/if}
 
 <style>
-    #card {
-        display: grid;
-        grid-template-columns: auto auto;
-    }
-    label {
-        text-align: right;
-    }
-
+label {
+    display: block;
+}
 </style>
 
