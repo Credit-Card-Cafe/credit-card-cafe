@@ -1,10 +1,13 @@
 <!--Homepage-->
 <script lang="js">
+  import { onMount } from 'svelte';
 	import { cardList } from '../lib/firebase';
   let cards = [];
+  onMount(() => {
   cardList.then(list => {
     cards = list
     });
+  });
 </script>
 
 <div>Welcome to Credit Card DB</div>
