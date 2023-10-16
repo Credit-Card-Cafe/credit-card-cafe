@@ -1,19 +1,12 @@
 <!--Homepage-->
 <script lang="js">
-  import { onMount } from 'svelte';
-	import { getCardsList } from '../lib/firebase';
-  let cards = [];
-  onMount(() => {
-  getCardsList.then((list) => {
-    cards = list;
-    });
-  });
+  import { cardList } from '../lib/stores';
 </script>
 
 <div>Welcome to Credit Card DB</div>
 <div>Here you can find advanced details about credit cards</div>
 
-{#each cards as card}
+{#each $cardList as card}
   <a href="/card/{card.url}">
     <span>{card.bank}</span> -
     <span>{card.name}</span>
