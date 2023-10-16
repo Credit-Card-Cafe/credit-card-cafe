@@ -1,5 +1,5 @@
 <script lang="js">
-    import {user} from "../lib/stores";
+    import { user } from "../lib/stores";
     import LogInButton from "../components/LogInButton.svelte";
     import LogOutButton from "../components/LogOutButton.svelte";
 
@@ -8,11 +8,11 @@
 <div id="top">
     <div class="flex">CreditCardDB</div>
     <nav>
-    <a href="/">Home</a>
-    <a href="/search">Search</a>
-    {#if $user}
-        <a href="/contribute">Contribute</a>
-    {/if}
+        <a href="/">Home</a>
+        <a href="/search">Search</a>
+        {#if $user}
+            <a href="/contribute">Contribute</a>
+        {/if}
     </nav>
     <div id="end" class="flex">
         {#if $user}
