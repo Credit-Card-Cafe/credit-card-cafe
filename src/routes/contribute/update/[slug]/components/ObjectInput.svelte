@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
     export let field;
     export let card;
-    import { dataField } from "../fields";
+    import { dataField } from "../../../../../lib/fields";
     export let newCard;
 
     let data = {}

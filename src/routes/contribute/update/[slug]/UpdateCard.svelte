@@ -2,7 +2,7 @@
     import { updateCard } from "../../../../lib/firebase";
 	export let card;
     import { onMount } from "svelte";
-    import {dataField} from "./fields";
+    import {dataField} from "../../../../lib/fields";
     import TextInput from "./components/TextInput.svelte";
     import SelectInput from "./components/SelectInput.svelte";
     import ObjectInput from "./components/ObjectInput.svelte";

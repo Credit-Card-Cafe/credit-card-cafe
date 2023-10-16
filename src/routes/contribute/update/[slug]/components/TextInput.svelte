@@ -1,7 +1,7 @@
 <script>
     export let field;
     export let value;
-    import { dataField } from "../fields";
+    import { dataField } from "../../../../../lib/fields";
     export let newCard;
 
     function setUpdate(val) {
