@@ -1,6 +1,6 @@
-import { cardList } from "../../../../lib/firebase";
+import { getCardsList } from "../../../../lib/firebase";
 let cards = [];
-cardList.then((list) => {
+getCardsList.then((list) => {
   cards = list;
 });
 

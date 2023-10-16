@@ -1,4 +1,8 @@
-//javascript reference: "database name",
+//type: (string), UpdateCard.svelte will use this to send information to proper component.
+//<input type="text"> :  property: { name: "Display Name", type: "text"}
+//<select>            :  property: { name: "Display Name", type: "submit", options: ["option 1", "option n"]}
+//<input type="radio">:  property: { name: "Display Name", type: "radio", options: ["option 1", "option n"]}
+
 export const dataField = {
   bank: { name: "Bank", type: "text" },
   name: { name: "Name", type: "text" },

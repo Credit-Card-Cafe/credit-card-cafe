@@ -14,7 +14,7 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
 } from "firebase/auth";
-import { user } from "./stores";
+import { user, cardList } from "./stores";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -37,11 +37,12 @@ const db = getFirestore(app);
 async function getCards(db) {
   const cardsCollection = collection(db, "creditCards");
   const cardsDocs = await getDocs(cardsCollection);
-  const cardsList = cardsDocs.docs.map((doc) => doc.data());
-  return cardsList;
+  const list = cardsDocs.docs.map((doc) => doc.data());
+  cardList.set(list);
+  return list;
 }
 
-export const cardList = getCards(db);
+export const getCardsList = getCards(db);
 
 //google sign in
 const provider = new GoogleAuthProvider();

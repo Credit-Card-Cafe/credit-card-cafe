@@ -1,11 +1,11 @@
 <!--Homepage-->
 <script lang="js">
   import { onMount } from 'svelte';
-	import { cardList } from '../lib/firebase';
+	import { getCardsList } from '../lib/firebase';
   let cards = [];
   onMount(() => {
-  cardList.then(list => {
-    cards = list
+  getCardsList.then((list) => {
+    cards = list;
     });
   });
 </script>

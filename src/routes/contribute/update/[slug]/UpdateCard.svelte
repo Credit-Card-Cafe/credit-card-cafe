@@ -7,6 +7,8 @@
     import SelectInput from "./components/SelectInput.svelte";
     import ObjectInput from "./components/ObjectInput.svelte";
     var updateAuthorization = true;
+
+    //var to store changes, accessed by components 
     var newCard = {};
 
     //after page load, modify the details of the value, if no information exists
