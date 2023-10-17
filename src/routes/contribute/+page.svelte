@@ -3,7 +3,9 @@
     import { user } from "../../lib/stores";
 </script>
 
-
+<svelte:head>
+    <title>CreditCardDB | Contribute</title>
+</svelte:head>
 {#if $user}
 <SubmitDataForm></SubmitDataForm>
 {:else}

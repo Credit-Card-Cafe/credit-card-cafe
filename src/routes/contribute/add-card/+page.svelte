@@ -25,6 +25,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>CreditCardDB | Add Card</title>
+</svelte:head>
+
 {#if submitted}
 <div id="form">
     <div><label for="name">Credit Card Name</label><input id="name" type="text" required></div>

@@ -1,4 +1,8 @@
 <!--Homepage-->
+<svelte:head>
+  <title>CreditCardDB</title>
+</svelte:head>
+
 <script lang="js">
   import { cardList } from '../lib/stores';
 </script>

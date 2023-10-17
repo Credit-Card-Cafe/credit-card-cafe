@@ -4,15 +4,16 @@
 //<input type="radio">:  property: { name: "Display Name", type: "radio", options: ["option 1", "option n"]}
 
 export const dataField = {
-  bank: { name: "Bank", type: "text" },
-  name: { name: "Name", type: "text" },
+  bank: { name: "Bank", type: "text", lvl: 1},
+  name: { name: "Name", type: "text", lvl: 2},
   network: {
     name: "Network",
     type: "select",
     options: ["Visa", "MasterCard", "American Express", "Discover"],
+    lvl: 3,
   },
-  foreign_transaction_fee: { name: "Foreign Transaction Fee", type: "text" },
-  annual_fee: { name: "Annual Fee", type: "text" },
+  foreign_transaction_fee: { name: "Foreign Transaction Fee", type: "text", lvl: 6},
+  annual_fee: { name: "Annual Fee", type: "text", lvl: 7 },
   // rewards: {
   //   name: "Rewards",
   //   type: "dynamicObject",
@@ -42,5 +43,7 @@ export const dataField = {
         options: ["Front", "Back", "Both"],
       },
     },
+    lvl: 4,
   },
+  color: {name: "Color (Hex)", type: "text", lvl: 5}
 };
