@@ -5,6 +5,10 @@
     import { user } from '../../../../lib/stores';
   </script>
   
+<svelte:head>
+    <title>CreditCardDB | Update Card | {data.card.bank} - {data.card.name}</title>
+</svelte:head>
+
   {#if $user}
     {#if data.card}
       <UpdateCard card={data.card}></UpdateCard>

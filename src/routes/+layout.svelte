@@ -6,7 +6,8 @@
 </script>
 
 <div id="top">
-    <div class="flex">CreditCardDB</div>
+    <div>
+    <div id="title">CreditCardDB</div>
     <nav>
         <a href="/">Home</a>
         <a href="/search">Search</a>
@@ -14,6 +15,7 @@
             <a href="/contribute">Contribute</a>
         {/if}
     </nav>
+    </div>
     <div id="end" class="flex">
         {#if $user}
             Loged in as {$user.displayName} <LogOutButton></LogOutButton>
@@ -27,10 +29,17 @@
 #top {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    background: rgb(154, 222, 173);
+    justify-content: space-between;
+    justify-items: center;
+    background: rgb(151, 255, 238);
     margin-bottom: 10px;
+    padding: 10px 20px;
+}
+#title, nav {
+    display: inline;
+}
+#title {
+    margin-right: 20px;
 }
 a {
     border: 1px solid red;
