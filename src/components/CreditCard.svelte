@@ -1,6 +1,8 @@
 <script lang="js">
 	export let card;
     import { dataField } from "../lib/fields";
+
+    var network = "visa";
 </script>
 
 <div id="card">
@@ -11,7 +13,7 @@
         <div id="chip"></div>
         {/if}
         {#if card.bank != card.network}
-        <div id="network">{card.network}</div>
+        <div id="network" class={network}>{card.network}</div>
         {/if}
     </div>
     <!-- {#each Object.keys(card) as prop}
@@ -25,7 +27,6 @@
             {/if}
         {/if}
     {/each} -->
-    <a href="/contribute/update/{card.url}">Update Information</a>
 </div>
 
 <style>
@@ -37,6 +38,8 @@
     #creditCard {
         position: relative;
         background-color: var(--color, #FFF);
+
+        /*background: linear-gradient(146deg, var(--color, #FFF), #FFF, var(--color, #FFF));*/
         width: 3.375in;
         height: 2.125in;
         padding: .25in;
@@ -65,6 +68,11 @@
         bottom: 0.125in;
         right: 0.125in;
         font-size: 0.45in;
+    }
+    .visa {
+        color: rgb(136, 136, 136);
+        text-transform: uppercase;
+        font-weight: 750;
     }
     
     
