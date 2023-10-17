@@ -8,7 +8,8 @@
 </svelte:head>
 
 {#if data.card}
-  <CreditCard card={data.card} --color="#{data.card.color}"></CreditCard>
+  <CreditCard card={data.card} --color="{data.card.color}"></CreditCard>
+  <a href="/contribute/update/{data.card.url}">Update Information</a>
 {:else}
   <div>Credit Card not found</div>
 {/if}

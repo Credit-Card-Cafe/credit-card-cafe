@@ -46,6 +46,9 @@ a {
     margin: 3px;
     padding: 3px;
 }
+:global(body) {
+    margin: 0;
+}
 </style>
 
 <slot />
