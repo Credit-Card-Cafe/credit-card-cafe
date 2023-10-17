@@ -6,6 +6,7 @@
     import TextInput from "./components/TextInput.svelte";
     import SelectInput from "./components/SelectInput.svelte";
     import ObjectInput from "./components/ObjectInput.svelte";
+  import CreditCard from "../../../../components/CreditCard.svelte";
     var updateAuthorization = true;
 
     //var to store changes, accessed by components 
@@ -46,6 +47,7 @@
 
 {#if updateAuthorization}
 <div id="card">
+    <CreditCard card={card} --color="{card.color}"></CreditCard>
     {#each fields as field}
         {#if dataField[field].type == "text"}
             <TextInput field={field} value={card[field]} newCard={newCard}></TextInput>
@@ -63,5 +65,6 @@
 </div>
 {/if}
 
+<style>
 
-
+</style>
