@@ -1,6 +1,11 @@
 <!--Homepage-->
+<svelte:head>
+  <title>CreditCardDB</title>
+</svelte:head>
+
 <script lang="js">
   import { cardList } from '../lib/stores';
+  import "./global.css";
 </script>
 
 <div>Welcome to Credit Card DB</div>
@@ -12,3 +17,10 @@
     <span>{card.name}</span>
   </a><br>
 {/each}
+
+
+<style>
+  :global(body) {
+    margin: 0;
+  }
+</style>

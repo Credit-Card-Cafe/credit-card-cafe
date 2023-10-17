@@ -38,6 +38,7 @@
     #creditCard {
         position: relative;
         background-color: var(--color, #FFF);
+
         /*background: linear-gradient(146deg, var(--color, #FFF), #FFF, var(--color, #FFF));*/
         width: 3.375in;
         height: 2.125in;
@@ -73,5 +74,7 @@
         text-transform: uppercase;
         font-weight: 750;
     }
+    
+    
 </style>
 
