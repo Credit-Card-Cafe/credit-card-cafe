@@ -3,3 +3,5 @@ import { writable } from "svelte/store";
 export const user = writable();
 
 export const cardList = writable([]);
+
+export const newCard = writable({});

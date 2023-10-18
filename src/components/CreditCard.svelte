@@ -7,9 +7,13 @@
 
 <div id="card">
     <div id="creditCard">
+        {#if card.bank}
         <div id="bank">{card.bank}</div>
+        {/if}
+        {#if card.name}
         <div id="name">{card.name}</div>
-        {#if card.physical.chip == "Yes"}
+        {/if}
+        {#if card.physical.chip && card.physical.chip == "Yes"}
         <div id="chip"></div>
         {/if}
         {#if card.bank != card.network}
