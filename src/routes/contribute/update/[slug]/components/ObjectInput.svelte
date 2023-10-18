@@ -13,7 +13,6 @@
             data[val] = document.getElementById(val).value;
         }
         newCard[field] = data;
-        console.log(newCard);
     }
 
     const dataKeys = Object.keys(dataField[field].data);

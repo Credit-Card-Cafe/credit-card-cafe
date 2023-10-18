@@ -1,8 +1,21 @@
 <!-- Individual card update page-->
 <script lang="js">
-    import UpdateCard from './UpdateCard.svelte';
+    import Update from './Update.svelte';
+    import { updateCard } from "../../../../lib/firebase";
     export let data;
     import { user } from '../../../../lib/stores';
+    import { newCard } from '../../../../lib/stores';
+
+    var updateAuthorization = true;
+
+    function sendUpdate() {
+        updateCard($newCard, data.card.url).then((data) => {
+            updateAuthorization = false; 
+            $newCard = {};
+            //document.getElementById("after").innerHTML = JSON.stringify(data);
+        });
+    }
+
   </script>
   
 <svelte:head>
@@ -11,7 +24,7 @@
 
   {#if $user}
     {#if data.card}
-      <UpdateCard card={data.card}></UpdateCard>
+      <Update card={data.card} updateAuthorization={updateAuthorization} on:submit={() => sendUpdate()}></Update>
     {:else}
       <div>Credit Card not found. Would you like to create one?</div>
     {/if}

@@ -3,18 +3,26 @@
     import LogInButton from "../components/LogInButton.svelte";
     import LogOutButton from "../components/LogOutButton.svelte";
 
+    function search() {
+        let query = document.getElementById("search").value;
+        window.alert(`Searching: ${query}`);
+    }
 </script>
 
 <div id="top">
     <div>
-    <div id="title">CreditCardDB</div>
-    <nav>
-        <a href="/">Home</a>
-        <a href="/search">Search</a>
-        {#if $user}
-            <a href="/contribute">Contribute</a>
-        {/if}
-    </nav>
+        <div id="title">CreditCardDB</div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/search">Cards</a>
+            {#if $user}
+                <a href="/contribute">Contribute</a>
+            {/if}
+        </nav>
+        <form>
+            <input type="text" id="search" placeholder="Search cards...">
+            <input type="submit" on:click={() => search()}>
+        </form>
     </div>
     <div id="end" class="flex">
         {#if $user}
@@ -35,7 +43,7 @@
     margin-bottom: 10px;
     padding: 10px 20px;
 }
-#title, nav {
+#title, nav, form {
     display: inline;
 }
 #title {

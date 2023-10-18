@@ -2,21 +2,24 @@
     export let field;
     export let value;
     import { dataField } from "../../../../../lib/fields";
-    export let newCard;
+    import { newCard } from "../../../../../lib/stores";
 
-    function setUpdate(val) {
-        newCard[val] = document.getElementById(val).value;
+    const defaultValue = value;
+
+    function setUpdate() {
+        $newCard[field] = value;
+        if (value == defaultValue || (!defaultValue && value == "")) {
+            delete $newCard[field];
+        }
     }
 </script>
 
 
-<label for="{field}">
+<div>
     {dataField[field].name}
-    <input class="input" type="text" id="{field}" on:input={() => setUpdate(field)} value="{value}">
-</label>
+    <input type="text" bind:value on:input={() => setUpdate()}>
+</div>
 
 <style>
-    label {
-        display: block;
-    }
+
 </style>

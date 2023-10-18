@@ -1,5 +1,5 @@
 <div>
-    <a href="contribute">Update Information</a>
+    <a href="contribute/update">Update Information</a>
     <a href="contribute/add-card">Add a Card</a>
     <a href="contribute">Add a Data Point</a>
 </div>
