@@ -3,7 +3,6 @@
     export let object;
     import { dataField } from "../../../../../lib/fields";
     import TextInput from "./TextInput.svelte";
-    import { newCard } from "../../../../../lib/stores";
 
     if (object == undefined) {
         object = {};

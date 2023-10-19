@@ -19,7 +19,11 @@
 
 {#if updateAuthorization}
 <div id="card">
-    <CreditCard card={card} --color="{card.color}"></CreditCard>
+    {#if Object.hasOwn($newCard, "color")}
+        <CreditCard card={card} --color="{$newCard.color}"></CreditCard>
+    {:else}
+        <CreditCard card={card} --color="{card.color}"></CreditCard>
+    {/if}
         {#each Object.keys(dataField) as field}
             {#if dataField[field].type == "text"}
                 <TextInput field={field} value={card[field]}></TextInput>

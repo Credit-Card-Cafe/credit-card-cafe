@@ -18,8 +18,17 @@
             {/if}
             </div>
             {#if Object.hasOwn(card, "network")}
-                {#if card.bank != card.network}<div id="network" class={network}>{card.network}</div>{/if}
-            {/if}
+                {#if card.bank != card.network}
+                <!-- Sibling to id="bank"-->
+                <div id="network" class={network}>
+                    {#if Object.hasOwn($newCard, "network")}
+                        {$newCard.network}
+                    {:else}
+                        {card.network}
+                    {/if}
+                </div>
+                {/if}
+        {/if}
         {/if}
         {#if Object.hasOwn(card, "name")}
             <div id="name">
