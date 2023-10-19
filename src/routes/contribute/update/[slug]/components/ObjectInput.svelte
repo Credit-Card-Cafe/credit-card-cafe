@@ -1,31 +1,14 @@
 <script>
-  import { onMount } from "svelte";
     export let field;
-    export let card;
+    export let object;
     import { dataField } from "../../../../../lib/fields";
-    export let newCard;
+    import TextInput from "./TextInput.svelte";
+    import { newCard } from "../../../../../lib/stores";
 
-    let data = {}
-    function setUpdate(val) {
-        if (dataField[field]["data"][val].type == "radio") {
-            document.getElementsByName(val).forEach((id) => {if(id.checked) data[val] = id.value});
-        } else {
-            data[val] = document.getElementById(val).value;
-        }
-        newCard[field] = data;
-    }
-
-    const dataKeys = Object.keys(dataField[field].data);
-
-    onMount(()=>{
-        dataKeys.forEach((val) => setUpdate(val));
-    });
-
-    function getValue(val) {
-        if(card){
-            return card[val];
-        } else {
-            return undefined;
+    if (object == undefined) {
+        object = {};
+        for(let prop of Object.keys(dataField[field]["data"])) {
+            object[prop] = "";
         }
     }
 
@@ -33,13 +16,10 @@
 
 <div>
     {dataField[field].name}
-    {#each dataKeys as data}
+    {#each Object.keys(dataField[field]["data"]) as data}
         {#if dataField[field]["data"][data].type == "text"}
-        <label for="{data}">
-            {dataField[field]["data"][data].name}
-            <input class="physical_card input" type="text" id="{data}" on:input={() => setUpdate(data)} value="{getValue(data)}">
-        </label>
-        {:else if dataField[field]["data"][data].type == "radio"}
+            <TextInput field={data} value={object[data]} object={field}></TextInput>
+        <!-- {:else if dataField[field]["data"][data].type == "radio"}
         {dataField[field]["data"][data].name}
             {#each dataField[field]["data"][data].options as option}
                 
@@ -54,17 +34,8 @@
                     checked={option == getValue(data)}
                 >
             </label>
-            {/each}
+            {/each} -->
         {/if}
         
     {/each}
 </div>
-
-<style>
-    label {
-        display: block;
-    }
-    label {
-        text-indent: 30px;
-    }
-</style>
