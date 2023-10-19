@@ -1,25 +1,33 @@
 <script>
     export let field;
     export let value;
+    export let object = false;
     import { dataField } from "../../../../../lib/fields";
     import { newCard } from "../../../../../lib/stores";
 
     const defaultValue = value;
 
     function setUpdate() {
-        $newCard[field] = value;
-        if (value == defaultValue || (!defaultValue && value == "")) {
-            delete $newCard[field];
+        
+        if (object) {
+            if (Object.keys($newCard[object]).length == 0)
+                $newCard[object] = {};
+            $newCard[object][field] = value;
+            if (value == defaultValue || (!defaultValue && value == "")) {
+                delete $newCard[object][field];
+            }
+        } else {
+            $newCard[field] = value;
+            if (value == defaultValue || (!defaultValue && value == "")) {
+                delete $newCard[field];
+            }
         }
+        
     }
 </script>
 
 
 <div>
-    {dataField[field].name}
+    {#if object} {dataField[object]["data"][field].name} {:else} {dataField[field].name} {/if}
     <input type="text" bind:value on:input={() => setUpdate()}>
 </div>
-
-<style>
-
-</style>

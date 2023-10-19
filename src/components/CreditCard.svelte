@@ -1,23 +1,39 @@
 <script lang="js">
 	export let card;
     import { dataField } from "../lib/fields";
+    import { newCard } from "../lib/stores";
 
     var network = "visa";
+
 </script>
 
 <div id="card">
     <div id="creditCard">
-        {#if card.bank}
-        <div id="bank">{card.bank}</div>
+        {#if Object.hasOwn(card, "bank")}
+            <div id="bank">
+            {#if Object.hasOwn($newCard, "bank")}
+                {$newCard.bank}
+            {:else}
+                {card.bank}
+            {/if}
+            </div>
+            {#if Object.hasOwn(card, "network")}
+                {#if card.bank != card.network}<div id="network" class={network}>{card.network}</div>{/if}
+            {/if}
         {/if}
-        {#if card.name}
-        <div id="name">{card.name}</div>
+        {#if Object.hasOwn(card, "name")}
+            <div id="name">
+            {#if Object.hasOwn($newCard, "name")}
+                {$newCard.name}
+            {:else}
+                {card.name}
+            {/if}
+            </div>
         {/if}
-        {#if card.physical.chip && card.physical.chip == "Yes"}
-        <div id="chip"></div>
-        {/if}
-        {#if card.bank != card.network}
-        <div id="network" class={network}>{card.network}</div>
+        {#if Object.hasOwn(card, "physical")}
+            {#if Object.hasOwn(card.physical, "chip")}
+                {#if card.physical.chip}<div id="chip"></div>{/if}
+            {/if}
         {/if}
     </div>
     <!-- {#each Object.keys(card) as prop}
@@ -61,10 +77,11 @@
     }
     #bank {
         position: absolute;
+        display: inline-block;
         top: 1.25in;
-        right: 1.6875in;
         font-size: .25in;
         text-align: center;
+        overflow-wrap: normal;
     }
     #network {
         position: absolute;

@@ -9,8 +9,6 @@
     import CreditCard from "../../../../components/CreditCard.svelte";
     import { newCard } from "../../../../lib/stores";
 
-    const fields = Object.keys(dataField);
-
     const dispatch = createEventDispatcher();
     const submit = () => dispatch('submit');
 
@@ -22,22 +20,20 @@
 {#if updateAuthorization}
 <div id="card">
     <CreditCard card={card} --color="{card.color}"></CreditCard>
-        {#each fields as field}
+        {#each Object.keys(dataField) as field}
             {#if dataField[field].type == "text"}
                 <TextInput field={field} value={card[field]}></TextInput>
             {:else if dataField[field].type == "select"}
                 <SelectInput field={field} value={card[field]}></SelectInput>
-            <!-- {:else if dataField[field].type == "object"}
-                <ObjectInput field={field} card={card[field]}></ObjectInput> -->
+            {:else if dataField[field].type == "object"}
+                <ObjectInput field={field} object={card[field]}></ObjectInput>
             {/if}
         {/each}
         <button on:click={submit}>Submit Changes</button>
 </div>
 <div> 
     Update:
-    <pre id="e">{#each Object.keys($newCard) as prop}
-        {prop}: {$newCard[prop]}
-        {/each}</pre>
+    <pre id="e">{JSON.stringify($newCard)}</pre>
     
 </div>
 {:else}
