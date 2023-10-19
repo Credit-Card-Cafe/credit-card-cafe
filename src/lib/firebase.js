@@ -1,11 +1,15 @@
 import { initializeApp } from "firebase/app";
 import {
   collection,
-  getDocs,
+  onSnapshot,
   getFirestore,
   setDoc,
   updateDoc,
   doc,
+  query,
+  limit,
+  orderBy,
+  getDocs
 } from "firebase/firestore";
 import {
   getAuth,
@@ -33,15 +37,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-async function getCards(db) {
-  const cardsCollection = collection(db, "creditCards");
-  const cardsDocs = await getDocs(cardsCollection);
-  const list = cardsDocs.docs.map((doc) => doc.data());
-  cardList.set(list);
-  return list;
+export async function orderCards(param, results) {
+  const order = query(collection(db, "creditCards"), orderBy(param,), limit(results));
+  const queryDocs = await getDocs(order);
+  const queryList = queryDocs.docs.map((doc) => doc.data());
+  return queryList;
 }
 
-export const getCardsList = getCards(db);
+export const unsubCards = onSnapshot(collection(db, "creditCards"), (creditCards) => {
+  const list = creditCards.docs.map((doc) => doc.data());
+  cardList.set(list);
+});
 
 //google sign in
 const provider = new GoogleAuthProvider();

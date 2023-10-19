@@ -1,21 +1,26 @@
 <script>
     import { dataField } from "../../../lib/fields";
-    import { cardList } from "../../../lib/stores";
+    import {orderCards} from "../../../lib/firebase";
+  import { cardList } from "../../../lib/stores";
     export let queries;
+    export let results = 5;
 
-    var searchResults = $cardList;
+    let searchResults = $cardList
 
-    function sortCards() {
-        searchResults.sort();
+    function order(param) {
+        orderCards(param, results).then((list) => {
+            searchResults = list;
+        });
     }
+
 </script>
 
 <table>
     <tr>
-        <th on:click={sortCards()}>Card &darr;</th>
-        <th>Bank</th>
+        <th>Card</th>
+        <th><button on:click={() => order("bank")}>Bank</button></th>
         {#each queries as query}
-            <th>{dataField[query].name}</th>
+            <th><button on:click={() => order(query)}>{dataField[query].name}</button></th>
         {/each}
     </tr>
     {#each searchResults as card}
