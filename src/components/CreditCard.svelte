@@ -17,9 +17,7 @@
                 {card.bank}
             {/if}
             </div>
-            {#if Object.hasOwn(card, "network")}
-                {#if card.bank != card.network}
-                <!-- Sibling to id="bank"-->
+            {#if Object.hasOwn(card, "network") && (card.bank != card.network)}
                 <div id="network" class={network}>
                     {#if Object.hasOwn($newCard, "network")}
                         {$newCard.network}
@@ -27,8 +25,7 @@
                         {card.network}
                     {/if}
                 </div>
-                {/if}
-        {/if}
+            {/if}
         {/if}
         {#if Object.hasOwn(card, "name")}
             <div id="name">
@@ -39,10 +36,18 @@
             {/if}
             </div>
         {/if}
-        {#if Object.hasOwn(card, "physical")}
-            {#if Object.hasOwn(card.physical, "chip")}
-                {#if card.physical.chip}<div id="chip"></div>{/if}
-            {/if}
+        {#if 
+        Object.hasOwn(card, "physical") 
+        && 
+        Object.hasOwn(card.physical, "chip") 
+        &&
+        card.physical.chip == "Yes"
+        &&
+        !( Object.hasOwn($newCard, "physical") && Object.hasOwn($newCard["physical"], "chip"))
+        }
+            <div id="chip"/>
+        {:else if Object.hasOwn($newCard, "physical") && Object.hasOwn($newCard["physical"], "chip") && $newCard.physical.chip == "Yes"} 
+                <div id="chip"/>
         {/if}
     </div>
     <!-- {#each Object.keys(card) as prop}
