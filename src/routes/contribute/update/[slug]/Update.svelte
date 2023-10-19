@@ -8,6 +8,7 @@
     import ObjectInput from "./components/ObjectInput.svelte";
     import CreditCard from "../../../../components/CreditCard.svelte";
     import { newCard } from "../../../../lib/stores";
+  import RadioInput from "./components/RadioInput.svelte";
 
     const dispatch = createEventDispatcher();
     const submit = () => dispatch('submit');
@@ -31,6 +32,8 @@
                 <SelectInput field={field} value={card[field]}></SelectInput>
             {:else if dataField[field].type == "object"}
                 <ObjectInput field={field} object={card[field]}></ObjectInput>
+            {:else if dataField[field].type == "radio"}
+                <RadioInput field={field} value={card[field]}></RadioInput>
             {/if}
         {/each}
         <button on:click={submit}>Submit Changes</button>
