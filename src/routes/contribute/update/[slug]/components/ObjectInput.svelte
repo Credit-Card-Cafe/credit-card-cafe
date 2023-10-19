@@ -2,8 +2,8 @@
     export let field;
     export let object;
     import { dataField } from "../../../../../lib/fields";
+    import RadioInput from "./RadioInput.svelte";
     import TextInput from "./TextInput.svelte";
-    import { newCard } from "../../../../../lib/stores";
 
     if (object == undefined) {
         object = {};
@@ -19,23 +19,8 @@
     {#each Object.keys(dataField[field]["data"]) as data}
         {#if dataField[field]["data"][data].type == "text"}
             <TextInput field={data} value={object[data]} object={field}></TextInput>
-        <!-- {:else if dataField[field]["data"][data].type == "radio"}
-        {dataField[field]["data"][data].name}
-            {#each dataField[field]["data"][data].options as option}
-                
-                <label for="{data}{option}">{option}
-                <input 
-                    class="physical_card input" 
-                    type="radio" 
-                    name="{data}" 
-                    id="{data}{option}" 
-                    on:input={() => setUpdate(data)} 
-                    value="{option}"
-                    checked={option == getValue(data)}
-                >
-            </label>
-            {/each} -->
+        {:else if dataField[field]["data"][data].type == "radio"}
+            <RadioInput field={data} value={object[data]} object={field}></RadioInput>
         {/if}
-        
     {/each}
 </div>
