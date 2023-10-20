@@ -10,6 +10,7 @@
     import { newCard } from "../../../../lib/stores";
   import RadioInput from "./components/RadioInput.svelte";
   import ColorInput from "./components/ColorInput.svelte";
+  import ListInput from "./components/ListInput.svelte";
 
     const dispatch = createEventDispatcher();
     const submit = () => dispatch('submit');
@@ -37,6 +38,8 @@
                 <RadioInput field={field} value={card[field]}></RadioInput>
             {:else if dataField[field].type == "color"}
                 <ColorInput field={field} value={card[field]}></ColorInput>
+            {:else if dataField[field].type == "list"}
+                <ListInput field={field} list={card[field]}></ListInput>
             {/if}
         {/each}
         <button on:click={submit}>Submit Changes</button>

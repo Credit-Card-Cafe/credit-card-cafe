@@ -8,7 +8,6 @@
 
     const defaultValue = value;
     value = rgbToHex(value[0],value[1],value[2])
-    console.log(defaultValue, " => ", value)
 
     function setUpdate() {
         let color = hexToRgb(value);
