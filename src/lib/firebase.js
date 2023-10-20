@@ -9,7 +9,8 @@ import {
   query,
   limit,
   orderBy,
-  getDocs
+  getDocs,
+  getDoc
 } from "firebase/firestore";
 import {
   getAuth,
@@ -22,7 +23,7 @@ import { user, cardList } from "./stores";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
+//Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAHdRUzJTM-_3JQr4LW9fYS3935w28FHKw",
   authDomain: "creditcarddb-3fafd.firebaseapp.com",
@@ -33,10 +34,25 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//----------------------Database read functions-----------------
+
+
+//gets a singular doc from its URL
+export async function getOne(url) {
+  const docRef = doc(db, "creditCards", url);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  }
+}
+
+
+//gets an ordered list of cards
 export async function orderCards(param, results) {
   const order = query(collection(db, "creditCards"), orderBy(param,), limit(results));
   const queryDocs = await getDocs(order);
@@ -44,15 +60,45 @@ export async function orderCards(param, results) {
   return queryList;
 }
 
+//sets SvelteStore cardlist to a list of all the cards, udpates when database changes
 export const unsubCards = onSnapshot(collection(db, "creditCards"), (creditCards) => {
   const list = creditCards.docs.map((doc) => doc.data());
   cardList.set(list);
 });
 
-//google sign in
+
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//----------------------Database write functions-----------------
+
+//adds a new card to the database
+//DATA NOT SANATIZED, so pretty please dont go live :)
+export async function addCard(name, bank, network, id) {
+  await setDoc(doc(db, "creditCards", id), {
+    name: name,
+    bank: bank,
+    network: network,
+    url: id,
+  });
+}
+
+//updates a card in the database
+//DATA NOT SANATIZED, so pretty please dont go live :)
+export async function updateCard(card, id) {
+  const ccard = doc(db, "creditCards", id);
+  return updateDoc(ccard, card);
+}
+
+
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//----------------------Firebase Auth functions-----------------
+
+
+
+//initialize google sign in
 const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
 
+//log in function
 export async function logIn() {
   signInWithPopup(auth, provider)
     .then((result) => {
@@ -76,6 +122,7 @@ export async function logIn() {
     });
 }
 
+//checks for user logged in; sets user 
 onAuthStateChanged(auth, (client) => {
   if (client) {
     user.set(client);
@@ -84,6 +131,7 @@ onAuthStateChanged(auth, (client) => {
   }
 });
 
+//log out 
 export async function logout() {
   signOut(auth)
     .then(() => {
@@ -92,20 +140,4 @@ export async function logout() {
     .catch((error) => {
       // An error happened.
     });
-}
-
-//DATA NOT SANATIZED, so pretty please dont go live :)
-export async function addCard(name, bank, network, id) {
-  await setDoc(doc(db, "creditCards", id), {
-    name: name,
-    bank: bank,
-    network: network,
-    url: id,
-  });
-}
-
-//DATA NOT SANATIZED, so pretty please dont go live :)
-export async function updateCard(card, id) {
-  const ccard = doc(db, "creditCards", id);
-  return updateDoc(ccard, card);
 }

@@ -1,17 +1,31 @@
 <script lang="js">
   import CreditCard from '../../../components/CreditCard.svelte';
   export let data;
+  import { getOne } from '../../../lib/firebase.js';
   import { user } from '../../../lib/stores';
+
+  let card = {
+    name: "CreditCardDB",
+    bank: "Bank of Ben",
+    network: "visa",
+    color: "0,0,0"
+  }
+
+  getOne(data.slug).then((result) => {
+    card = result;
+  });
+
+  console.log(card)
 </script>
 
 <svelte:head>
-    <title>CreditCardDB | {data.card.bank} - {data.card.name}</title>
+    <title>CreditCardDB | {card.bank} - {card.name}</title>
 </svelte:head>
 
-{#if data.card}
-  <CreditCard card={data.card} --color="{data.card.color}"></CreditCard>
+{#if card}
+  <CreditCard card={card} --color="{card.color}"></CreditCard>
   {#if $user}
-  <a href="/contribute/update/{data.card.url}">Update Information</a>
+  <a href="/contribute/update/{card.url}">Update Information</a>
   {/if}
 {:else}
   <div>Credit Card not found</div>
