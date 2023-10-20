@@ -1,6 +1,6 @@
 <script>
     export let field;
-    export let value;
+    export let value = undefined;
     export let object = false;
     import { dataField } from "../../../../../lib/fields";
     import { newCard } from "../../../../../lib/stores";

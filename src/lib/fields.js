@@ -2,6 +2,7 @@
 //<input type="text"> :  property: { name: "Display Name", type: "text"}
 //<select>            :  property: { name: "Display Name", type: "submit", options: ["option 1", "option n"]}
 //<input type="radio">:  property: { name: "Display Name", type: "radio", options: ["option 1", "option n"]}
+//lists               :  property: { name: "Dispaly Name", type: "list", item_type:["type of each item"]}
 
 export const dataField = {
   bank: { name: "Bank", type: "text", lvl: 1},
@@ -10,16 +11,15 @@ export const dataField = {
     name: "Network",
     type: "select",
     options: ["Visa", "MasterCard", "American Express", "Discover"],
-    lvl: 3,
   },
-  foreign_transaction_fee: { name: "Foreign Transaction Fee", type: "text", lvl: 6},
-  annual_fee: { name: "Annual Fee", type: "text", lvl: 7 },
+  foreign_transaction_fee: { name: "Foreign Transaction Fee", type: "text"},
+  annual_fee: { name: "Annual Fee", type: "text"},
   // rewards: {
   //   name: "Rewards",
   //   type: "dynamicObject",
-  //   data: [
-  //     {value: },
-  //   ],
+  //   data: {
+  //     redemption: {name: "Redemption", type="text"},
+  //     rewards_list: {name: "Rewards Categories", type="list"}
   // },
   physical: {
     name: "Physical Card",
@@ -43,7 +43,6 @@ export const dataField = {
         options: ["Front", "Back", "Both"],
       },
     },
-    lvl: 4,
   },
-  color: {name: "Color RGB", type: "color", lvl: 5},
+  color: {name: "Color RGB", type: "color"},
 };
