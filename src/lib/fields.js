@@ -18,9 +18,10 @@ export const dataField = {
   //   name: "Rewards",
   //   type: "dynamicObject",
   //   data: {
-  //     redemption: {name: "Redemption", type="text"},
+  //     
   //     rewards_list: {name: "Rewards Categories", type="list"}
   // },
+  redemption: {name: "Redemption Type", type:"select", options: ["Cash Back","Miles","Points","Statement Credit"]},
   physical: {
     name: "Physical Card",
     type: "object",
