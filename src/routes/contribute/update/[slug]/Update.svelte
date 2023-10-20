@@ -9,6 +9,7 @@
     import CreditCard from "../../../../components/CreditCard.svelte";
     import { newCard } from "../../../../lib/stores";
   import RadioInput from "./components/RadioInput.svelte";
+  import ColorInput from "./components/ColorInput.svelte";
 
     const dispatch = createEventDispatcher();
     const submit = () => dispatch('submit');
@@ -26,7 +27,7 @@
         <CreditCard card={card} --color="{card.color}"></CreditCard>
     {/if}
         {#each Object.keys(dataField) as field}
-            {#if dataField[field].type == "text"}
+            {#if dataField[field].type == "text" && field != "color"}
                 <TextInput field={field} value={card[field]}></TextInput>
             {:else if dataField[field].type == "select"}
                 <SelectInput field={field} value={card[field]}></SelectInput>
@@ -34,6 +35,8 @@
                 <ObjectInput field={field} object={card[field]}></ObjectInput>
             {:else if dataField[field].type == "radio"}
                 <RadioInput field={field} value={card[field]}></RadioInput>
+            {:else if dataField[field].type == "color"}
+                <ColorInput field={field} value={card[field]}></ColorInput>
             {/if}
         {/each}
         <button on:click={submit}>Submit Changes</button>

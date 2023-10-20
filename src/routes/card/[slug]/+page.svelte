@@ -15,7 +15,6 @@
     card = result;
   });
 
-  console.log(card)
 </script>
 
 <svelte:head>
