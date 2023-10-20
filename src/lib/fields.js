@@ -12,8 +12,8 @@ export const dataField = {
     type: "select",
     options: ["Visa", "MasterCard", "American Express", "Discover"],
   },
-  foreign_transaction_fee: { name: "Foreign Transaction Fee", type: "text"},
-  annual_fee: { name: "Annual Fee", type: "text"},
+  foreign_transaction_fee: { name: "Foreign Transaction Fee (%)", type: "number"},
+  annual_fee: { name: "Annual Fee ($)", type: "number"},
   // rewards: {
   //   name: "Rewards",
   //   type: "dynamicObject",
