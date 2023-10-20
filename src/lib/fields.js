@@ -45,5 +45,5 @@ export const dataField = {
     },
     lvl: 4,
   },
-  color: {name: "Color RGB", type: "text", lvl: 5},
+  color: {name: "Color RGB", type: "color", lvl: 5},
 };
