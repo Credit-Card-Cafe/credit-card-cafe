@@ -4,6 +4,7 @@
   import { cardList } from "../../../lib/stores";
     export let queries;
     export let results = 5;
+    import { user } from "../../../lib/stores";
 
     let searchResults = $cardList
 
@@ -28,9 +29,22 @@
     <tr>
         <td><a href="/card/{card.url}">{card.name} </a></td>
         <td>{card.bank}</td>
-        {#each queries as query}
-        <td>{card[query]}</td>
-        {/each}
+            {#each queries as query}
+            <td>
+                {#if card[query] == undefined} 
+                    [Data doesn't exist.] 
+                    {#if $user}
+                        <a href="/contribute/update/{card.url}">Add it?</a>
+                    {/if}
+                {:else if query == "annual_fee"} 
+                    ${card[query]}
+                {:else if query == "foreign_transaction_fee"}
+                    {card[query]}%
+                {:else} 
+                    {card[query]}
+                {/if}
+            </td>
+            {/each}
     </tr>
        
     
