@@ -7,7 +7,7 @@
   let card = {
     name: "CreditCardDB",
     bank: "Bank of Ben",
-    network: "visa",
+    network: "Loading...",
     color: "0,0,0"
   }
 
