@@ -2,14 +2,17 @@
     import { user } from "../lib/stores";
     import LogInButton from "../components/LogInButton.svelte";
     import LogOutButton from "../components/LogOutButton.svelte";
+    import { headerColor } from "../lib/stores";
 
     function search() {
         let query = document.getElementById("search").value;
         window.alert(`Searching: ${query}`);
     }
+
+
 </script>
 
-<div id="top">
+<div id="top" style={`background:${$headerColor}`}>
     <div>
         <div id="title">CreditCardDB</div>
         <nav>
@@ -39,20 +42,20 @@
     flex-direction: row;
     justify-content: space-between;
     justify-items: center;
-    background: rgb(151, 255, 238);
-    margin-bottom: 10px;
-    padding: 10px 20px;
+    margin-bottom: 4rem;
+    padding: 1rem 2rem;
 }
 #title, nav, form {
     display: inline;
 }
 #title {
-    margin-right: 20px;
+    margin-right: 2rem;
 }
 a {
-    border: 1px solid red;
-    margin: 3px;
-    padding: 3px;
+    text-decoration: none;
+    color: black;
+    margin: .5rem;
+    padding: .5rem;
 }
 :global(body) {
     margin: 0;

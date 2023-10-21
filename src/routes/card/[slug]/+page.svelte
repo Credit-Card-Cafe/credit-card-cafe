@@ -2,17 +2,18 @@
   import CreditCard from '../../../components/CreditCard.svelte';
   export let data;
   import { getOne } from '../../../lib/firebase.js';
-  import { user } from '../../../lib/stores';
+  import { user, headerColor } from '../../../lib/stores';
 
   let card = {
     name: "CreditCardDB",
     bank: "Bank of Ben",
     network: "Loading...",
-    color: "0,0,0"
+    color: "253,248,244"
   }
 
   getOne(data.slug).then((result) => {
     card = result;
+    headerColor.set("rgba(" + result.color + ",0.25)");
   });
 
 </script>
