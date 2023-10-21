@@ -18,8 +18,10 @@
             $newCard[object][field] = color;
             if (JSON.stringify(color) == JSON.stringify(defaultValue) || (!defaultValue && color.length == 0)) {
                 delete $newCard[object][field];
-                if (Object.keys($newCard[object]).length == 0)
+                if (Object.keys($newCard[object]).length == 0) {
                     delete $newCard[object];
+                }
+                    
             }
         } else {
             $newCard[field] = color;

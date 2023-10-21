@@ -16,8 +16,9 @@
             $newCard[object][field] = group;
             if (group == defaultValue || (!defaultValue && group == "")) {
                 delete $newCard[object][field];
-                if (Object.keys($newCard[object]).length == 0)
+                if (Object.keys($newCard[object]).length == 0){
                     delete $newCard[object];
+                }
             }
         } else {
             $newCard[field] = group;

@@ -1,6 +1,6 @@
 <script>
     export let field;
-    export let value = undefined;
+    export let value;
     export let object = false;
     import { dataField } from "../../../../../lib/fields";
     import { newCard } from "../../../../../lib/stores";
@@ -15,8 +15,8 @@
             $newCard[object][field] = value;
             if (value == defaultValue || (!defaultValue && value == "")) {
                 delete $newCard[object][field];
-                if (Object.keys($newCard[object]).length == 0)
-                    delete $newCard[object];
+                if (Object.keys($newCard[object]).length == 0){
+                    delete $newCard[object];}
             }
         } else {
             $newCard[field] = value;
