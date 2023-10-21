@@ -55,7 +55,12 @@ a {
     text-decoration: none;
     color: black;
     margin: .5rem;
-    padding: .5rem;
+    padding: .70rem;
+    font-size: 1rem;
+}
+a:hover {
+    background: rgba(0,0,0,0.1);
+    border-radius: 5px;
 }
 :global(body) {
     margin: 0;

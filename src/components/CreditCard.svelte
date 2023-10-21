@@ -7,7 +7,7 @@
     var network = "visa";
 
     onDestroy(() => {
-        headerColor.set("rgba(253,248,244)");
+        headerColor.set("rgb(253,248,244)");
     });
 </script>
 

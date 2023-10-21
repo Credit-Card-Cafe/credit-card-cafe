@@ -13,7 +13,7 @@
 
   getOne(data.slug).then((result) => {
     card = result;
-    headerColor.set("rgba(" + result.color + ",0.25)");
+    headerColor.set("rgba(" + result.color + ",0.13)");
   });
 
 </script>
