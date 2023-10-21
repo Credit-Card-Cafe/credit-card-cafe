@@ -5,3 +5,5 @@ export const user = writable();
 export const cardList = writable([]);
 
 export const newCard = writable({});
+
+export const headerColor = writable("rgb(253,248,244)");
