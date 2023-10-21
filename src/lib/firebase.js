@@ -54,7 +54,7 @@ export async function getOne(url) {
 
 //gets an ordered list of cards
 export async function orderCards(param, results) {
-  const order = query(collection(db, "creditCards"), orderBy(param,), limit(results));
+  const order = query(collection(db, "creditCards"), orderBy(param, "asc"), limit(results));
   const queryDocs = await getDocs(order);
   const queryList = queryDocs.docs.map((doc) => doc.data());
   return queryList;

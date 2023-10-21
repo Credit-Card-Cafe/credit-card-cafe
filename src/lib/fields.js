@@ -1,8 +1,9 @@
 //type: (string), UpdateCard.svelte will use this to send information to proper component.
-//<input type="text"> :  property: { name: "Display Name", type: "text"}
-//<select>            :  property: { name: "Display Name", type: "submit", options: ["option 1", "option n"]}
-//<input type="radio">:  property: { name: "Display Name", type: "radio", options: ["option 1", "option n"]}
-//lists               :  property: { name: "Dispaly Name", type: "list", item_type:["type of each item"]}
+//<input type="text">   :  property: { name: "Display Name", type: "text"}
+//<select>              :  property: { name: "Display Name", type: "submit", options: ["option 1", "option n"]}
+//<input type="radio">  :  property: { name: "Display Name", type: "radio", options: ["option 1", "option n"]}
+//lists                 :  property: { name: "Display Name", type: "list", item_type:["type of each item"]}
+//<input type="number"> :  property: { name: "Display Name", type: "number"}
 
 export const dataField = {
   bank: { name: "Bank", type: "text", lvl: 1},
