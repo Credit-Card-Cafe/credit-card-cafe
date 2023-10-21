@@ -1,10 +1,14 @@
 <script lang="js">
+  import { onDestroy, onMount } from "svelte";
 	export let card;
     import { dataField } from "../lib/fields";
-    import { newCard } from "../lib/stores";
+    import { headerColor, newCard } from "../lib/stores";
 
     var network = "visa";
 
+    onDestroy(() => {
+        headerColor.set("rgb(253,248,244)");
+    });
 </script>
 
 <div id="card">
@@ -71,7 +75,7 @@
     }
     #creditCard {
         position: relative;
-        background-color: var(--color, #FFF);
+        background-color: var(--color, rgb(253,248,244));
         background: linear-gradient(146deg, rgb(var(--color)), rgba(var(--color), 0.6), rgb(var(--color)));
         width: 3.375in;
         height: 2.125in;
