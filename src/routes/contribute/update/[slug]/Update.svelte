@@ -19,6 +19,7 @@
     onDestroy(() => {
         $newCard = {};
     })
+
 </script>
 
 {#if updateAuthorization}
@@ -29,7 +30,7 @@
         <CreditCard card={card} --color="{card.color}"></CreditCard>
     {/if}
         {#each Object.keys(dataField) as field}
-            {#if dataField[field].type == "text" && field != "color"}
+            {#if dataField[field].type == "text"}
                 <TextInput field={field} value={card[field]}></TextInput>
             {:else if dataField[field].type == "select"}
                 <SelectInput field={field} value={card[field]}></SelectInput>
@@ -50,7 +51,7 @@
 <div> 
     Update:
     <pre id="e">{JSON.stringify($newCard)}</pre>
-    
+    <pre id="e">{JSON.stringify(card)}</pre>
 </div>
 {:else}
 <div id="after">

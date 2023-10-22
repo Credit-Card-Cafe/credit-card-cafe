@@ -16,7 +16,8 @@
             if (value == defaultValue || (!defaultValue && value == "")) {
                 delete $newCard[object][field];
                 if (Object.keys($newCard[object]).length == 0){
-                    delete $newCard[object];}
+                    delete $newCard[object];
+                }
             }
         } else {
             $newCard[field] = value;
