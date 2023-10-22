@@ -11,6 +11,8 @@
         <span>Network <input type="checkbox" value="network" bind:group={queries}></span>
         <span>Annual Fee<input  type="checkbox" value="annual_fee" bind:group={queries}></span>
         <span>Foreign Transaction Fee <input type="checkbox" value="foreign_transaction_fee" bind:group={queries}></span>
+        <span>Rewards Redemption <input type="checkbox" value="redemption" bind:group={queries}></span>
+        <span>Brand <input type="checkbox" value="brand" bind:group={queries}></span>
         <span>Results: <select bind:value={results}>
             <option disabled selected>{results}</option>
             <option>5</option>

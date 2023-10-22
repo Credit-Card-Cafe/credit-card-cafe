@@ -26,9 +26,13 @@ export const dataField = {
   //     rewards_list: {name: "Rewards Categories", type="list"}
   // },
   redemption: {
-    name: "Redemption Type",
+    name: "Rewards Redemption",
     type: "select",
-    options: ["Cash Back", "Miles", "Points", "Statement Credit"],
+    options: ["Cash Back", "Miles", "Points", "Statement Credit", "Gift Cards"],
+  },
+  brand: {
+    name: "Brand",
+    type: "text",
   },
   physical: {
     name: "Physical Card",

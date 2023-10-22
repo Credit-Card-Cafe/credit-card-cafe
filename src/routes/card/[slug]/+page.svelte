@@ -2,7 +2,7 @@
   import CreditCard from '../../../components/CreditCard.svelte';
   export let data;
   import { getOne } from '../../../lib/firebase.js';
-  import { user, headerColor } from '../../../lib/stores';
+  import { user, headerColor, oneCard } from '../../../lib/stores';
 
   let card = {
     name: "CreditCardDB",

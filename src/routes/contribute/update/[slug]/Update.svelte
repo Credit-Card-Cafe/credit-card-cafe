@@ -14,8 +14,6 @@
     import ListInput from "./components/ListInput.svelte";
     import NumberInput from "./components/NumberInput.svelte";
 
-    console.log("Update.svelte load")
-
     const dispatch = createEventDispatcher();
     const submit = () => dispatch('submit');
 

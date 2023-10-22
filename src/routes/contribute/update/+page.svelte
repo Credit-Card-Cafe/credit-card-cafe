@@ -2,5 +2,5 @@
 <svelte:head>
     <title>CreditCardDB | Update Card</title>
 </svelte:head>
-<div>Yeehaw, dingus. <br> Go update a card! 
+<div>To update a card, find it via <a href="../../search/">Search</a>, click on the card, then click "Update Card" from the card page.
 </div>

@@ -19,7 +19,7 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
 } from "firebase/auth";
-import { user, cardList } from "./stores";
+import { user, cardList, oneCard } from "./stores";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -44,6 +44,9 @@ const db = getFirestore(app);
 export async function getOne(url) {
   const docRef = doc(db, "creditCards", url);
   const docSnap = await getDoc(docRef);
+  oneCard.set(docSnap.data());
+  const sleep = (m) => new Promise((r) => setTimeout(r, m));
+  await sleep(500);
   if (docSnap.exists()) {
     return docSnap.data();
   }
