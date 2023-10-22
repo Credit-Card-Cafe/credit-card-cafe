@@ -6,23 +6,30 @@
 //<input type="number"> :  property: { name: "Display Name", type: "number"}
 
 export const dataField = {
-  bank: { name: "Bank", type: "text", lvl: 1},
-  name: { name: "Name", type: "text", lvl: 2},
+  bank: { name: "Bank", type: "text", lvl: 1 },
+  name: { name: "Name", type: "text", lvl: 2 },
   network: {
     name: "Network",
     type: "select",
     options: ["Visa", "MasterCard", "American Express", "Discover"],
   },
-  foreign_transaction_fee: { name: "Foreign Transaction Fee (%)", type: "number"},
-  annual_fee: { name: "Annual Fee ($)", type: "number"},
+  foreign_transaction_fee: {
+    name: "Foreign Transaction Fee (%)",
+    type: "number",
+  },
+  annual_fee: { name: "Annual Fee ($)", type: "number" },
   // rewards: {
   //   name: "Rewards",
   //   type: "dynamicObject",
   //   data: {
-  //     
+  //
   //     rewards_list: {name: "Rewards Categories", type="list"}
   // },
-  redemption: {name: "Redemption Type", type:"select", options: ["Cash Back","Miles","Points","Statement Credit"]},
+  redemption: {
+    name: "Redemption Type",
+    type: "select",
+    options: ["Cash Back", "Miles", "Points", "Statement Credit"],
+  },
   physical: {
     name: "Physical Card",
     type: "object",
@@ -46,5 +53,5 @@ export const dataField = {
       },
     },
   },
-  color: {name: "Color RGB", type: "color"},
+  color: { name: "Color RGB", type: "color" },
 };

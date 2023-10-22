@@ -5,40 +5,36 @@
     export let data;
     import { user, newCard } from '../../../../lib/stores';
 
+    console.log("Page.svelte load")
+
     var updateAuthorization = true;
 
-    let card = {
-    name: "CreditCardDB",
-    bank: "Bank of Ben",
-    network: "Loading...",
-    color: "0,0,0"
-  }
-
-    getOne(data.slug).then((result) => {
-      card = result;
-    });
-
     function sendUpdate() {
-        updateCard($newCard, card.url).then((data) => {
+        updateCard($newCard, $newCard.id).then((data) => {
             updateAuthorization = false; 
             $newCard = {};
-            //document.getElementById("after").innerHTML = JSON.stringify(data);
         });
     }
-
-    card.my_list = ["One","Two","Three","Four"]
+    
   </script>
   
 <svelte:head>
-    <title>CreditCardDB | Update Card | {card.bank} - {card.name}</title>
+    <title>CreditCardDB | Update Card</title>
 </svelte:head>
 
   {#if $user}
-    {#if card}
-      <Update card={card} updateAuthorization={updateAuthorization} on:submit={() => sendUpdate()}></Update>
-    {:else}
-      <div>Credit Card not found. Would you like to create one?</div>
-    {/if}
+    {#await getOne(data.slug)}
+      <div>Loading...</div>
+
+    {:then promisedCard} 
+      {#if promisedCard != null}
+        <Update card={promisedCard} updateAuthorization={updateAuthorization} on:submit={() => sendUpdate()}></Update>
+      {:else}
+        <div>Credit Card not found. Would you like to create one?</div>
+      {/if}
+
+
+    {/await}
   {:else}
     <div>Please log in to update a card</div>
   {/if}

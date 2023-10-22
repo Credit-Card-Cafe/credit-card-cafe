@@ -7,7 +7,13 @@
     import { hexToRgb, rgbToHex } from "../../../../../lib/functions";
 
     const defaultValue = value;
-    value = rgbToHex(value[0],value[1],value[2])
+
+    if (defaultValue == undefined) {
+        value = "#FFEE2D6"
+    } else {
+        value = rgbToHex(value[0],value[1],value[2])
+    }
+    
 
     function setUpdate() {
         let color = hexToRgb(value);
@@ -36,5 +42,5 @@
 
 <div>
     {#if object} {dataField[object]["data"][field].name} {:else} {dataField[field].name} {/if}
-    <input type="color" bind:value on:input={() => setUpdate()}>
+    <input type="color" bind:value on:input={() => setUpdate()}> {JSON.stringify(defaultValue)} => {JSON.stringify(value)}
 </div>

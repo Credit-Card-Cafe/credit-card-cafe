@@ -2,16 +2,19 @@
 	export let card;
     export let updateAuthorization;
     import {createEventDispatcher, onDestroy } from "svelte";
+    import { newCard } from "../../../../lib/stores";
     import {dataField} from "../../../../lib/fields";
+    import CreditCard from "../../../../components/CreditCard.svelte";
+
     import TextInput from "./components/TextInput.svelte";
     import SelectInput from "./components/SelectInput.svelte";
     import ObjectInput from "./components/ObjectInput.svelte";
-    import CreditCard from "../../../../components/CreditCard.svelte";
-    import { newCard } from "../../../../lib/stores";
-  import RadioInput from "./components/RadioInput.svelte";
-  import ColorInput from "./components/ColorInput.svelte";
-  import ListInput from "./components/ListInput.svelte";
-  import NumberInput from "./components/NumberInput.svelte";
+    import RadioInput from "./components/RadioInput.svelte";
+    import ColorInput from "./components/ColorInput.svelte";
+    import ListInput from "./components/ListInput.svelte";
+    import NumberInput from "./components/NumberInput.svelte";
+
+    console.log("Update.svelte load")
 
     const dispatch = createEventDispatcher();
     const submit = () => dispatch('submit');
@@ -20,6 +23,7 @@
         $newCard = {};
     })
 
+    $newCard.id = card.url;
 </script>
 
 {#if updateAuthorization}
@@ -46,11 +50,12 @@
                 <NumberInput field={field} value={card[field]}></NumberInput>
             {/if}
         {/each}
-        <button on:click={submit}>Submit Changes</button>
+        <button on:click={() => submit()}>Submit Changes</button>
 </div>
 <div> 
     Update:
     <pre id="e">{JSON.stringify($newCard)}</pre>
+
     <pre id="e">{JSON.stringify(card)}</pre>
 </div>
 {:else}

@@ -8,6 +8,7 @@
     const defaultValue = value;
 
     function setUpdate() {
+        console.log(defaultValue, " => " ,value)
         if (object) {
             if (!Object.hasOwn($newCard, object)) {
                 $newCard[object] = {};

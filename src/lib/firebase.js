@@ -10,7 +10,7 @@ import {
   limit,
   orderBy,
   getDocs,
-  getDoc
+  getDoc,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -37,10 +37,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //----------------------Database read functions-----------------
-
 
 //gets a singular doc from its URL
 export async function getOne(url) {
@@ -51,21 +49,26 @@ export async function getOne(url) {
   }
 }
 
-
 //gets an ordered list of cards
 export async function orderCards(param, results) {
-  const order = query(collection(db, "creditCards"), orderBy(param, "asc"), limit(results));
+  const order = query(
+    collection(db, "creditCards"),
+    orderBy(param, "asc"),
+    limit(results)
+  );
   const queryDocs = await getDocs(order);
   const queryList = queryDocs.docs.map((doc) => doc.data());
   return queryList;
 }
 
 //sets SvelteStore cardlist to a list of all the cards, udpates when database changes
-export const unsubCards = onSnapshot(collection(db, "creditCards"), (creditCards) => {
-  const list = creditCards.docs.map((doc) => doc.data());
-  cardList.set(list);
-});
-
+export const unsubCards = onSnapshot(
+  collection(db, "creditCards"),
+  (creditCards) => {
+    const list = creditCards.docs.map((doc) => doc.data());
+    cardList.set(list);
+  }
+);
 
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //----------------------Database write functions-----------------
@@ -88,11 +91,8 @@ export async function updateCard(card, id) {
   return updateDoc(ccard, card);
 }
 
-
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //----------------------Firebase Auth functions-----------------
-
-
 
 //initialize google sign in
 const provider = new GoogleAuthProvider();
@@ -122,7 +122,7 @@ export async function logIn() {
     });
 }
 
-//checks for user logged in; sets user 
+//checks for user logged in; sets user
 onAuthStateChanged(auth, (client) => {
   if (client) {
     user.set(client);
@@ -131,7 +131,7 @@ onAuthStateChanged(auth, (client) => {
   }
 });
 
-//log out 
+//log out
 export async function logout() {
   signOut(auth)
     .then(() => {
