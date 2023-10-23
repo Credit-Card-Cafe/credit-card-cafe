@@ -64,7 +64,10 @@ export async function orderCards(param, results) {
   return queryList;
 }
 
-//sets SvelteStore cardlist to a list of all the cards, udpates when database changes
+let snapShotCounter = 0;
+//sets SvelteStore cardlist to a list of all the cards, udpates when database changes.
+//Will call upon app creation. Does not need to be referenced.
+//Could be expensive?
 export const unsubCards = onSnapshot(
   collection(db, "creditCards"),
   (creditCards) => {

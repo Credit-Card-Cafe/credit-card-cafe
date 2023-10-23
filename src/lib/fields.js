@@ -18,13 +18,10 @@ export const dataField = {
     type: "number",
   },
   annual_fee: { name: "Annual Fee ($)", type: "number" },
-  // rewards: {
-  //   name: "Rewards",
-  //   type: "dynamicObject",
-  //   data: {
-  //
-  //     rewards_list: {name: "Rewards Categories", type="list"}
-  // },
+  rewards: {
+    name: "Rewards",
+    type: "dynamic",
+  },
   redemption: {
     name: "Rewards Redemption",
     type: "select",
@@ -33,6 +30,11 @@ export const dataField = {
   brand: {
     name: "Brand",
     type: "text",
+  },
+  consumer: {
+    name: "Consumer",
+    type: "select",
+    options: ["Personal", "Business", "Student"],
   },
   physical: {
     name: "Physical Card",

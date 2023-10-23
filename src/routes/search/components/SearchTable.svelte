@@ -1,10 +1,9 @@
 <script>
     import { dataField } from "../../../lib/fields";
     import {orderCards} from "../../../lib/firebase";
-  import { cardList } from "../../../lib/stores";
+    import { cardList, user } from "../../../lib/stores";
     export let queries;
     export let results = 5;
-    import { user } from "../../../lib/stores";
 
     let searchResults = $cardList
 
