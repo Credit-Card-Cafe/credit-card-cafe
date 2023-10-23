@@ -21,32 +21,31 @@
             2. newCard[field] has a property that is different than the objects property, but this object does have.
 
            B. Adds add of this object's properties to newCard[field], if:
-            1. newCard[field] does not have those properties.
+            1. newCard[field] does not have those properties, but this object does.
             2. newCard[field] has at least one property that this object doesn't have, or
-            3. newCard[field] has at least one propert that this object does have, but is modified.  
+            3. newCard[field] has at least one property that this object does have, but is modified.  
+            4. object[prop] is not blank
 
            C. Removes fields from newCard[field], if:
-            1. Object does not have this field, and the field is blank.
+            1. Object does not have this field, newCard[field] does have this field, and the field is blank.
             
         */
         let rmField = true;
         for (let prop of keys) {
-            if (Object.hasOwn(object, prop)) {
+            if (Object.hasOwn(object, prop) && object[prop] != "") { //B4
                 if(!Object.hasOwn($newCard[field], prop)) { //B1
                     $newCard[field][prop] = object[prop];
                 }
-                if($newCard[field][prop] != object[prop]){ //A2
-                    rmField = false; //B3
+                if($newCard[field][prop] != object[prop]){ //A2, B3
+                    rmField = false; 
                 } 
-            } else if (Object.hasOwn($newCard[field], prop)) { //A1 
+            } else if (Object.hasOwn($newCard[field], prop)) { //A1, B2
                 if ($newCard[field][prop] == "") { //C2
                     delete $newCard[field][prop];
                 } else {
-                    rmField = false; //B2
-                }
-                
-            } 
-            
+                    rmField = false; 
+                }   
+            }
         }
         if(rmField){
             delete $newCard[field];
