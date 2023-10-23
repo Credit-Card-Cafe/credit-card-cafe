@@ -4,8 +4,11 @@
     export let object = false;
     import { dataField } from "../../../../../lib/fields";
     import { newCard } from "../../../../../lib/stores";
+    import { createEventDispatcher } from "svelte";
 
     const defaultValue = value;
+    const dispatch = createEventDispatcher();
+    const checkObject = () => dispatch('update')
 
     function setUpdate() {
         if (object) {
@@ -13,11 +16,7 @@
                 $newCard[object] = {};
             }
             $newCard[object][field] = value;
-            if (value == defaultValue || (!defaultValue && value == "")) {
-                delete $newCard[object][field];
-                if (Object.keys($newCard[object]).length == 0){
-                    delete $newCard[object];}
-            }
+            checkObject();
         } else {
             $newCard[field] = value;
             if (value == defaultValue || (!defaultValue && value == "")) {

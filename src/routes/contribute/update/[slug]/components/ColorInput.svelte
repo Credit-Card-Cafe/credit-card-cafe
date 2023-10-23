@@ -5,8 +5,11 @@
     import { dataField } from "../../../../../lib/fields";
     import { newCard } from "../../../../../lib/stores";
     import { hexToRgb, rgbToHex } from "../../../../../lib/functions";
+    import { createEventDispatcher } from "svelte";
 
     const defaultValue = value;
+    const dispatch = createEventDispatcher();
+    const checkObject = () => dispatch('update')
 
     if (defaultValue == undefined) {
         value = "#FFEE2D6"
@@ -21,14 +24,8 @@
             if (!Object.hasOwn($newCard, object)) {
                 $newCard[object] = {};
             }
-            $newCard[object][field] = color;
-            if (JSON.stringify(color) == JSON.stringify(defaultValue) || (!defaultValue && color.length == 0)) {
-                delete $newCard[object][field];
-                if (Object.keys($newCard[object]).length == 0) {
-                    delete $newCard[object];
-                }
-                    
-            }
+            $newCard[object][field] = value;
+            checkObject();
         } else {
             $newCard[field] = color;
             if (JSON.stringify(color) == JSON.stringify(defaultValue) || (!defaultValue && color.length == 0)) {
