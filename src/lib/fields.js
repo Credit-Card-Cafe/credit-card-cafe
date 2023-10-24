@@ -77,6 +77,8 @@ export const lists = {
     gas_ev: "Gas Station + Electric Vehicle Charging",
     streaming: "Streaming",
     utilities: "Utility",
+    car: "Car Rental",
+    airline: "Airline",
     dining: "Dining",
     home: "Home Improvement",
     default: "All other",

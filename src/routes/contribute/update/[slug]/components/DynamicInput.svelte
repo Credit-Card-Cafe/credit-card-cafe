@@ -41,6 +41,7 @@
     }
 
     var add = "";
+    var addKey = {};
     function prepAdd(event) {
         add = event.detail;
     }
@@ -48,15 +49,26 @@
         if (add != "") {
             object[add] = null;
         }
+        addKey = {} //({} === {}) => false
+    }
+
+    function checkForValue(prop) {
+        if ((object[prop] == "" || object[prop] == null) && $newCard[field] && $newCard[field][prop]) {
+            return $newCard[field][prop];
+        } else {
+            return object[prop];
+        }
     }
 </script>
 
 <div>
     {dataField[field].name}
     {#each Object.keys(object) as prop}
-        <NumberInput field={prop} value={object[prop]} object={field} list={list} on:update={() => checkObject()}></NumberInput>
+        <NumberInput field={prop} value={checkForValue(prop)} object={field} list={list} on:update={() => checkObject()}></NumberInput>
     {/each}
-    <SelectInput field={dataField[field].action} value={dataField[field].action} object={field} list={list} on:add={prepAdd}></SelectInput>
+    {#key addKey}
+        <SelectInput field={dataField[field].action} value={dataField[field].action} object={field} list={list} on:add={prepAdd}></SelectInput>
+    {/key}
     <button on:click={() => addField()}>{dataField[field].action}</button>
 </div>
 
