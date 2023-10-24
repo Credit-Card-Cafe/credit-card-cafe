@@ -2,6 +2,7 @@
     export let field;
     export let value;
     export let object = false;
+    export let list = false;
     import { dataField } from "../../../../../lib/fields";
     import { newCard } from "../../../../../lib/stores";
     import { createEventDispatcher } from "svelte";
@@ -27,7 +28,14 @@
 </script>
 
 <div>
-    {#if object} 
+    {#if list}
+        {field}
+        <select bind:value on:change={() => dispatch('add', value)}>
+            {#each Object.keys(list) as option}
+                <option value={option}>{list[option]}</option>
+            {/each}
+        </select>
+    {:else if object} 
         {dataField[object]["data"][field].name}
         <select bind:value on:change={() => setUpdate()} >
             <option disabled selected>{value}</option>

@@ -20,6 +20,8 @@ export const dataField = {
   annual_fee: { name: "Annual Fee ($)", type: "number" },
   rewards: {
     name: "Rewards",
+    action: "Add Reward",
+    list: "rewardCategories",
     type: "dynamic",
   },
   redemption: {
@@ -60,4 +62,30 @@ export const dataField = {
     },
   },
   color: { name: "Color RGB", type: "color" },
+};
+
+export const lists = {
+  rewardCategories: {
+    grocery: "Grocery",
+    online: "Online Shopping",
+    online_grocery: "Online Grocery Shopping",
+    travel: "Travel",
+    travel_portal: "Travel Through Card's Portal",
+    flights_portal: "Flights through Card's Portal",
+    gas: "Gas Station",
+    ev: "Electric Vehicle Charging",
+    gas_ev: "Gas Station + Electric Vehicle Charging",
+    streaming: "Streaming",
+    utilities: "Utility",
+    dining: "Dining",
+    home: "Home Improvement",
+    default: "All other",
+    drug: "Drug Store",
+    self: "Through Card's Company",
+    high_spend: "Highest spend",
+    rotating: "Rotating Category",
+    wholesale: "Wholesale Club",
+    superstore: "Superstore",
+    entertainment: "Entertainment",
+  },
 };

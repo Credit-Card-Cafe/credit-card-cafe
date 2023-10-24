@@ -13,6 +13,7 @@
     import ColorInput from "./components/ColorInput.svelte";
     import ListInput from "./components/ListInput.svelte";
     import NumberInput from "./components/NumberInput.svelte";
+  import DynamicInput from "./components/DynamicInput.svelte";
 
     const dispatch = createEventDispatcher();
     const submit = () => dispatch('submit');
@@ -46,6 +47,8 @@
                 <ListInput field={field} list={card[field]}></ListInput>
             {:else if dataField[field].type == "number"}
                 <NumberInput field={field} value={card[field]}></NumberInput>
+            {:else if dataField[field].type == "dynamic"}
+                <DynamicInput field={field} object={card[field]}></DynamicInput>
             {/if}
         {/each}
         <button on:click={() => submit()}>Submit Changes</button>

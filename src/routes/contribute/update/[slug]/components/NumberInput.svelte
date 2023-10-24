@@ -1,7 +1,8 @@
 <script>
     export let field;
-    export let value = undefined;
+    export let value;
     export let object = false;
+    export let list = false;
     import { dataField } from "../../../../../lib/fields";
     import { newCard } from "../../../../../lib/stores";
     import { createEventDispatcher } from "svelte";
@@ -29,6 +30,6 @@
 
 
 <div>
-    {#if object} {dataField[object]["data"][field].name} {:else} {dataField[field].name} {/if}
+    {#if list} {list[field]} purchases {:else if object} {dataField[object]["data"][field].name} {:else} {dataField[field].name} {/if}
     <input type="number" bind:value on:input={() => setUpdate()}>
 </div>
