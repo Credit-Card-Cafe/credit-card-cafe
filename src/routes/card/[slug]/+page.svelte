@@ -3,6 +3,7 @@
   export let data;
   import { getOne } from '../../../lib/firebase.js';
   import { user, headerColor, oneCard } from '../../../lib/stores';
+  import CardInfo from './CardInfo.svelte';
 
   let card = {
     name: "CreditCardDB",
@@ -23,10 +24,21 @@
 </svelte:head>
 
 {#if card}
-  <CreditCard card={card} --color="{card.color}"></CreditCard>
-  {#if $user}
-  <a href="/contribute/update/{card.url}">Update Information</a>
-  {/if}
+  <div>
+    <CreditCard card={card} --color="{card.color}"></CreditCard>
+    <CardInfo card={card}></CardInfo>
+    {#if $user}
+      <a href="/contribute/update/{card.url}">Update Information</a>
+    {/if}
+</div>
 {:else}
   <div>Credit Card not found</div>
 {/if}
+
+<style>
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>
