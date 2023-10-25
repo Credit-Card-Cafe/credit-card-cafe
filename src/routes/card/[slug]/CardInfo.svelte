@@ -1,16 +1,33 @@
 <script>
     export let card;
     import { lists, dataField } from "../../../lib/fields";
+
+    let fees = ["foreign_transaction_fee", "annual_fee"];
+    let displayFees = true
+    
 </script>
 
 <div id="cardInfo">
     <div id="intro" class="mb center">
         <div class="large underline">At a Glance:</div>
-        <div>A {#if card.brand}{card.brand}{/if} {card.bank} Credit Card, with
+        <p>A {#if card.brand}{card.brand}{/if} {card.bank} Credit Card, with
         {#if card.annual_fee && card.annual_fee != 0}a ${card.annual_fee} Annual Fee.{:else if card.annual_fee == 0}<div class="box">No Annual Fee.</div>{/if}
         {#if card.redemption} This card earns {card.redemption} on purchases (check "Rewards" below for categories).{/if}
-        </div>
+        {#if card.link}<a href={card.link}>Apply to the card here</a>{/if}
+        </p>
+        <p>This card is issued 
+            {#if Object.hasOwn(card, "bank") && !Object.hasOwn(card, "brand")}
+            by {card.bank} 
+            {:else if Object.hasOwn(card, "bank") && Object.hasOwn(card, "brand")}
+            and {card.brand}
+            {/if}
+            {#if Object.hasOwn(card, "network")}
+                through the {card.network} Network 
+            {/if}
+            {#if Object.hasOwn(card, "consumer")}
+                for {#if card.consumer == "Student"} Students{:else if card.consumer == "Business"} Businesses{:else} Personal Use{/if}{/if}.</p>
     </div>
+
     {#if card.rewards}
     <div id="rewards" class="mb">
         <div class="large">Rewards:</div>
@@ -29,6 +46,24 @@
         </ul>
     </div>
     {/if}
+    
+    {#if displayFees}
+    <div id="fees" class="mb">
+        <div class="large">Fees:</div>
+        <table>
+            {#each fees as fee}
+                {#if Object.hasOwn(card, fee)}
+                    <tr>
+                        <td>{dataField[fee].name}</td>
+                        <td>{#if card[fee] == 0}No Annual Fee{:else}${card[fee]}{/if}</td>
+                    </tr>
+                {/if}
+            {/each}
+        </table>
+        <div class="small">*Some Fees May Not Be Listed</div>
+    </div>
+    {/if}
+
     {#if card.physical}
     <div id="physical" class="mb">
         <div class="large">Physical Properties:</div>
@@ -51,14 +86,32 @@
         </ul>
     </div>
     {/if}
+
+    {#if card.link}
+        <div><a href={card.link}>Apply to the card here</a></div>
+    {/if}
 </div>
 
 <style>
+    tr,td {
+        padding: 1rem;
+    }
+    table {
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+    table > tr:nth-child(even) > td {
+        border-top: 1px solid black;
+    }
+    tr > td:nth-child(2) {
+        border-left: 1px solid black;
+    }
     .mb {
         margin-bottom: 2rem;
     }
     #cardInfo {
-        width: max-content;
+        margin-left: 20rem;
+        margin-right: 20rem;
         margin-top: 5rem;
         display: flex;
         flex-direction: column;
@@ -70,6 +123,9 @@
     }
     .large {
         font-size: 2rem;
+    }
+    .small {
+        font-size: 0.75rem;
     }
     .underline {
         text-decoration: underline;

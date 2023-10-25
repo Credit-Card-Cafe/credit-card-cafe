@@ -13,6 +13,7 @@ export const dataField = {
     type: "select",
     options: ["Visa", "MasterCard", "American Express", "Discover"],
   },
+  link: { name: "Link to Card", type: "text"},
   foreign_transaction_fee: {
     name: "Foreign Transaction Fee (%)",
     type: "number",

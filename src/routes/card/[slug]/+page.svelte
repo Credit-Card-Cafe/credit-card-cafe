@@ -6,9 +6,9 @@
   import CardInfo from './CardInfo.svelte';
 
   let card = {
-    name: "CreditCardDB",
+    name: "Loading...",
     bank: "Bank of Ben",
-    network: "Loading...",
+    network: "CreditCardDB",
     color: "253,248,244"
   }
 
