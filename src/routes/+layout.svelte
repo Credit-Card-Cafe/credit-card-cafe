@@ -3,17 +3,12 @@
     import LogInButton from "../components/LogInButton.svelte";
     import LogOutButton from "../components/LogOutButton.svelte";
     import { headerColor } from "../lib/stores";
-
-    function search() {
-        let query = document.getElementById("search").value;
-        window.alert(`Searching: ${query}`);
-    }
-
+  import SearchBar from "../components/SearchBar.svelte";
 
 </script>
 
 <div id="top" style={`background:${$headerColor}`}>
-    <div>
+    <div id="start">
         <div id="title">CreditCardDB</div>
         <nav>
             <a href="/">Home</a>
@@ -22,10 +17,7 @@
                 <a href="/contribute">Contribute</a>
             {/if}
         </nav>
-        <form>
-            <input type="text" id="search" placeholder="Search cards...">
-            <input type="submit" on:click={() => search()}>
-        </form>
+        <SearchBar></SearchBar>
     </div>
     <div id="end" class="flex">
         {#if $user}
@@ -45,11 +37,15 @@
     margin-bottom: 4rem;
     padding: 1rem 2rem;
 }
-#title, nav, form {
+#title, nav {
     display: inline;
 }
 #title {
     margin-right: 2rem;
+}
+#start {
+    display: flex;
+    flex-direction: row;
 }
 a {
     text-decoration: none;
