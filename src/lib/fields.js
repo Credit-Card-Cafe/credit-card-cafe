@@ -6,8 +6,8 @@
 //<input type="number"> :  property: { name: "Display Name", type: "number"}
 
 export const dataField = {
-  bank: { name: "Bank", type: "text", lvl: 1 },
-  name: { name: "Name", type: "text", lvl: 2 },
+  bank: { name: "Bank", type: "text"},
+  name: { name: "Name", type: "text",},
   network: {
     name: "Network",
     type: "select",
