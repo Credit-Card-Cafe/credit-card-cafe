@@ -11,7 +11,7 @@
     <div id="intro" class="mb center">
         <div class="large underline">At a Glance:</div>
         <p>A {#if card.brand}{card.brand}{/if} {card.bank} Credit Card, with
-        {#if card.annual_fee && card.annual_fee != 0}a ${card.annual_fee} Annual Fee.{:else if card.annual_fee == 0}<div class="box">No Annual Fee.</div>{/if}
+        {#if card.annual_fee && card.annual_fee != 0}a ${card.annual_fee} Annual Fee.{:else if card.annual_fee == 0}no Annual Fee.{/if}
         {#if card.redemption} This card earns {card.redemption} on purchases (check "Rewards" below for categories).{/if}
         {#if card.link}<a href={card.link}>Apply to the card here</a>{/if}
         </p>

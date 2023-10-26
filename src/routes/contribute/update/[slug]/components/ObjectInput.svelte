@@ -53,7 +53,7 @@
     }
 </script>
 
-<div class="object">
+<div class="{object == {} ? 'undef' : 'object'}">
     <div class="title">{dataField[field].name}</div>
     {#each keys as data}
         {#if dataField[field]["data"][data].type == "text"}
@@ -74,5 +74,11 @@
     .title {
         font-weight: 700;
         font-size: 1.5rem;
+    }
+    .undef {
+        padding: 1rem;
+        margin: 1rem 0;
+        border: 1px solid red;
+        border-radius: 5px;
     }
 </style>
