@@ -28,7 +28,7 @@
     }
 </script>
 
-<div>
+<div class={value === undefined ? 'undef' : ''}>
     {#if object} 
         {dataField[object]["data"][field].name}: 
         {#each dataField[object]["data"][field].options as option}
@@ -45,5 +45,12 @@
 </div>
 
 <style>
-
+    div {
+        padding: 1rem;
+    }
+    .undef {
+        margin-top: 0.25rem;
+        border: 1px solid red;
+        border-radius: 5px;
+    }
 </style>

@@ -61,8 +61,8 @@
     }
 </script>
 
-<div>
-    {dataField[field].name}
+<div class="dynamic">
+    <div class="title">{dataField[field].name}</div>
     {#each Object.keys(object) as prop}
         <NumberInput field={prop} value={checkForValue(prop)} object={field} list={list} on:update={() => checkObject()}></NumberInput>
     {/each}
@@ -73,5 +73,14 @@
 </div>
 
 <style>
-
+    .dynamic {
+        padding: 1rem;
+        margin: 1rem 0;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+    .title {
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
 </style>

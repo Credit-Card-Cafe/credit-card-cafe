@@ -6,19 +6,20 @@
 //<input type="number"> :  property: { name: "Display Name", type: "number"}
 
 export const dataField = {
-  bank: { name: "Bank", type: "text"},
-  name: { name: "Name", type: "text",},
+  bank: { name: "Bank", type: "text" },
+  name: { name: "Name", type: "text" },
   network: {
     name: "Network",
     type: "select",
     options: ["Visa", "MasterCard", "American Express", "Discover"],
   },
-  link: { name: "Link to Card", type: "text"},
+  link: { name: "Link to Card", type: "text" },
   foreign_transaction_fee: {
     name: "Foreign Transaction Fee (%)",
     type: "number",
   },
   annual_fee: { name: "Annual Fee ($)", type: "number" },
+  balance_transfer_fee: { name: "Balance Transfer Fee (%)", type: "number" },
   rewards: {
     name: "Rewards",
     action: "Add Reward",

@@ -12,3 +12,13 @@
         <TextInput field={item}></TextInput>
     {/each}
 </div>
+
+<style>
+    div {
+        padding: 1rem;
+    }
+    .undef {
+        border: 1px solid red;
+        border-radius: 5px;
+    }
+</style>

@@ -27,7 +27,7 @@
     }
 </script>
 
-<div>
+<div class={value === undefined ? 'undef' : ''}>
     {#if list}
         {field}
         <select bind:value on:change={() => dispatch('add', value)}>
@@ -55,5 +55,12 @@
 </div>
 
 <style>
-
+    div {
+        padding: 1rem;
+    }
+    .undef {
+        margin-top: 0.25rem;
+        border: 1px solid red;
+        border-radius: 5px;
+    }
 </style>

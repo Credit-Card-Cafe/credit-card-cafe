@@ -37,7 +37,20 @@
 </script>
 
 
-<div>
+<div class={value === undefined ? 'undef' : ''}>
     {#if object} {dataField[object]["data"][field].name} {:else} {dataField[field].name} {/if}
-    <input type="color" bind:value on:input={() => setUpdate()}> {JSON.stringify(defaultValue)} => {JSON.stringify(value)}
+    <input type="color" bind:value on:input={() => setUpdate()}>
 </div>
+
+<style>
+    div {
+        padding: 1rem;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+    .undef {
+        margin-top: 0.25rem;
+        border: 1px solid red;
+        border-radius: 5px;
+    }
+</style>

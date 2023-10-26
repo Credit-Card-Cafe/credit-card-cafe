@@ -2,7 +2,7 @@
 	export let card;
     export let updateAuthorization;
     import {createEventDispatcher, onDestroy } from "svelte";
-    import { newCard } from "../../../../lib/stores";
+    import { newCard, admin } from "../../../../lib/stores";
     import {dataField} from "../../../../lib/fields";
     import CreditCard from "../../../../components/CreditCard.svelte";
 
@@ -32,6 +32,7 @@
     {:else}
         <CreditCard card={card} --color="{card.color}"></CreditCard>
     {/if}
+    <div id="updateFields">
         {#each Object.keys(dataField) as field}
             {#if dataField[field].type == "text"}
                 <TextInput field={field} value={card[field]}></TextInput>
@@ -51,14 +52,17 @@
                 <DynamicInput field={field} object={card[field]}></DynamicInput>
             {/if}
         {/each}
+    </div>
         <button on:click={() => submit()}>Submit Changes</button>
 </div>
-<div> 
-    Update:
-    <pre id="e">{JSON.stringify($newCard)}</pre>
+    {#if $admin}
+    <div> 
+        Update:
+        <pre id="e">{JSON.stringify($newCard)}</pre>
 
-    <pre id="e">{JSON.stringify(card)}</pre>
-</div>
+        <pre id="e">{JSON.stringify(card)}</pre>
+    </div>
+    {/if}
 {:else}
 <div id="after">
     Thx.
@@ -68,5 +72,34 @@
 <style>
  button {
     margin-top: 10px;
+ }
+ #card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10rem;
+ }
+ #updateFields {
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+ }
+ button {
+    margin-top: 2rem;
+    border: 2px solid silver;
+    background-color: rgb(253,248,244);
+    padding: 1rem;
+    font-size: 2rem;
+    border-radius: 10px;
+    -webkit-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+ }
+ button:hover {
+    background-color: silver;
+    padding: 1rem;
+    font-size: 2rem;
+    border-radius: 10px;
  }
 </style>

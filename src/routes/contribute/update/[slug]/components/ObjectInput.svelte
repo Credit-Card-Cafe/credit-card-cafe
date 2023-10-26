@@ -53,8 +53,8 @@
     }
 </script>
 
-<div>
-    {dataField[field].name}
+<div class="object">
+    <div class="title">{dataField[field].name}</div>
     {#each keys as data}
         {#if dataField[field]["data"][data].type == "text"}
             <TextInput field={data} value={object[data]} object={field} on:update={() => checkObject()}></TextInput>
@@ -63,3 +63,16 @@
         {/if}
     {/each}
 </div>
+
+<style>
+    .object {
+        padding: 1rem;
+        margin: 1rem 0;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+    .title {
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+</style>

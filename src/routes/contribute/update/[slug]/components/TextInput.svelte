@@ -29,7 +29,18 @@
 </script>
 
 
-<div>
+<div class={value === undefined ? 'undef' : ''}>
     {#if list} {list[field]} purchases {:else if object} {dataField[object]["data"][field].name} {:else} {dataField[field].name} {/if}
     <input type="text" bind:value on:input={() => setUpdate()}>
 </div>
+
+<style>
+    div {
+        padding: 1rem;
+    }
+    .undef {
+        margin-top: 0.25rem;
+        border: 1px solid red;
+        border-radius: 5px;
+    }
+</style>
