@@ -1,9 +1,10 @@
 <script>
-    import { cardList } from "../lib/stores";
+    import { goto } from '$app/navigation';
 
     function search() {
         if (value != "") {
-            window.alert(`Searching: ${value}`);
+            goto(`/search?q=${value}`);
+            value = "";
         }
     }
 
