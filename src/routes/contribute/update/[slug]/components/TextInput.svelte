@@ -30,8 +30,18 @@
 
 
 <div class={value === undefined ? 'undef' : ''}>
-    {#if list} {list[field]} purchases {:else if object} {dataField[object]["data"][field].name} {:else} {dataField[field].name} {/if}
+    {#if list} 
+        {list[field]} purchases 
+    {:else if object} 
+        {dataField[object]["data"][field].name} 
+    {:else if isNaN(field)} 
+        {dataField[field].name} 
+    {/if}
+    {#if isNaN(field)}
     <input type="text" bind:value on:input={() => setUpdate()}>
+    {:else}
+        <input type="text" bind:value on:input={() => dispatch("add", {value: value, index: field})}>{field}
+    {/if}
 </div>
 
 <style>
@@ -42,5 +52,8 @@
         margin-top: 0.25rem;
         border: 1px solid red;
         border-radius: 5px;
+    }
+    input {
+        margin-left: 0.75rem;
     }
 </style>

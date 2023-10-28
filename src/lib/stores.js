@@ -1,7 +1,7 @@
 import { writable } from "svelte/store";
 
 export const user = writable();
-export const admin = writable(false);
+export const admin = writable(true);
 
 export const cardList = writable([]);
 

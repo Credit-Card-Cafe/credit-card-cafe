@@ -2,24 +2,26 @@
 //<input type="text">   :  property: { name: "Display Name", type: "text"}
 //<select>              :  property: { name: "Display Name", type: "submit", options: ["option 1", "option n"]}
 //<input type="radio">  :  property: { name: "Display Name", type: "radio", options: ["option 1", "option n"]}
-//lists                 :  property: { name: "Display Name", type: "list", item_type:["type of each item"]}
+//lists                 :  property: { name: "Display Name", type: "list", action: "Button Name"}
 //<input type="number"> :  property: { name: "Display Name", type: "number"}
+//<input type="color">  :  property: { name: "Display Name", type: "color"}
+//Object                :  property: { name: "Display Name", type: "object", data: { input1: {}, inputN: {}}
+//Dynamic Object        :  property: { name: "Display Name", action: "Button Name", list: "List in Lists", type: "dynamic"}
 
 export const dataField = {
-  bank: { name: "Bank", type: "text" },
-  name: { name: "Name", type: "text" },
+  bank: { name: "Bank", type: "text"},
+  name: { name: "Name", type: "text",},
   network: {
     name: "Network",
     type: "select",
     options: ["Visa", "MasterCard", "American Express", "Discover"],
   },
-  link: { name: "Link to Card", type: "text" },
+  link: { name: "Link to Card", type: "text"},
   foreign_transaction_fee: {
     name: "Foreign Transaction Fee (%)",
     type: "number",
   },
   annual_fee: { name: "Annual Fee ($)", type: "number" },
-  balance_transfer_fee: { name: "Balance Transfer Fee (%)", type: "number" },
   rewards: {
     name: "Rewards",
     action: "Add Reward",
@@ -64,6 +66,7 @@ export const dataField = {
     },
   },
   color: { name: "Color RGB", type: "color" },
+  search_terms: { name: "Search Terms", type: "list", action: "New Search Term..."}
 };
 
 export const lists = {
