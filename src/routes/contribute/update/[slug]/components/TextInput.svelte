@@ -40,7 +40,7 @@
     {#if isNaN(field)}
     <input type="text" bind:value on:input={() => setUpdate()}>
     {:else}
-        <input type="text" bind:value on:input={() => dispatch("add", {value: value, index: field})}>{field}
+        <input type="text" bind:value on:input={dispatch("add", {value: value, index: field})}>
     {/if}
 </div>
 
@@ -55,5 +55,6 @@
     }
     input {
         margin-left: 0.75rem;
+        padding: 0.35rem;
     }
 </style>

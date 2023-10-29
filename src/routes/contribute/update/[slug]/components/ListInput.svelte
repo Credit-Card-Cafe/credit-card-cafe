@@ -9,18 +9,14 @@
         list = [];
     }
 
-    function setField(event) { //when the input of item x changes
-        if (event.detail.value != "") { //if the value of item x is not empty
-            list[event.detail.index] = event.detail.value; //change the value of item x in the list to the input
+    function setField(event) {
+        if (event.detail.value != "") {
+            list[event.detail.index] = event.detail.value;
         } else {
-            list.splice(event.detail.index, 1); //else remove item x from the list 
+            list.splice(event.detail.index, 1);
         }
-        $newCard[field] = list; //then add the list to the update 
-
-        //if the list is empty, OR the list is unchanged, remove the list from the update using:
-        //delete $newCard[field];
-
-        if(list.length == 0 || $newCard === list) {
+        $newCard[field] = list.filter((i) => typeof i === "string" && i != "");
+        if(list.length == 0 || $newCard[field].length == 0) {
             delete $newCard[field];
         }
     }
@@ -29,8 +25,7 @@
         list = [...list, ""];
     }
 
-    let render = list.length
-    $: console.log(list.length)
+    $: render = list.length
 </script>
 
 <div class="{list == {} ? 'undef' : 'list'}">
