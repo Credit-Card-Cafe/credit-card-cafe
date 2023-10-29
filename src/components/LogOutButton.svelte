@@ -3,5 +3,5 @@
 </script>
 
 <button on:click={logout}>
-	Log out (Loser)
+	Log out (Loser 😝)
 </button>
