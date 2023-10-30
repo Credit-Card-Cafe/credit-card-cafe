@@ -56,11 +56,11 @@
         <button on:click={() => submit()}>Submit Changes</button>
 </div>
     {#if $admin}
-    <div> 
+    <div style="display: flex; flex-direction: row; justify-content: space-around;"> 
         Update:
-        <pre id="e">{JSON.stringify($newCard)}</pre>
+        <pre>{JSON.stringify($newCard,null,1)}</pre>
 
-        <pre id="e">{JSON.stringify(card)}</pre>
+        <pre>{JSON.stringify(card, null, 1)}</pre>
     </div>
     {/if}
 {:else}
