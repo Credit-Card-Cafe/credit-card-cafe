@@ -14,6 +14,7 @@
             list[event.detail.index] = event.detail.value;
         } else {
             list.splice(event.detail.index, 1);
+            render = list.length;
         }
         $newCard[field] = list.filter((i) => typeof i === "string" && i != "");
         if(list.length == 0 || $newCard[field].length == 0) {
@@ -25,7 +26,7 @@
         list = [...list, ""];
     }
 
-    $: render = list.length
+    let render = list.length;
 </script>
 
 <div class="{list == {} ? 'undef' : 'list'}">
