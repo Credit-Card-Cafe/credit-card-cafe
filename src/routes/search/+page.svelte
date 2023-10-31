@@ -1,11 +1,12 @@
 <script>
     import SearchTable from "./components/SearchTable.svelte";
     import { page } from '$app/stores';
+  import SearchResults from "./components/SearchResults.svelte";
 
 </script>
 
 {#if $page.url.searchParams.has("q")}
-<div>Eventually searching for {$page.url.searchParams.get("q")}...</div>
+<SearchResults query={$page.url.searchParams.get("q")}></SearchResults>
 {:else}
 <SearchTable></SearchTable>
 {/if}

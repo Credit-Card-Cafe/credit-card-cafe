@@ -70,9 +70,6 @@
 {/if}
 
 <style>
- button {
-    margin-top: 10px;
- }
  #card {
     display: flex;
     flex-direction: column;
