@@ -42,6 +42,10 @@ export const dataField = {
     type: "select",
     options: ["Personal", "Business", "Student"],
   },
+  image: {
+    name: "Image",
+    type: "text"
+  },
   physical: {
     name: "Physical Card",
     type: "object",
