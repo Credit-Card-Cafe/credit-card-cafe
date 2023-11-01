@@ -75,7 +75,7 @@
     </div>
     <button on:click={submit}>Submit Card</button>
 </div>
-    {#if admin}
+    {#if $admin}
     <div>
         <pre>name: {name}<br>bank: {bank}<br>network: {network}<br>brand: {brand}<br>consumer: {consumer}<br>search_terms: {searchTerms}<br>url: {id}</pre>
         <pre>{JSON.stringify(tempCard,null,1)}</pre>

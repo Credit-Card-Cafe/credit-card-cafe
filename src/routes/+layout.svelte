@@ -1,5 +1,5 @@
 <script lang="js">
-    import { user } from "../lib/stores";
+    import { user, admin } from "../lib/stores";
     import LogInButton from "../components/LogInButton.svelte";
     import LogOutButton from "../components/LogOutButton.svelte";
     import { headerColor } from "../lib/stores";
@@ -20,6 +20,7 @@
         <SearchBar></SearchBar>
     </div>
     <div id="end" class="flex">
+        <button on:click={() => $admin = !$admin}>Admin Toggle ({$admin ? "On" : "Off"})</button>
         {#if $user}
             Loged in as {$user.displayName} <LogOutButton></LogOutButton>
         {:else}
