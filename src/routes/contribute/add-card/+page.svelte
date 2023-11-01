@@ -10,7 +10,7 @@
     let brand = "";
     let consumer = "";
     $: id = bank.concat(name).replace(/ /g, '').toLowerCase();
-    $: searchTerms = [name, bank, network, brand].filter((term) => term!="");
+    $: searchTerms = [name, bank, brand].filter((term) => term!="");
     $: tempCard = {
         name: name,
         bank: bank,
