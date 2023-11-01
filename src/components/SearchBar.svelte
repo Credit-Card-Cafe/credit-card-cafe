@@ -2,7 +2,7 @@
     import { goto } from '$app/navigation';
 
     function search() {
-        if (value != "") {
+        if (value.replace(/ /g, '') != "") {
             goto(`/search?q=${value}`);
             value = "";
         }
