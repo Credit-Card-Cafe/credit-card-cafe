@@ -12,6 +12,9 @@
 </script>
 
 <div id="card">
+    {#if Object.hasOwn(card, "image")}
+        <div id="creditCard" style="background-image:url({card.image})"></div>
+    {:else}
     <div id="creditCard">
         {#if Object.hasOwn(card, "bank")}
             <div id="bank">
@@ -54,6 +57,7 @@
                 <div id="chip"/>
         {/if}
     </div>
+    {/if}
 </div>
 
 <style>
@@ -66,20 +70,21 @@
         position: relative;
         background-color: var(--color, rgb(253,248,244));
         background: linear-gradient(146deg, rgb(var(--color)), rgba(var(--color), 0.6), rgb(var(--color)));
-        width: 3.375in;
-        height: 2.125in;
-        padding: .25in;
-        border-radius: 10px;
+        width: 324px;
+        height: 186px;
+        padding: 25px;
+        border-radius: 18px;
         box-shadow: 10px 10px 5px silver, 0 0 3px silver;
+        background-size: contain;
     }
     #chip {
         position: absolute;
         background-color: silver;
-        height: .3125in;
-        width: 0.4375in;
+        height: 35px;
+        width: 47px;
         border-radius: 0.05in;
-        top: 0.75in;
-        left: 0.375in;
+        top: 82px;
+        left: 42px;
         bottom: 1.0625in;
     }
     #bank {
