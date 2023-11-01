@@ -29,7 +29,11 @@
     } else if (brand == "" && tempCard && Object.hasOwn(tempCard,"brand")){
         delete tempCard["brand"];
     }
-
+    $: if (network == "American Express") {
+        searchTerms.push("Amex")
+    } else if (searchTerms.includes("Amex")) {
+        searchTerms.splice(searchTerms.findIndex((term) => term == "Amex"),1);
+    }
     function submit() {
         if ($user) {
             if (name == "" || bank == "" || network == "" || searchTerms.includes("") || consumer == "") {
