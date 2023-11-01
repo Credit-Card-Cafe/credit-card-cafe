@@ -81,11 +81,12 @@ export const unsubCards = onSnapshot(
 
 //adds a new card to the database
 //DATA NOT SANATIZED, so pretty please dont go live :)
-export async function addCard(name, bank, network, id) {
+export async function addCard(name, bank, network, searchTerms, id) {
   await setDoc(doc(db, "creditCards", id), {
     name: name,
     bank: bank,
     network: network,
+    search_terms: searchTerms,
     url: id,
   });
 }

@@ -1,5 +1,5 @@
 <script lang="js">
-    import { user } from "../../../lib/stores";
+    import { user, admin } from "../../../lib/stores";
     import { addCard } from "../../../lib/firebase";
     var submitted = true;
     var name = undefined;
@@ -14,8 +14,9 @@
                 console.log("Something went wrong...")
             } else {
                 let id = bank + name;
+                let searchTerms = [name, bank, network]
                 id = id.replace(/ /g, '').toLowerCase();
-                addCard(name,bank,network,id).then(() => submitted = false);
+                addCard(name,bank,network,searchTerms,id).then(() => submitted = false);
             }
             
         }
