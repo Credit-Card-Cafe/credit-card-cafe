@@ -1,22 +1,39 @@
 <script lang="js">
-    import { user, admin } from "../../../lib/stores";
+    import { user, admin, oneCard } from "../../../lib/stores";
     import { addCard } from "../../../lib/firebase";
-    var submitted = true;
-    var name = undefined;
-    var bank = undefined;
-    var network = undefined;
+    import { goto } from '$app/navigation';
+
+    let submitted = true;
+    let name = "";
+    let bank = "";
+    let network = "";
+    let brand = "";
+    let consumer = "";
+    $: id = bank.concat(name).replace(/ /g, '').toLowerCase();
+    $: searchTerms = [name, bank, network, brand].filter((term) => term!="");
+
     function submit() {
         if ($user) {
-            name = document.getElementById("name").value;
-            bank = document.getElementById("bank").value;
-            network = document.getElementById("network").value;
-            if (name == undefined || bank == undefined || network == undefined) {
+            if (name == "" || bank == "" || network == "" || searchTerms.includes("") || consumer == "") {
                 console.log("Something went wrong...")
             } else {
-                let id = bank + name;
-                let searchTerms = [name, bank, network]
-                id = id.replace(/ /g, '').toLowerCase();
-                addCard(name,bank,network,searchTerms,id).then(() => submitted = false);
+                addCard(
+                    name,
+                    bank,
+                    network,
+                    searchTerms,
+                    id
+                ).then(() => {
+                    submitted = false;
+                    goto(`/contribute/update/${id}`)
+                    $oneCard = {
+                        name: name,
+                        bank: bank,
+                        network: network,
+                        search_terms: searchTerms,
+                        url: id
+                    }
+                });
             }
             
         }
@@ -32,20 +49,48 @@
 
 {#if submitted}
 <div id="form">
-    <div><label for="name">Credit Card Name</label><input id="name" type="text" required></div>
-    <div><label for="bank">Bank</label><input id="bank" type="text" required></div>
-    <div><label for="network">Network</label>
-        <select id="network" type="network" required>
-            <option value="Visa">Visa</option>
-            <option value="MasterCard">MasterCard</option>
-            <option value="American Express">American Express</option>
-            <option value="Discover">Discover</option>
+    <div class={name == "" ? 'undef' : ''}>Credit Card Name <input bind:value={name} required></div>
+    <div class={bank == "" ? 'undef' : ''}>Bank <input bind:value={bank} required></div>
+    <div class={network == "" ? 'undef' : ''}>Network 
+        <select bind:value={network} required>
+            <option>Visa</option>
+            <option>MasterCard</option>
+            <option>American Express</option>
+            <option>Discover</option>
+        </select>
+    </div>
+    <div>Brand <input bind:value={brand}></div>
+    <div class={consumer == "" ? 'undef' : ''}>Consumer 
+        <select bind:value={consumer} required>
+            <option>Personal</option>
+            <option>Business</option>
+            <option>Student</option>
         </select>
     </div>
     <button on:click={submit}>Submit Card</button>
 </div>
+    {#if admin}
+        <pre>name: {name}<br>bank: {bank}<br>network: {network}<br>brand: {brand}<br>consumer: {consumer}<br>search_terms: {searchTerms}<br>url: {id}</pre>
+    {/if}
 {:else}
 <div>
-    Thank you for submitting the {bank} {name} {#if bank != network} {network} {/if}. Your submission is in review. 
+    Loading...
 </div>
 {/if}
+
+
+<style>
+    #form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #form > div {
+        border-radius: 5px;
+        padding: 2rem;
+        margin-bottom: 0.75rem;
+    }
+    .undef {
+        border: 1px solid red;
+    }
+</style>
