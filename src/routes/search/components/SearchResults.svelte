@@ -22,8 +22,8 @@
 
 <style>
     #cardList {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: auto auto auto;
     }
     a {
         margin-bottom: 3rem;

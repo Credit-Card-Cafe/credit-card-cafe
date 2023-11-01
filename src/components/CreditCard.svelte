@@ -54,17 +54,6 @@
                 <div id="chip"/>
         {/if}
     </div>
-    <!-- {#each Object.keys(card) as prop}
-        {#if !(prop == "url" || prop == "color")}
-            {#if typeof card[prop] == "object"}
-                {#each Object.keys(card[prop]) as propprop}
-                <div id="{propprop}"><span class="name">{dataField[prop]["data"][propprop].name}: </span><span class="prop">{card[prop][propprop]}</span></div>
-                {/each}
-            {:else}
-                <div id="{prop}"><span class="name">{dataField[prop].name}: </span><span class="prop">{card[prop]}</span></div>
-            {/if}
-        {/if}
-    {/each} -->
 </div>
 
 <style>
@@ -94,12 +83,20 @@
         bottom: 1.0625in;
     }
     #bank {
+        text-decoration: none;
         position: absolute;
         display: inline-block;
         top: 1.25in;
         font-size: .25in;
+        font-weight: 600;
         text-align: center;
         overflow-wrap: normal;
+        color: black;
+    }
+    #name {
+        text-decoration: none;
+        color: #000;
+        display: inline-block;
     }
     #network {
         position: absolute;
