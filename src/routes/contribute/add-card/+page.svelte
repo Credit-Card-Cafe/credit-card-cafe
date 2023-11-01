@@ -11,28 +11,34 @@
     let consumer = "";
     $: id = bank.concat(name).replace(/ /g, '').toLowerCase();
     $: searchTerms = [name, bank, network, brand].filter((term) => term!="");
+    $: tempCard = {
+        name: name,
+        bank: bank,
+        network: network,
+        consumer: consumer,
+        brand: brand,
+        url: id,
+    } 
+    $: if (searchTerms && searchTerms.length > 0) {
+        tempCard["search_terms"] = searchTerms;
+    } else if (searchTerms && searchTerms.length == 0 && tempCard && Object.hasOwn(tempCard,"search_terms")) {
+        delete tempCard["search_terms"];
+    }
+    $: if (brand != "") {
+        tempCard["brand"] = brand;
+    } else if (brand == "" && tempCard && Object.hasOwn(tempCard,"brand")){
+        delete tempCard["brand"];
+    }
 
     function submit() {
         if ($user) {
             if (name == "" || bank == "" || network == "" || searchTerms.includes("") || consumer == "") {
                 console.log("Something went wrong...")
             } else {
-                addCard(
-                    name,
-                    bank,
-                    network,
-                    searchTerms,
-                    id
-                ).then(() => {
+                addCard(tempCard).then(() => {
                     submitted = false;
                     goto(`/contribute/update/${id}`)
-                    $oneCard = {
-                        name: name,
-                        bank: bank,
-                        network: network,
-                        search_terms: searchTerms,
-                        url: id
-                    }
+                    $oneCard = tempCard;
                 });
             }
             
@@ -70,8 +76,12 @@
     <button on:click={submit}>Submit Card</button>
 </div>
     {#if admin}
+    <div>
         <pre>name: {name}<br>bank: {bank}<br>network: {network}<br>brand: {brand}<br>consumer: {consumer}<br>search_terms: {searchTerms}<br>url: {id}</pre>
+        <pre>{JSON.stringify(tempCard,null,1)}</pre>
+    </div>
     {/if}
+    
 {:else}
 <div>
     Loading...
