@@ -70,12 +70,13 @@
         position: relative;
         background-color: var(--color, rgb(253,248,244));
         background: linear-gradient(146deg, rgb(var(--color)), rgba(var(--color), 0.6), rgb(var(--color)));
-        width: 336px;
+        width: 323px;
         height: 186px;
         padding: 25px;
         border-radius: 18px;
         box-shadow: 10px 10px 5px silver, 0 0 3px silver;
         background-size: contain;
+        background-repeat: no-repeat;
     }
     #chip {
         position: absolute;
