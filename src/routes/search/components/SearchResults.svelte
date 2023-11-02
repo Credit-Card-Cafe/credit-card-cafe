@@ -5,10 +5,14 @@
 
     const list = $cardList.filter((card) => (
             Object.hasOwn(card, "search_terms") 
-            && 
+            &&
             card.search_terms.join(" ").toLowerCase().includes(query.toLowerCase()) 
             ||
             query == "*"
+        ) && (
+            Object.hasOwn(card, "url")
+            &&
+            Object.hasOwn(card, "name")
         )
     );
 

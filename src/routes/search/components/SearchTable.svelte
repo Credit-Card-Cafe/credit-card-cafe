@@ -1,7 +1,7 @@
 <script>
     import { dataField } from "../../../lib/fields";
     import {orderCards} from "../../../lib/firebase";
-    import { cardList, user } from "../../../lib/stores";
+    import { cardList, user, admin } from "../../../lib/stores";
     
     var queries = ["network", "annual_fee"];
     var results = 5;
@@ -14,6 +14,11 @@
         });
     }
 
+    $: searchResults = searchResults.filter((card) => (
+        Object.hasOwn(card, "url")
+        &&
+        Object.hasOwn(card, "name")
+    ));
 </script>
 
 <div id="search">
@@ -49,7 +54,7 @@
                 <td>
                     {#if card[query] == undefined} 
                         [Data doesn't exist.] 
-                        {#if $user}
+                        {#if $admin}
                             <a href="/contribute/update/{card.url}">Add it?</a>
                         {/if}
                     {:else if query == "annual_fee"} 
