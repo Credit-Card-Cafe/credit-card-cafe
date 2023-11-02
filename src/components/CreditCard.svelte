@@ -12,7 +12,7 @@
 </script>
 
 <div id="card">
-    {#if Object.hasOwn(card, "image")}
+    {#if Object.hasOwn(card, "image") && card.image != ""}
         <div id="creditCard" style="background-image:url({card.image})"></div>
     {:else}
     <div id="creditCard">
