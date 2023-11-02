@@ -1,6 +1,7 @@
 <div>
     <a href="contribute/update">Update Information</a>
     <a href="contribute/add-card">Add a Card</a>
+    <a href="contribute/add-bank">Add a Bank</a>
     <a href="contribute">Add a Data Point</a>
 </div>
 
