@@ -3,13 +3,12 @@
   import { beforeUpdate } from 'svelte';
   import Rewards from './components/Rewards.svelte';
   import CardStack from './components/CardStack.svelte';
+  import CreditCard from '../../components/CreditCard.svelte';
   let wallet = [];
   let tracking = [];
 
   beforeUpdate(() => {
     if ($user) {
-      $user.wallet = ["americanexpresshiltonhonorsamericanexpressaspirecard","bankofbenbenbashbewards","ethanchanoggamercashrewards"]
-      $user.tracking = ["americanexpressgold","chasesaphireprefered","keilben","twonew"]
       wallet = $cardList.filter((card) => $user && Object.hasOwn($user, "wallet") && $user.wallet.includes(card.url));
       tracking = $cardList.filter((card) => $user && Object.hasOwn($user, "tracking") && $user.tracking.includes(card.url));
     }
@@ -23,20 +22,28 @@
 
 {#if $user}
 <div id="account">
-  {#if wallet}
-    <div id="wallet">
-      <div class="title">Your Wallet</div>
-      <CardStack cards={wallet}></CardStack>
-      <Rewards cards={wallet} person={"Your"}></Rewards>
+  <div id="wallet">
+    <div class="title">Your Wallet</div>
+      {#if $user.wallet}
+        <CardStack cards={wallet}></CardStack>
+        <Rewards cards={wallet} person={"Your"}></Rewards>
+      {:else}
+        <CreditCard card={{
+          name: "You do not have any cards in your wallet. To add a card, find a card you like, then select 'Add to Wallet', from the card's information page."
+        }}></CreditCard>
+      {/if}
     </div>
-  {/if}
-  {#if tracking}
-    <div id="tracklist">
-      <div class="title">Tracking</div>
-      <CardStack cards={tracking}></CardStack>
-      <Rewards cards={tracking} person={"Potential"} ></Rewards>
+  <div id="tracklist">
+    <div class="title">Tracking</div>
+      {#if $user.tracking}
+        <CardStack cards={tracking}></CardStack>
+        <Rewards cards={tracking} person={"Potential"} ></Rewards>
+      {:else}
+        <CreditCard card={{
+          name: "You are not currently tracking any cards. To track a card, find a card you like, then select 'Track Card', from the card's information page. "
+        }}></CreditCard>
+      {/if}
     </div>
-  {/if}
 </div>
 {:else}
 <div>
