@@ -108,6 +108,7 @@ export async function logIn() {
       const client = result.user;
       user.set(client);
       // IdP data available using getAdditionalUserInfo(result)
+      setUserData();
     })
     .catch((error) => {
       // Handle Errors here.
@@ -121,10 +122,25 @@ export async function logIn() {
     });
 }
 
+//adds user paramaters from to local client
+async function setUserData() {
+  let uid = ""
+  user.subscribe((usr) => {
+    uid = usr.uid;
+  })
+  const docRef = doc(db, "users", uid);
+  const docSnap = await getDoc(docRef);
+  // each property in docSnap.data() must be added to the user 
+  user.update((usr) => {
+    return {...usr, ...docSnap.data()}
+  });
+}
+
 //checks for user logged in; sets user
 onAuthStateChanged(auth, (client) => {
   if (client) {
     user.set(client);
+    setUserData();
   } else {
     user.set();
   }
