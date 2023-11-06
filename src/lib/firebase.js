@@ -108,6 +108,7 @@ export async function logIn() {
       const client = result.user;
       user.set(client);
       // IdP data available using getAdditionalUserInfo(result)
+      addUserToDatabase(client);
       setUserData();
     })
     .catch((error) => {
@@ -122,7 +123,17 @@ export async function logIn() {
     });
 }
 
-//adds user paramaters from to local client
+//adds user to database, called upon user creation
+export async function addUserToDatabase(client) {
+  let usr = {
+    username: "",
+    wallet: [],
+    tracking: [],
+  }
+  await setDoc(doc(db, "users", client.uid), usr);
+}
+
+//adds user paramaters from database to local client
 async function setUserData() {
   let uid = ""
   user.subscribe((usr) => {
