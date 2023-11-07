@@ -108,7 +108,7 @@ export async function logIn() {
       const client = result.user;
       user.set(client);
       // IdP data available using getAdditionalUserInfo(result)
-      addUserToDatabase(client);
+      //if user not in database
       setUserData();
     })
     .catch((error) => {
@@ -123,16 +123,6 @@ export async function logIn() {
     });
 }
 
-//adds user to database, called upon user creation
-export async function addUserToDatabase(client) {
-  let usr = {
-    username: "",
-    wallet: [],
-    tracking: [],
-  }
-  await setDoc(doc(db, "users", client.uid), usr);
-}
-
 //adds user paramaters from database to local client
 async function setUserData() {
   let uid = ""
@@ -142,9 +132,18 @@ async function setUserData() {
   const docRef = doc(db, "users", uid);
   const docSnap = await getDoc(docRef);
   // each property in docSnap.data() must be added to the user 
-  user.update((usr) => {
-    return {...usr, ...docSnap.data()}
-  });
+  if (docSnap.exists()) {
+    user.update((usr) => {
+      return {...usr, ...docSnap.data()}
+    });
+  } else {
+    let usr = {
+      username: "",
+      wallet: [],
+      tracking: [],
+    }
+    await setDoc(doc(db, "users", uid), usr);
+  }
 }
 
 //checks for user logged in; sets user
