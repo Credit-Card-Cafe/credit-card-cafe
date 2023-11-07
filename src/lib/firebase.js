@@ -90,6 +90,18 @@ export async function updateCard(card, id) {
   return updateDoc(ccard, card);
 }
 
+export async function updateUser(field, value) {
+  let uid = ""
+  user.subscribe((usr) => {
+    uid = usr.uid;
+  })
+  const userDoc = doc(db, "users", uid);
+  const sleep = (m) => new Promise((r) => setTimeout(r, m));
+  await sleep(500);
+  return updateDoc(userDoc, {
+    [field]: [...value]
+  })
+}
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //----------------------Firebase Auth functions-----------------
 
@@ -109,7 +121,7 @@ export async function logIn() {
       user.set(client);
       // IdP data available using getAdditionalUserInfo(result)
       //if user not in database
-      setUserData();
+      initUserData();
     })
     .catch((error) => {
       // Handle Errors here.
@@ -124,18 +136,20 @@ export async function logIn() {
 }
 
 //adds user paramaters from database to local client
-async function setUserData() {
+export async function initUserData() {
+  console.log("read")
   let uid = ""
   user.subscribe((usr) => {
     uid = usr.uid;
   })
   const docRef = doc(db, "users", uid);
   const docSnap = await getDoc(docRef);
-  // each property in docSnap.data() must be added to the user 
   if (docSnap.exists()) {
     user.update((usr) => {
       return {...usr, ...docSnap.data()}
     });
+    user.subscribe((usr) => {
+    })
   } else {
     let usr = {
       username: "",
@@ -150,7 +164,7 @@ async function setUserData() {
 onAuthStateChanged(auth, (client) => {
   if (client) {
     user.set(client);
-    setUserData();
+    initUserData();
   } else {
     user.set();
   }

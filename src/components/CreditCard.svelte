@@ -1,8 +1,9 @@
 <script lang="js">
-  import { onDestroy, onMount } from "svelte";
+  import { onDestroy } from "svelte";
 	export let card;
-    import { dataField } from "../lib/fields";
-    import { headerColor, newCard } from "../lib/stores";
+    export let showTrackCard = false;
+    import { headerColor, newCard } from "$lib/stores";
+    import TrackCard from "./TrackCard.svelte";
 
     var network = "visa";
 
@@ -58,7 +59,11 @@
         {/if}
     </div>
     {/if}
+    {#if showTrackCard}
+    <TrackCard id={card.url}></TrackCard>
+    {/if}
 </div>
+
 
 <style>
     #card {

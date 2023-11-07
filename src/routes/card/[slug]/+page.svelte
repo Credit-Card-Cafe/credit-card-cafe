@@ -1,8 +1,8 @@
 <script lang="js">
   import CreditCard from '../../../components/CreditCard.svelte';
   export let data;
-  import { getOne } from '../../../lib/firebase.js';
-  import { user, headerColor, oneCard } from '../../../lib/stores';
+  import { getOne } from '$lib/firebase.js';
+  import { user, headerColor, oneCard } from '$lib/stores';
   import CardInfo from './CardInfo.svelte';
 
   let card = {
@@ -12,8 +12,11 @@
     color: "253,248,244"
   }
 
+  let loaded = false;
+
   getOne(data.slug).then((result) => {
     card = result;
+    loaded = true;
     headerColor.set("rgba(" + result.color + ",0.13)");
   });
 
@@ -25,7 +28,7 @@
 
 {#if card}
   <div>
-    <CreditCard card={card} --color="{card.color}"></CreditCard>
+    <CreditCard card={card} --color="{card.color}" showTrackCard={loaded}></CreditCard>
     <CardInfo card={card}></CardInfo>
     {#if $user}
       <a href="/contribute/update/{card.url}">Update Information</a>

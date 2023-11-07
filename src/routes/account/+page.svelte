@@ -1,13 +1,13 @@
 <script lang="js">
   import { user, cardList } from '../../lib/stores';
-  import { beforeUpdate } from 'svelte';
+  import { initUserData } from '$lib/firebase';
   import Rewards from './components/Rewards.svelte';
   import CardStack from './components/CardStack.svelte';
   import CreditCard from '../../components/CreditCard.svelte';
   let wallet = [];
   let tracking = [];
 
-  beforeUpdate(() => {
+  initUserData().then(() => {
     if ($user) {
       wallet = $cardList.filter((card) => $user && Object.hasOwn($user, "wallet") && $user.wallet.includes(card.url));
       tracking = $cardList.filter((card) => $user && Object.hasOwn($user, "tracking") && $user.tracking.includes(card.url));
