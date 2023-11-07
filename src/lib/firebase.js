@@ -64,8 +64,6 @@ export async function orderCards(param, results) {
   return queryList;
 }
 
-let snapShotCounter = 0;
-//sets SvelteStore cardlist to a list of all the cards, udpates when database changes.
 //Will call upon app creation. Does not need to be referenced.
 //Could be expensive?
 export const unsubCards = onSnapshot(
@@ -110,6 +108,8 @@ export async function logIn() {
       const client = result.user;
       user.set(client);
       // IdP data available using getAdditionalUserInfo(result)
+      //if user not in database
+      setUserData();
     })
     .catch((error) => {
       // Handle Errors here.
@@ -123,10 +123,34 @@ export async function logIn() {
     });
 }
 
+//adds user paramaters from database to local client
+async function setUserData() {
+  let uid = ""
+  user.subscribe((usr) => {
+    uid = usr.uid;
+  })
+  const docRef = doc(db, "users", uid);
+  const docSnap = await getDoc(docRef);
+  // each property in docSnap.data() must be added to the user 
+  if (docSnap.exists()) {
+    user.update((usr) => {
+      return {...usr, ...docSnap.data()}
+    });
+  } else {
+    let usr = {
+      username: "",
+      wallet: [],
+      tracking: [],
+    }
+    await setDoc(doc(db, "users", uid), usr);
+  }
+}
+
 //checks for user logged in; sets user
 onAuthStateChanged(auth, (client) => {
   if (client) {
     user.set(client);
+    setUserData();
   } else {
     user.set();
   }
