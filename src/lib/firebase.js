@@ -118,10 +118,9 @@ export async function logIn() {
       const token = credential.accessToken;
       // The signed-in user info.
       const client = result.user;
-      user.set(client);
+      initUserData(client);
       // IdP data available using getAdditionalUserInfo(result)
       //if user not in database
-      initUserData();
     })
     .catch((error) => {
       // Handle Errors here.
@@ -135,36 +134,29 @@ export async function logIn() {
     });
 }
 
-//adds user paramaters from database to local client
-export async function initUserData() {
-  console.log("read")
-  let uid = ""
-  user.subscribe((usr) => {
-    uid = usr.uid;
-  })
-  const docRef = doc(db, "users", uid);
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    user.update((usr) => {
-      return {...usr, ...docSnap.data()}
-    });
-    user.subscribe((usr) => {
-    })
-  } else {
-    let usr = {
-      username: "",
-      wallet: [],
-      tracking: [],
+async function initUserData(client) {
+    const docRef = doc(db, "users", client.uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log(docSnap.data())
+      user.set({ ...client, ...docSnap.data() });
+    } else {
+      await setDoc(doc(db, "users", {
+        username: "",
+        wallet: [],
+        tracking: []
+      })).then((obj) => {
+        console.log(obj)
+        user.set({ ...client, ...obj });
+      });
     }
-    await setDoc(doc(db, "users", uid), usr);
-  }
 }
+  
 
 //checks for user logged in; sets user
 onAuthStateChanged(auth, (client) => {
   if (client) {
-    user.set(client);
-    initUserData();
+    initUserData(client);
   } else {
     user.set();
   }
