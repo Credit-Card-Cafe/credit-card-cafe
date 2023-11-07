@@ -68,8 +68,8 @@
     }
     #creditCard {
         position: relative;
-        background-color: var(--color, rgb(253,248,244));
-        background: linear-gradient(146deg, rgb(var(--color)), rgba(var(--color), 0.6), rgb(var(--color)));
+        background: rgb(253,248,244);
+        background-image: linear-gradient(146deg, rgb(var(--color)), rgba(var(--color), 0.6), rgb(var(--color)));
         width: 323px;
         height: 186px;
         padding: 25px;
