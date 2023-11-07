@@ -24,7 +24,7 @@
 <div id="account">
   <div id="wallet">
     <div class="title">Your Wallet</div>
-      {#if $user.wallet}
+      {#if $user.wallet && $user.wallet.length > 0}
         <CardStack cards={wallet}></CardStack>
         <Rewards cards={wallet} person={"Your"}></Rewards>
       {:else}
@@ -35,7 +35,7 @@
     </div>
   <div id="tracklist">
     <div class="title">Tracking</div>
-      {#if $user.tracking}
+      {#if $user.tracking && $user.tracking.length > 0}
         <CardStack cards={tracking}></CardStack>
         <Rewards cards={tracking} person={"Potential"} ></Rewards>
       {:else}
