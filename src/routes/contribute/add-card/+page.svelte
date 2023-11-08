@@ -1,20 +1,20 @@
 <script lang="js">
-    import { user, admin, oneCard } from "$lib/stores";
+    import { user, admin, oneCard, bankList, unavailableBank, saveCardInfo} from "$lib/stores";
     import { addCard, getBankList } from "$lib/firebase";
     import { goto } from '$app/navigation';
     import { onMount } from "svelte";
 
-    let bankList = []
     onMount(() => {
-        getBankList.then((list) => {bankList = list})
+        getBankList.then((list) => {$bankList = [...$bankList, ...list]})
     });
 
-    let submitted = true;
+    let unsubmitted = true;
     let name = "";
     let bank = "";
     let network = "";
     let brand = "";
     let consumer = "";
+
     $: searchTerms = [name, bank, brand].filter((term) => term!="");
     $: tempCard = {
         name: name,
@@ -24,6 +24,18 @@
         brand: brand,
         url: genId(),
     } 
+
+    if ($saveCardInfo) {
+        (Object.hasOwn($saveCardInfo,"name") ? name = $saveCardInfo.name : name = "");
+        (Object.hasOwn($saveCardInfo,"bank") ? bank = $saveCardInfo.bank : bank = "");
+        (Object.hasOwn($saveCardInfo,"network") ? network = $saveCardInfo.network : network = "");
+        (Object.hasOwn($saveCardInfo,"brand") ? brand = $saveCardInfo.brand : brand = "");
+        (Object.hasOwn($saveCardInfo,"consumer") ? consumer = $saveCardInfo.consumer : consumer = "");
+        tempCard = $saveCardInfo;
+        $saveCardInfo = false;
+    }
+
+
     $: if (searchTerms && searchTerms.length > 0) {
         tempCard["search_terms"] = searchTerms;
     } else if (searchTerms && searchTerms.length == 0 && tempCard && Object.hasOwn(tempCard,"search_terms")) {
@@ -36,16 +48,18 @@
     }
 
     let validbank = false;
+
     $: if (bank != "") {
-        if (!bankList.find((b) => b.name == bank)) {
+        if (!$bankList.find((b) => b.name == bank)) {
             validbank = false;
+            $unavailableBank = bank;
         } else {validbank = true;}
     } else {
         validbank = false;
     } 
 
     function genId() {
-        let delWords = ["credit", "card"]
+        let delWords = ["credit", "card", "union"]
         let x = name.split(" ").filter((word) =>  !(
                 delWords.includes(word.toLowerCase())
                 ||
@@ -69,8 +83,8 @@
                 console.log("Something went wrong...")
             } else {
                 addCard(tempCard).then(() => {
-                    submitted = false;
-                    goto(`/contribute/update/${tempcard.url}`)
+                    unsubmitted = false;
+                    goto(`/contribute/update/${tempCard.url}`)
                     $oneCard = tempCard;
                 });
             }
@@ -86,12 +100,12 @@
     <title>CreditCardDB | Add Card</title>
 </svelte:head>
 
-{#if submitted}
+{#if unsubmitted}
 <div id="form">
     <div class={name == "" ? 'undef' : ''}>Credit Card Name <input bind:value={name} required></div>
     <div class={bank == "" || !validbank ? 'undef' : ''}>
         {#if !validbank && bank !=""}
-            <div class="err">Not in bank index. Would you like to add it?</div>
+            <div class="err">Not in bank index. <a href="/contribute/add-bank" on:click={() => {$saveCardInfo = tempCard}}>Would you like to add it?</a></div>
         {/if}
         Bank <input bind:value={bank} required>
     </div>
@@ -111,7 +125,7 @@
             <option>Student</option>
         </select>
     </div>
-    <button on:click={submit}>Submit Card</button>
+    <button disabled={name == "" || bank == "" || network == "" || consumer == "" || !validbank ? true : false} on:click={() => submit()}>Submit Card</button>
 </div>
     {#if $admin}
     <div class="a">

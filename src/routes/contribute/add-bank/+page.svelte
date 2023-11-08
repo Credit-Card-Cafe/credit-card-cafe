@@ -1,5 +1,5 @@
 <script lang="js">
-    import { user, admin } from "../../../lib/stores";
+    import { user, admin, bankList, unavailableBank} from "../../../lib/stores";
     import { addBank } from "../../../lib/firebase";
     import { goto } from '$app/navigation';
 
@@ -9,14 +9,28 @@
     let url = "";
     let tempBank = {};
 
+    let defaultDirect = true;
+
+    if ($unavailableBank) {
+        name = $unavailableBank
+        tempBank["name"] = name;
+        tempBank["url"] = genId()
+        defaultDirect = false;
+    }
     function submit() {
         if ($user) {
             if (name == "") {
                 console.log("Something went wrong...")
             } else {
                 addBank(tempBank).then(() => {
+                    $bankList.push(tempBank);
+                    $unavailableBank = false;
                     submitted = false;
-                    goto(`/bank/${url}`)
+                    if (defaultDirect) {
+                        goto(`/bank/${url}`);
+                    } else {
+                        goto("/contribute/add-card");
+                    }
                 });
             }
             
@@ -26,9 +40,19 @@
         }
     }
 
+    function genId() {
+        let delWords = ["credit", "card", "union"]
+        return name
+        .trim()
+        .split(" ")
+        .filter((word) =>  !(delWords.includes(word.toLowerCase())))
+        .join("-")
+        .toLowerCase();
+    }
+
     function setBank(){
-        url = name.replace(/ /g, '').toLowerCase().substring(0,20);
-        tempBank["name"] = name;
+        url = genId();
+        tempBank["name"] = name.trim();
         tempBank["url"] = url;
         if (name == "") {
             delete tempBank["name"];
@@ -76,11 +100,11 @@
             {/key}
             <button on:click={() => addField()}>Add Nickname</button>
         </div>
-        <button disabled={name == "" ? true : false} on:click={submit}>Add Bank</button>
+        <button disabled={name == "" ? true : false} on:click={() => submit()}>Add Bank</button>
     </div>
         {#if $admin}
-        <div>
-            <pre>bank: {name}</pre>
+        <div class="a">
+            <pre>name: {name}</pre>
             <pre>nicknames: {JSON.stringify(nicknames)}</pre>
             <pre>{JSON.stringify(tempBank,null,1)}</pre>
         </div>
@@ -110,5 +134,10 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+    }
+    .a {
+        position:fixed;
+        top: 6rem;
+        left: 2rem;
     }
 </style>
