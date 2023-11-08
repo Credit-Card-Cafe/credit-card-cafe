@@ -9,7 +9,6 @@
     let network = "";
     let brand = "";
     let consumer = "";
-    $: id = bank.concat(name).replace(/ /g, '').toLowerCase();
     $: searchTerms = [name, bank, brand].filter((term) => term!="");
     $: tempCard = {
         name: name,
@@ -17,7 +16,7 @@
         network: network,
         consumer: consumer,
         brand: brand,
-        url: id,
+        url: genId(),
     } 
     $: if (searchTerms && searchTerms.length > 0) {
         tempCard["search_terms"] = searchTerms;
@@ -34,6 +33,26 @@
     } else if (searchTerms.includes("Amex")) {
         searchTerms.splice(searchTerms.findIndex((term) => term == "Amex"),1);
     }
+
+    function genId() {
+        let delWords = ["credit", "card"]
+        let x = name.split(" ").filter((word) =>  !(
+                delWords.includes(word.toLowerCase())
+                ||
+                network.toLowerCase().includes(word.toLowerCase())
+                ||
+                bank.toLowerCase().includes(word.toLowerCase())
+                ||
+                brand.toLowerCase().includes(word.toLowerCase())
+            )).join("-");
+        if (x.length == 0) {x = "card"}
+        if (brand.trim().length > 0) {
+            return brand.trim().concat(" ",x).replace(/ /g, '-').toLowerCase();
+        } else if (bank.trim().length > 0) {
+            return bank.trim().concat(" ",x).replace(/ /g, '-').toLowerCase();
+        }
+    }
+
     function submit() {
         if ($user) {
             if (name == "" || bank == "" || network == "" || searchTerms.includes("") || consumer == "") {
@@ -41,7 +60,7 @@
             } else {
                 addCard(tempCard).then(() => {
                     submitted = false;
-                    goto(`/contribute/update/${id}`)
+                    goto(`/contribute/update/${tempcard.url}`)
                     $oneCard = tempCard;
                 });
             }
@@ -81,7 +100,7 @@
 </div>
     {#if $admin}
     <div>
-        <pre>name: {name}<br>bank: {bank}<br>network: {network}<br>brand: {brand}<br>consumer: {consumer}<br>search_terms: {searchTerms}<br>url: {id}</pre>
+        <pre>name: {name}<br>bank: {bank}<br>network: {network}<br>brand: {brand}<br>consumer: {consumer}<br>search_terms: {searchTerms}<br></pre>
         <pre>{JSON.stringify(tempCard,null,1)}</pre>
     </div>
     {/if}
