@@ -141,7 +141,6 @@ async function initUserData(client) {
     const docRef = doc(db, "users", client.uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log(docSnap.data())
       user.set({ ...client, ...docSnap.data() });
     } else {
       await setDoc(doc(db, "users", {
@@ -149,7 +148,6 @@ async function initUserData(client) {
         wallet: [],
         tracking: []
       })).then((obj) => {
-        console.log(obj)
         user.set({ ...client, ...obj });
       });
     }

@@ -6,7 +6,7 @@
 
     let bankList = []
     onMount(() => {
-        getBankList.then((list) => {bankList = list; console.log(bankList)})
+        getBankList.then((list) => {bankList = list})
     });
 
     let submitted = true;
