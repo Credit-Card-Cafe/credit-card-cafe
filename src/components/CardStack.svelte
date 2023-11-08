@@ -1,6 +1,6 @@
 <script>
     export let cards;
-    import CreditCard from "../../../components/CreditCard.svelte";
+    import CreditCard from "./CreditCard.svelte";
 </script>
 
 <div class="cards">

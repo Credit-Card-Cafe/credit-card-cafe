@@ -1,7 +1,7 @@
 <script lang="js">
   import { user, cardList } from '../../lib/stores';
   import Rewards from './components/Rewards.svelte';
-  import CardStack from './components/CardStack.svelte';
+  import CardStack from '../../components/CardStack.svelte';
   import CreditCard from '../../components/CreditCard.svelte';
  
   let wallet = [];
