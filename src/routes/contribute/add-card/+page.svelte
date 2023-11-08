@@ -1,7 +1,13 @@
 <script lang="js">
-    import { user, admin, oneCard } from "../../../lib/stores";
-    import { addCard } from "../../../lib/firebase";
+    import { user, admin, oneCard } from "$lib/stores";
+    import { addCard, getBankList } from "$lib/firebase";
     import { goto } from '$app/navigation';
+    import { onMount } from "svelte";
+
+    let bankList = []
+    onMount(() => {
+        getBankList.then((list) => {bankList = list; console.log(bankList)})
+    });
 
     let submitted = true;
     let name = "";
@@ -28,11 +34,15 @@
     } else if (brand == "" && tempCard && Object.hasOwn(tempCard,"brand")){
         delete tempCard["brand"];
     }
-    $: if (network == "American Express") {
-        searchTerms.push("Amex")
-    } else if (searchTerms.includes("Amex")) {
-        searchTerms.splice(searchTerms.findIndex((term) => term == "Amex"),1);
-    }
+
+    let validbank = false;
+    $: if (bank != "") {
+        if (!bankList.find((b) => b.name == bank)) {
+            validbank = false;
+        } else {validbank = true;}
+    } else {
+        validbank = false;
+    } 
 
     function genId() {
         let delWords = ["credit", "card"]
@@ -79,7 +89,12 @@
 {#if submitted}
 <div id="form">
     <div class={name == "" ? 'undef' : ''}>Credit Card Name <input bind:value={name} required></div>
-    <div class={bank == "" ? 'undef' : ''}>Bank <input bind:value={bank} required></div>
+    <div class={bank == "" || !validbank ? 'undef' : ''}>
+        {#if !validbank && bank !=""}
+            <div class="err">Not in bank index. Would you like to add it?</div>
+        {/if}
+        Bank <input bind:value={bank} required>
+    </div>
     <div class={network == "" ? 'undef' : ''}>Network 
         <select bind:value={network} required>
             <option>Visa</option>
@@ -99,7 +114,7 @@
     <button on:click={submit}>Submit Card</button>
 </div>
     {#if $admin}
-    <div>
+    <div class="a">
         <pre>name: {name}<br>bank: {bank}<br>network: {network}<br>brand: {brand}<br>consumer: {consumer}<br>search_terms: {searchTerms}<br></pre>
         <pre>{JSON.stringify(tempCard,null,1)}</pre>
     </div>
@@ -122,8 +137,17 @@
         border-radius: 5px;
         padding: 2rem;
         margin-bottom: 0.75rem;
+        transition: 0.25s all ease;
     }
     .undef {
         border: 1px solid red;
+    }
+    .a {
+        position:fixed;
+        top: 6rem;
+        left: 2rem;
+    }
+    .err {
+        margin-bottom: 1rem;
     }
 </style>

@@ -64,6 +64,15 @@ export const unsubCards = onSnapshot(
   }
 );
 
+async function getBanks(db) {
+  const bankCollection = collection(db, "banks");
+  const bankDocs = await getDocs(bankCollection);
+  const list = bankDocs.docs.map((doc) => doc.data());
+  return list;
+}
+
+export const getBankList = getBanks(db);
+
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //----------------------Database write functions-----------------
 
