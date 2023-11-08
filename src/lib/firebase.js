@@ -73,6 +73,10 @@ export async function addCard(card) {
   await setDoc(doc(db, "creditCards", card.url), card);
 }
 
+export async function addBank(bank) {
+  await setDoc(doc(db, "banks", bank.url), bank);
+}
+
 //updates a card in the database
 //DATA NOT SANATIZED, so pretty please dont go live :)
 export async function updateCard(card, id) {
