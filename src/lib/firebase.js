@@ -84,6 +84,15 @@ async function getBanks(db) {
 
 export const getBankList = getBanks(db);
 
+async function getSubmissions(db) {
+  const collection = collection(db, "submissions");
+  const docs = await getDocs(collection);
+  const list = docs.docs.map((doc) => doc.data());
+  return list;
+}
+
+export const getSubmissionList = getSubmissions(db);
+
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //----------------------Database write functions-----------------
 
@@ -166,10 +175,10 @@ async function initUserData(client) {
     if (docSnap.exists()) {
       user.set({ ...client, ...docSnap.data() });
     } else {
-      await setDoc(doc(db, "users", {
+      await setDoc(doc(db, "users", client.uid),{
         wallet: [],
         tracking: []
-      })).then((obj) => {
+      }).then((obj) => {
         user.set({ ...client, ...obj });
       });
     }

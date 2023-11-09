@@ -4,7 +4,7 @@
 </script>
 
 <div id="dropdown">
-    <a href="/account">{$user.username}</a>
+    <a href="/account">{$user.displayName}</a>
     <div id="menu">
         {#if $user.admin}
         <button on:click={() => $admin = !$admin}>Admin Toggle ({$admin ? "On" : "Off"})</button>

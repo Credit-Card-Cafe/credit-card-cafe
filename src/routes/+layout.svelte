@@ -15,6 +15,9 @@
             <a href="/search">Cards</a>
             {#if $user}
                 <a href="/contribute">Contribute</a>
+                {#if $user.admin}
+                    <a href="/submissions">Submissions</a>
+                {/if}
             {/if}
         </nav>
         <SearchBar></SearchBar>
