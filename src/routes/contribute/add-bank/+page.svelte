@@ -1,6 +1,6 @@
 <script lang="js">
     import { user, admin, bankList, unavailableBank} from "../../../lib/stores";
-    import { addBank } from "../../../lib/firebase";
+    import { addBank, addSubmission } from "../../../lib/firebase";
     import { goto } from '$app/navigation';
 
     let submitted = true;
@@ -18,7 +18,7 @@
         defaultDirect = false;
     }
     function submit() {
-        if ($user) {
+        if ($user && $user.admin && $admin) {
             if (name == "") {
                 console.log("Something went wrong...")
             } else {
@@ -32,10 +32,23 @@
                         goto("/contribute/add-card");
                     }
                 });
+            }    
+        } else if ($user) {
+            if (name == "") {
+                console.log("Something went wrong...")
+            } else {
+                addSubmission(tempBank, "add-bank").then(() => {
+                    $bankList.push(tempBank);
+                    $unavailableBank = false;
+                    submitted = false;
+                    if (defaultDirect) {
+                        goto(`/bank/${url}`);
+                    } else {
+                        goto("/contribute/add-card");
+                    }
+                });
             }
-            
-        }
-        else {
+        } else {
             window.alert("Must be logged in to submit")
         }
     }
@@ -100,7 +113,11 @@
             {/key}
             <button on:click={() => addField()}>Add Nickname</button>
         </div>
+        {#if $admin}
         <button disabled={name == "" ? true : false} on:click={() => submit()}>Add Bank</button>
+        {:else}
+        <button disabled={name == "" ? true : false} on:click={() => submit()}>Submit Bank</button>
+        {/if}
     </div>
         {#if $admin}
         <div class="a">

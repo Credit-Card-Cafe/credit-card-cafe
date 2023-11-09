@@ -97,6 +97,13 @@ export async function addBank(bank) {
   await setDoc(doc(db, "banks", bank.url), bank);
 }
 
+export async function addSubmission(obj, type) {
+  await setDoc(doc(collection(db, "submissions")), {
+    obj: obj,
+    type: type
+  });
+}
+
 //updates a card in the database
 //DATA NOT SANATIZED, so pretty please dont go live :)
 export async function updateCard(card, id) {

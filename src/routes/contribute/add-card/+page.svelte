@@ -1,6 +1,6 @@
 <script lang="js">
     import { user, admin, oneCard, bankList, unavailableBank, saveCardInfo} from "$lib/stores";
-    import { addCard, getBankList } from "$lib/firebase";
+    import { addCard, getBankList, addSubmission } from "$lib/firebase";
     import { goto } from '$app/navigation';
     import { onMount } from "svelte";
 
@@ -81,7 +81,7 @@
     }
 
     function submit() {
-        if ($user) {
+        if ($user && $user.admin && $admin) {
             if (name == "" || bank == "" || network == "" || searchTerms.includes("") || consumer == "") {
                 console.log("Something went wrong...")
             } else {
@@ -92,6 +92,16 @@
                 });
             }
             
+        } else if ($user) {
+            if (name == "" || bank == "" || network == "" || searchTerms.includes("") || consumer == "") {
+                console.log("Something went wrong...")
+            } else {
+                addSubmission(tempCard, "add-card").then(() => {
+                    unsubmitted = false;
+                    goto(`/contribute/update/${tempCard.url}`)
+                    $oneCard = tempCard;
+                });
+            }
         }
         else {
             window.alert("Must be logged in to submit")
@@ -128,7 +138,11 @@
             <option>Student</option>
         </select>
     </div>
+    {#if $admin}
+    <button disabled={name == "" || bank == "" || network == "" || consumer == "" || !validbank ? true : false} on:click={() => submit()}>Add Card</button>
+    {:else}
     <button disabled={name == "" || bank == "" || network == "" || consumer == "" || !validbank ? true : false} on:click={() => submit()}>Submit Card</button>
+    {/if}
 </div>
     {#if $admin}
     <div class="a">

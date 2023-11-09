@@ -53,7 +53,11 @@
             {/if}
         {/each}
     </div>
+    {#if $admin}
+        <button on:click={() => submit()}>Update Card</button>
+    {:else}
         <button on:click={() => submit()}>Submit Changes</button>
+    {/if}
 </div>
     {#if $admin}
     <div style="display: flex; flex-direction: row; justify-content: space-around;"> 
