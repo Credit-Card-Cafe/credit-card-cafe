@@ -30,9 +30,9 @@ const db = getFirestore(app);
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //----------------------Database read functions-----------------
 
-//gets a singular doc from its URL
-export async function getOne(url) {
-  const docRef = doc(db, "creditCards", url);
+//gets a singular doc from its ID
+export async function getOne(id) {
+  const docRef = doc(db, "creditCards", id);
   const docSnap = await getDoc(docRef);
   oneCard.set(docSnap.data());
   const sleep = (m) => new Promise((r) => setTimeout(r, m));
@@ -42,8 +42,8 @@ export async function getOne(url) {
   }
 }
 
-export async function getOneBank(url) {
-  const docRef = doc(db, "banks", url);
+export async function getOneBank(id) {
+  const docRef = doc(db, "banks", id);
   const docSnap = await getDoc(docRef);
   oneCard.set(docSnap.data());
   const sleep = (m) => new Promise((r) => setTimeout(r, m));
@@ -99,11 +99,11 @@ export const getSubmissionList = getSubmissions(db);
 //adds a new card to the database
 //DATA NOT SANATIZED, so pretty please dont go live :)
 export async function addCard(card) {
-  await setDoc(doc(db, "creditCards", card.url), card);
+  await setDoc(doc(db, "creditCards", card.id), card);
 }
 
 export async function addBank(bank) {
-  await setDoc(doc(db, "banks", bank.url), bank);
+  await setDoc(doc(db, "banks", bank.id), bank);
 }
 
 export async function addSubmission(obj, type) {

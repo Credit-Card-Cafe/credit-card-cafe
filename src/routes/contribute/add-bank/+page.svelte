@@ -6,7 +6,7 @@
     let submitted = true;
     let nicknames = [];
     let name = "";
-    let url = "";
+    let id = "";
     let tempBank = {};
 
     let defaultDirect = true;
@@ -14,7 +14,7 @@
     if ($unavailableBank) {
         name = $unavailableBank
         tempBank["name"] = name;
-        tempBank["url"] = genId()
+        tempBank["id"] = genId()
         defaultDirect = false;
     }
     function submit() {
@@ -27,7 +27,7 @@
                     $unavailableBank = false;
                     submitted = false;
                     if (defaultDirect) {
-                        goto(`/bank/${url}`);
+                        goto(`/bank/${id}`);
                     } else {
                         goto("/contribute/add-card");
                     }
@@ -42,7 +42,7 @@
                     $unavailableBank = false;
                     submitted = false;
                     if (defaultDirect) {
-                        goto(`/bank/${url}`);
+                        goto(`/bank/${id}`);
                     } else {
                         goto("/contribute/add-card");
                     }
@@ -64,12 +64,12 @@
     }
 
     function setBank(){
-        url = genId();
+        id = genId();
         tempBank["name"] = name.trim();
-        tempBank["url"] = url;
+        tempBank["id"] = id;
         if (name == "") {
             delete tempBank["name"];
-            delete tempBank["url"];
+            delete tempBank["id"];
         }
     }
 

@@ -10,7 +10,7 @@
             ||
             query == "*"
         ) && (
-            Object.hasOwn(card, "url")
+            Object.hasOwn(card, "id")
             &&
             Object.hasOwn(card, "name")
         )

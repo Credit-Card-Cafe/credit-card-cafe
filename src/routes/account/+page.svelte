@@ -9,8 +9,8 @@
   
   
   if ($user) {
-    wallet = $cardList.filter((card) => $user && Object.hasOwn($user, "wallet") && $user.wallet.includes(card.url));
-    tracking = $cardList.filter((card) => $user && Object.hasOwn($user, "tracking") && $user.tracking.includes(card.url));
+    wallet = $cardList.filter((card) => $user && Object.hasOwn($user, "wallet") && $user.wallet.includes(card.id));
+    tracking = $cardList.filter((card) => $user && Object.hasOwn($user, "tracking") && $user.tracking.includes(card.id));
   }
   
 </script>

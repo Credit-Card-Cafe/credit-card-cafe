@@ -25,7 +25,7 @@
     
     var skipDatabaseRead = false;
 
-    if (data.slug == $oneCard.url) {
+    if (data.slug == $oneCard.id) {
       skipDatabaseRead = true;
     }
   </script>

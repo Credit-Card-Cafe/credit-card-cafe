@@ -31,7 +31,7 @@
     <CreditCard card={card} --color="{card.color}" showTrackCard={loaded}></CreditCard>
     <CardInfo card={card}></CardInfo>
     {#if $user}
-      <a href="/contribute/update/{card.url}">Update Information</a>
+      <a href="/contribute/update/{card.id}">Update Information</a>
     {/if}
 </div>
 {:else}

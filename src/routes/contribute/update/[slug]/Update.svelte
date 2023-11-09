@@ -22,7 +22,7 @@
         $newCard = {};
     })
 
-    $newCard.id = card.url;
+    $newCard.id = card.id;
 </script>
 
 {#if updateAuthorization}

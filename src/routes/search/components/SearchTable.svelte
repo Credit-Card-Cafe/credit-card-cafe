@@ -15,7 +15,7 @@
     }
 
     $: searchResults = searchResults.filter((card) => (
-        (Object.hasOwn(card, "url")
+        (Object.hasOwn(card, "id")
         &&
         Object.hasOwn(card, "name"))
         ||
@@ -50,10 +50,10 @@
         {#each searchResults as card}
         
         <tr>
-            <td><a href="/card/{card.url}">{card.name} </a></td>
+            <td><a href="/card/{card.id}">{card.name} </a></td>
             <td>
-                {#if Object.hasOwn(card, "bank_url")}
-                    <a href="/bank/{card.bank_url}">{card.bank}</a>
+                {#if Object.hasOwn(card, "bank_id")}
+                    <a href="/bank/{card.bank_id}">{card.bank}</a>
                 {:else}
                     {card.bank}
                 {/if}
@@ -63,7 +63,7 @@
                     {#if card[query] == undefined} 
                         [Data doesn't exist.] 
                         {#if $admin}
-                            <a href="/contribute/update/{card.url}">Add it?</a>
+                            <a href="/contribute/update/{card.id}">Add it?</a>
                         {/if}
                     {:else if query == "annual_fee"} 
                         ${card[query]}

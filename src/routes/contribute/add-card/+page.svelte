@@ -22,7 +22,7 @@
         network: network,
         consumer: consumer,
         brand: brand,
-        url: genId(),
+        id: genId(),
     } 
 
     if ($saveCardInfo) {
@@ -55,7 +55,7 @@
             $unavailableBank = bank;
         } else {
             validbank = true;
-            tempCard["bank_url"] = $bankList.find((b) => b.name == bank).url;
+            tempCard["bank_id"] = $bankList.find((b) => b.name == bank).id;
         }
     } else {
         validbank = false;
@@ -87,7 +87,7 @@
             } else {
                 addCard(tempCard).then(() => {
                     unsubmitted = false;
-                    goto(`/contribute/update/${tempCard.url}`)
+                    goto(`/contribute/update/${tempCard.id}`)
                     $oneCard = tempCard;
                 });
             }
@@ -98,7 +98,7 @@
             } else {
                 addSubmission(tempCard, "add-card").then(() => {
                     unsubmitted = false;
-                    goto(`/contribute/update/${tempCard.url}`)
+                    goto(`/contribute/update/${tempCard.id}`)
                     $oneCard = tempCard;
                 });
             }

@@ -14,9 +14,9 @@
   getOneBank(data.slug).then((result) => {
      bank = result;
      list = $cardList.filter((card) => (
-      Object.hasOwn(card, "bank_url")
+      Object.hasOwn(card, "bank_id")
       &&
-      card.bank_url == bank.url
+      card.bank_id == bank.id
       )
       );
   });
