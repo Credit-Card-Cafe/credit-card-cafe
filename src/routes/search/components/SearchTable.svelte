@@ -49,7 +49,7 @@
         
         <tr>
             <td><a href="/card/{card.url}">{card.name} </a></td>
-            <td>{card.bank}</td>
+            <td><a href="/bank/{card.bank}">{card.bank}</a></td>
                 {#each queries as query}
                 <td>
                     {#if card[query] == undefined} 
