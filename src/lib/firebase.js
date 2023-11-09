@@ -98,9 +98,14 @@ export async function addBank(bank) {
 }
 
 export async function addSubmission(obj, type) {
+  let uid = ""
+  user.subscribe((usr) => {
+    uid = usr.uid;
+  })
   await setDoc(doc(collection(db, "submissions")), {
     obj: obj,
-    type: type
+    type: type,
+    user: uid
   });
 }
 

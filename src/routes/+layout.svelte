@@ -1,7 +1,6 @@
 <script lang="js">
     import { user, admin } from "$lib/stores";
     import LogInButton from "../components/LogInButton.svelte";
-    import LogOutButton from "../components/LogOutButton.svelte";
     import { headerColor } from "$lib/stores";
   import SearchBar from "../components/SearchBar.svelte";
     import AccountActions from "../components/AccountActions.svelte";
