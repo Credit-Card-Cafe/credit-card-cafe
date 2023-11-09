@@ -15,9 +15,11 @@
     }
 
     $: searchResults = searchResults.filter((card) => (
-        Object.hasOwn(card, "url")
+        (Object.hasOwn(card, "url")
         &&
-        Object.hasOwn(card, "name")
+        Object.hasOwn(card, "name"))
+        ||
+        $admin
     ));
 </script>
 

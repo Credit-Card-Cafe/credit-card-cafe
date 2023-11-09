@@ -29,6 +29,11 @@
         {/if}
     </div>
 </div>
+{#if $admin}
+    <div class="a">
+        <pre>uid: {$user.uid}<br>displayName: {$user.displayName}<br>email: {$user.email}<br>username: {$user.username}<br></pre>
+    </div>
+{/if}
 
 <style>
 #top {
@@ -62,6 +67,14 @@ a:hover {
 }
 :global(body) {
     margin: 0;
+}
+.a {
+    position: fixed;
+    top: 2.5rem;
+    right:2rem;
+    background: white;
+    padding: 0.5rem;
+    border: 1px solid black;
 }
 </style>
 

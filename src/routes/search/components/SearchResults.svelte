@@ -20,7 +20,7 @@
 
 <div id="cardList">
 {#each list as card}
-    <CreditCard card={card} --color="{card.color}"></CreditCard>
+    <CreditCard card={card} --color="{card.color}" showTrackCard={true}></CreditCard>
 {/each}
 </div>
 

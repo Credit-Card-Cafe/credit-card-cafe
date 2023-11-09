@@ -36,8 +36,8 @@
 </script>
 
 
-<div id="trackCard">
-    {#if $user}
+{#if $user}
+    <div id="trackCard">
         {#if show == "both"}
             <button on:click={() => addCardtoUser("wallet")}>Add Card to Wallet</button>
             <button on:click={() => addCardtoUser("tracking")}>Track this card</button>
@@ -52,11 +52,8 @@
                 <div>Something went wrong...</div>
             {/if}
         {/if}
-    {:else}
-        You can track this card or add it to your wallet by logging in.
-    {/if}
-</div>
-
+    </div>
+{/if}
 
 <style>
     #trackCard {
