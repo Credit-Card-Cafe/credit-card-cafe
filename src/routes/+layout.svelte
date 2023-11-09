@@ -2,7 +2,7 @@
     import { user, admin } from "$lib/stores";
     import LogInButton from "../components/LogInButton.svelte";
     import { headerColor } from "$lib/stores";
-  import SearchBar from "../components/SearchBar.svelte";
+    import SearchBar from "../components/SearchBar.svelte";
     import AccountActions from "../components/AccountActions.svelte";
 
 </script>
@@ -29,7 +29,7 @@
 </div>
 {#if $admin}
     <div class="a">
-        <pre>uid: {$user.uid}<br>displayName: {$user.displayName}<br>email: {$user.email}<br>username: {$user.username}<br></pre>
+        <pre>uid: {$user.uid}<br>displayName: {$user.displayName}<br>email: {$user.email}</pre>
     </div>
 {/if}
 

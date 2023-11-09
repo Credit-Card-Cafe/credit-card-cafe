@@ -167,7 +167,6 @@ async function initUserData(client) {
       user.set({ ...client, ...docSnap.data() });
     } else {
       await setDoc(doc(db, "users", {
-        username: "",
         wallet: [],
         tracking: []
       })).then((obj) => {
