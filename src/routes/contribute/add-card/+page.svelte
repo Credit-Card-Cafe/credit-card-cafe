@@ -53,7 +53,10 @@
         if (!$bankList.find((b) => b.name == bank)) {
             validbank = false;
             $unavailableBank = bank;
-        } else {validbank = true;}
+        } else {
+            validbank = true;
+            tempCard["bank_url"] = $bankList.find((b) => b.name == bank).url;
+        }
     } else {
         validbank = false;
     } 
