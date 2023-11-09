@@ -1,12 +1,31 @@
-<div>
-    This is all the information about the bank that we have.
+<script>
+    export let bank;
+
+</script>
+
+<div id="bankInfo">
+    {#if bank}
+        {#if Object.hasOwn(bank, "name")}
+            <div id="title">{bank.name}</div>
+        {/if}
+        {#if Object.hasOwn(bank, "info")}
+            <div id="info">{bank.info}</div>
+        {/if}
+    {:else}
+    There is no information pertaining this bank. 
+    {/if}
 </div>
 
 <style>
-    div {
+    #bankInfo {
         border: 1px solid black;
         border-radius: 10px;
         padding: 5rem;
+        max-width: 40%;
         max-height: min-content;
+    }
+    #title {
+        font-size: large;
+        font-weight: 700;
     }
 </style>

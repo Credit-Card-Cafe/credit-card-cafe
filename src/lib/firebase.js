@@ -42,6 +42,17 @@ export async function getOne(url) {
   }
 }
 
+export async function getOneBank(url) {
+  const docRef = doc(db, "banks", url);
+  const docSnap = await getDoc(docRef);
+  oneCard.set(docSnap.data());
+  const sleep = (m) => new Promise((r) => setTimeout(r, m));
+  await sleep(500);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  }
+}
+
 //gets an ordered list of cards
 export async function orderCards(param, results) {
   const order = query(
