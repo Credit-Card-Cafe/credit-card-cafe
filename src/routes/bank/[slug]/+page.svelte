@@ -7,7 +7,7 @@
 
   let bank = {
     name: "Loading...",
-    info: "Is this just real life, or is this just fantasy? Caught in a landslide, no escape from reality. Open your eyes, look up to the sky and see! I'm just a poor boy, I need no sympathy, because its easy come, easy go. Little high, little low. Anyway the wind blows - doesn't really matter to me, to me."
+    info: "Loading..."
   }
 
   let list = [];
@@ -28,7 +28,7 @@
 </svelte:head>
 
 <div id="bank">
-  <CardStack cards={list}></CardStack>
+  <CardStack cards={list} showTrackCard={true}></CardStack>
   <BankInfo bank={bank}></BankInfo>
 </div>
 

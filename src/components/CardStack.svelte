@@ -1,5 +1,6 @@
 <script>
     export let cards;
+    export let showTrackCard = false;
     import CreditCard from "./CreditCard.svelte";
 </script>
 
@@ -7,11 +8,11 @@
     {#each cards as card, i}
     {#if i == cards.length-1}
     <div class="lastcard"><a href="/card/{card.url}">
-        <CreditCard card={card} --color="{card.color}"></CreditCard>
+        <CreditCard card={card} --color="{card.color}" showTrackCard={showTrackCard}></CreditCard>
       </a></div>
     {:else}
       <div class="card"><a href="/card/{card.url}">
-        <CreditCard card={card} --color="{card.color}"></CreditCard>
+        <CreditCard card={card} --color="{card.color}" showTrackCard={showTrackCard}></CreditCard>
       </a></div>
     {/if}
     {/each}
