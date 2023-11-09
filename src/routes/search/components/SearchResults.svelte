@@ -20,9 +20,7 @@
 
 <div id="cardList">
 {#each list as card}
-    <a href="/card/{card.url}">
-        <CreditCard card={card} --color="{card.color}"></CreditCard>
-    </a>
+    <CreditCard card={card} --color="{card.color}"></CreditCard>
 {/each}
 </div>
 
@@ -30,8 +28,6 @@
     #cardList {
         display: grid;
         grid-template-columns: auto auto auto;
-    }
-    a {
-        margin-bottom: 3rem;
+        row-gap: 3rem;
     }
 </style>

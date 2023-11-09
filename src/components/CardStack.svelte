@@ -7,13 +7,13 @@
 <div class="cards">
     {#each cards as card, i}
     {#if i == cards.length-1}
-    <div class="lastcard"><a href="/card/{card.url}">
+    <div class="lastcard">
         <CreditCard card={card} --color="{card.color}" showTrackCard={showTrackCard}></CreditCard>
-      </a></div>
+    </div>
     {:else}
-      <div class="card"><a href="/card/{card.url}">
+      <div class="card">
         <CreditCard card={card} --color="{card.color}" showTrackCard={showTrackCard}></CreditCard>
-      </a></div>
+      </div>
     {/if}
     {/each}
 </div>

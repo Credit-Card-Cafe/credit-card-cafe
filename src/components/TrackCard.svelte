@@ -5,7 +5,6 @@
 
     let show = "";
     
-    console.log($user);
     if ($user) {
         if (Object.hasOwn($user, "wallet") && $user.wallet.includes(id)) {
             show = "wallet"

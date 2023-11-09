@@ -12,7 +12,9 @@
     });
 </script>
 
+
 <div id="card">
+    <a href="/card/{card.url}">
     {#if Object.hasOwn(card, "image") && card.image != ""}
         <div id="creditCard" style="background-image:url({card.image})"></div>
     {:else}
@@ -59,10 +61,12 @@
         {/if}
     </div>
     {/if}
+</a>
     {#if showTrackCard}
     <TrackCard id={card.url}></TrackCard>
     {/if}
 </div>
+
 
 
 <style>
