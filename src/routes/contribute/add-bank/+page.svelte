@@ -28,6 +28,8 @@
                     submitted = false;
                     if (defaultDirect) {
                         goto(`/bank/${id}`);
+                    } else if ($admin) {
+                        goto("/submissions")
                     } else {
                         goto("/contribute/add-card");
                     }

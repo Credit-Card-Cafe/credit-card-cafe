@@ -85,8 +85,8 @@ async function getBanks(db) {
 export const getBankList = getBanks(db);
 
 async function getSubmissions(db) {
-  const collection = collection(db, "submissions");
-  const docs = await getDocs(collection);
+  const subCollection = collection(db, "submissions");
+  const docs = await getDocs(subCollection);
   const list = docs.docs.map((doc) => doc.data());
   return list;
 }
