@@ -22,6 +22,9 @@ import {
 import { user, cardList, oneCard } from "./stores";
 import { firebaseConfig } from "../../firebaseconfig"
 
+//lmao lets make the user wait longer for the website to load
+const sleep = (m) => new Promise((r) => setTimeout(r, m));
+const waitTime = 500;
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -35,8 +38,7 @@ export async function getOne(id) {
   const docRef = doc(db, "creditCards", id);
   const docSnap = await getDoc(docRef);
   oneCard.set(docSnap.data());
-  const sleep = (m) => new Promise((r) => setTimeout(r, m));
-  await sleep(500);
+  await sleep(waitTime);
   if (docSnap.exists()) {
     return docSnap.data();
   }
@@ -46,8 +48,7 @@ export async function getOneBank(id) {
   const docRef = doc(db, "banks", id);
   const docSnap = await getDoc(docRef);
   oneCard.set(docSnap.data());
-  const sleep = (m) => new Promise((r) => setTimeout(r, m));
-  await sleep(500);
+  await sleep(waitTime);
   if (docSnap.exists()) {
     return docSnap.data();
   }
@@ -131,8 +132,6 @@ export async function updateUser(field, value) {
     uid = usr.uid;
   })
   const userDoc = doc(db, "users", uid);
-  const sleep = (m) => new Promise((r) => setTimeout(r, m));
-  await sleep(500);
   return updateDoc(userDoc, {
     [field]: [...value]
   })

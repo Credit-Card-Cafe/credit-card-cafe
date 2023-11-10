@@ -14,7 +14,7 @@
 
 
 <div id="card">
-    <a href="/card/{card.url}">
+    <a href="/card/{card.id}">
     {#if Object.hasOwn(card, "image") && card.image != ""}
         <div id="creditCard" style="background-image:url({card.image})"></div>
     {:else}
@@ -63,7 +63,7 @@
     {/if}
 </a>
     {#if showTrackCard}
-    <TrackCard id={card.url}></TrackCard>
+    <TrackCard id={card.id}></TrackCard>
     {/if}
 </div>
 
