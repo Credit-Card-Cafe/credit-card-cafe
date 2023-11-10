@@ -1,8 +1,8 @@
 <script lang="js">
 	export let card;
     export let updateAuthorization;
-    import {createEventDispatcher, onDestroy } from "svelte";
-    import { newCard, admin } from "../../../../lib/stores";
+    import {createEventDispatcher, onDestroy, onMount } from "svelte";
+    import { newCard, admin, oneCard } from "../../../../lib/stores";
     import {dataField} from "../../../../lib/fields";
     import CreditCard from "../../../../components/CreditCard.svelte";
 
@@ -13,7 +13,7 @@
     import ColorInput from "./components/ColorInput.svelte";
     import ListInput from "./components/ListInput.svelte";
     import NumberInput from "./components/NumberInput.svelte";
-  import DynamicInput from "./components/DynamicInput.svelte";
+    import DynamicInput from "./components/DynamicInput.svelte";
 
     const dispatch = createEventDispatcher();
     const submit = () => dispatch('submit');

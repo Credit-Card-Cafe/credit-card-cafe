@@ -1,35 +1,77 @@
 <script>
-    import { getSubmissionList } from "../../lib/firebase";
-    import { oneCard, saveCardInfo, unavailableBank, newCard } from "../../lib/stores";
+    import { getSubmissionList, updateSubmission, getBankList} from "$lib/firebase";
+    import { saveCardInfo, unavailableBank, newCard, cardList, admin} from "$lib/stores";
     import { goto } from '$app/navigation';
+    import { onMount } from "svelte";
 
-    let list = []
+    let list = [];
+    let bankList = [];
+    let group = [];
+    let display = "";
 
-    getSubmissionList.then((data) => {
-        list = data.filter((e) => e.type!="default");
-    })
+    onMount(() => {
+        getBankList.then((data) => {
+            bankList = data;
+        });
+        getSubmissionList.then((data) => {
+            list = data.filter((doc) => doc.data().display!=false);
+        });
+    });
+
+    function removeSubs() {
+        group.forEach((id) => {
+            updateSubmission({display: false}, id);
+        });
+        list = list.filter((doc) => !group.includes(doc.id))
+        group = [];
+    }
 
     function direct(submission){
-        if (submission.type == "update") {
-            $newCard = submission.obj.card;
-            goto(`/contribute/update/${submission.obj.id}`)
-        } else if (submission.type == "add-bank") {
-            $unavailableBank = submission.obj.name;
-            goto(`/contribute/add-bank`)
-        } else if (submission.type == "add-card") {
-            $saveCardInfo = submission.obj;
-            goto(`/contribute/add-card`)
+        if ($admin) {
+            if (submission.type == "update") {
+                if ($cardList.map((card) => card.id).includes(submission.obj.id)) {
+                    $newCard = submission.obj.card;
+                    goto(`/contribute/update/${submission.obj.id}`)
+                } else {
+                    display = "Selected update requires valid Card";
+                }       
+            } else if (submission.type == "add-bank") {
+                $unavailableBank = submission.obj.name;
+                goto(`/contribute/add-bank`)
+            } else if (submission.type == "add-card") {
+                if (bankList.map((bank) => bank.name).includes(submission.obj.bank)) {
+                    $saveCardInfo = submission.obj;
+                    goto(`/contribute/add-card`)
+                } else {
+                    display = "Selected card requires valid Bank";
+                }
+            }
+        } else {
+            display = "Please enable Admin mode"
         }
     }
+
 </script>
 
-<div>
+<div id="submissions">
+    {#if display !=""}
+    <div id="display">{display}</div>
+    {/if}
     <table>
-        <tr><th>type</th><th>id</th></tr>
+        <tr>
+            {#if group.length > 0}
+            <th on:click={() => removeSubs()}>delete</th>
+            {:else}
+            <th>select</th>
+            {/if}
+            <th>type</th>
+            <th>id</th>
+        </tr>
         {#each list as submission}  
-        <tr on:click={() => direct(submission)}>
-            <td>{submission.type}</td>
-            <td>{submission.obj.id}</td>
+        <tr>
+            <td><input type="checkbox" bind:group value={submission.id}></td>
+            <td on:click={() => direct(submission.data())}>{submission.data().type}</td>
+            <td on:click={() => direct(submission.data())}>{submission.data().obj.id}</td>
         </tr>
         {/each}
     </table>
@@ -43,8 +85,17 @@ th,td {
     padding: 0.5rem;
     cursor: pointer;
 }
-div {
+#submissions {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+#display {
+    border: 1px solid red;
+    color: red;
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
 }
 </style>

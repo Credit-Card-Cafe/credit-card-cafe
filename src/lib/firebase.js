@@ -87,8 +87,8 @@ export const getBankList = getBanks(db);
 
 async function getSubmissions(db) {
   const subCollection = collection(db, "submissions");
-  const docs = await getDocs(subCollection);
-  const list = docs.docs.map((doc) => doc.data());
+  const subdocs = await getDocs(subCollection);
+  const list = subdocs.docs.map((doc) => doc);
   return list;
 }
 
@@ -135,6 +135,11 @@ export async function updateUser(field, value) {
   return updateDoc(userDoc, {
     [field]: [...value]
   })
+}
+
+export async function updateSubmission(submission, id) {
+  const subDoc = doc(db, "submissions", id);
+  return updateDoc(subDoc, submission);
 }
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //----------------------Firebase Auth functions-----------------
