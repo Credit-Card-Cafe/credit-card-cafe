@@ -14,7 +14,7 @@
             bankList = data;
         });
         getSubmissionList.then((data) => {
-            list = data.filter((doc) => doc.data().display!=false);
+            list = data;
         });
     });
 
@@ -54,6 +54,7 @@
 </script>
 
 <div id="submissions">
+    {#if list.length > 0}
     {#if display !=""}
     <div id="display">{display}</div>
     {/if}
@@ -75,6 +76,9 @@
         </tr>
         {/each}
     </table>
+    {:else}
+        <div id="nosubs">No current submissions!</div>
+    {/if}
 </div>
 
 <style>
@@ -97,5 +101,10 @@ th,td {
     border-radius: 5px;
     padding: 1rem;
     margin-bottom: 1rem;
+}
+#nosubs {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5rem;
 }
 </style>

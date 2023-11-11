@@ -1,24 +1,6 @@
 import { initializeApp } from "firebase/app";
-import {
-  collection,
-  onSnapshot,
-  getFirestore,
-  setDoc,
-  updateDoc,
-  doc,
-  query,
-  limit,
-  orderBy,
-  getDocs,
-  getDoc,
-} from "firebase/firestore";
-import {
-  getAuth,
-  signOut,
-  signInWithPopup,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-} from "firebase/auth";
+import { collection, onSnapshot, getFirestore, setDoc, updateDoc, doc, query, limit,orderBy, getDocs, getDoc, where} from "firebase/firestore";
+import { getAuth, signOut, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import { user, cardList, oneCard } from "./stores";
 import { firebaseConfig } from "../../firebaseconfig"
 
@@ -86,7 +68,7 @@ async function getBanks(db) {
 export const getBankList = getBanks(db);
 
 async function getSubmissions(db) {
-  const subCollection = collection(db, "submissions");
+  const subCollection = query(collection(db, "submissions"), where('display','==',true));
   const subdocs = await getDocs(subCollection);
   const list = subdocs.docs.map((doc) => doc);
   return list;
@@ -115,7 +97,9 @@ export async function addSubmission(obj, type) {
   await setDoc(doc(collection(db, "submissions")), {
     obj: obj,
     type: type,
-    user: uid
+    user: uid,
+    time: Date.now(),
+    display: true
   });
 }
 
