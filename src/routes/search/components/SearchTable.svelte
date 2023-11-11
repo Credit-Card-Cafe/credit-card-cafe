@@ -82,27 +82,41 @@
 </div>
 
 <style>
-    table > tr:nth-child(even) {
-  background-color: rgb(240, 251, 255);
-}
-th,td {
-    padding: 5px;
-    cursor: pointer;
-}
-#search {
-        display: flex;
-        flex-direction: column;
+    #search {
+        flex-direction: column-reverse;
         justify-content: center;
-        padding: 30px;
+        display: flex;
+        padding: 1rem;
+        overflow-x: scroll;
+    }
+    table > tr:nth-child(even) {
+        background-color: rgb(240, 251, 255);
+    }
+    th, td {
+        padding: 0.5rem
     }
     #queries {
-        width: 50%;
+        margin-top: 1rem;
         display: grid;
-        grid-template-columns: auto auto auto auto auto;
+        grid-template-columns: auto auto;
         gap: 1rem;
-        margin-bottom: 2rem;
     }
-    input {
-        margin-right: 20px;
-    }
+    @media (min-width: 768px) {
+        
+        th,td {
+            cursor: pointer;
+        }
+        #search {
+            flex-direction: column;
+            padding: 30px;
+        }
+        #queries {
+            margin-top: 0;
+            grid-template-columns: auto auto auto auto auto;
+            margin-bottom: 2rem;
+        }
+        input {
+            margin-right: 20px;
+        }
+}
 </style>

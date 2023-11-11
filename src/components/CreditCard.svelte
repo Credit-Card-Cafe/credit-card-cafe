@@ -74,6 +74,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        -webkit-transform:scale(0.9);
+        -moz-transform:scale(0.9);
+        -ms-transform:scale(0.9);
+        transform:scale(0.9);
     }
     #creditCard {
         position: relative;
@@ -124,7 +128,14 @@
         text-transform: uppercase;
         font-weight: 750;
     }
-    
+    @media (min-width: 768px) {
+        #card {
+        -webkit-transform:scale(1);
+        -moz-transform:scale(1);
+        -ms-transform:scale(1);
+        transform:scale(1);
+        }
+    }
     
 </style>
 

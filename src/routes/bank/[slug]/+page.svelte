@@ -33,9 +33,17 @@
 </div>
 
 <style>
- div {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
- }
+  div {
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1rem;
+  }
+  @media (min-width: 768px) {
+    div {
+      flex-direction: row;
+    }
+}
 </style>

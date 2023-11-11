@@ -106,16 +106,6 @@
     tr > td:nth-child(2) {
         border-left: 1px solid black;
     }
-    .mb {
-        margin-bottom: 2rem;
-    }
-    #cardInfo {
-        margin-left: 20rem;
-        margin-right: 20rem;
-        margin-top: 5rem;
-        display: flex;
-        flex-direction: column;
-    }
     .center {
         display: flex;
         flex-direction: column;
@@ -130,4 +120,20 @@
     .underline {
         text-decoration: underline;
     }
+    .mb {
+        margin-bottom: 2rem;
+    }
+    #cardInfo {
+        margin-top: 1rem;
+        padding: 1rem;
+    }
+    @media (min-width: 768px) {
+        #cardInfo {
+            margin-left: 20rem;
+            margin-right: 20rem;
+            margin-top: 5rem;
+            display: flex;
+            flex-direction: column;
+        }
+}
 </style>

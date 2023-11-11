@@ -25,9 +25,11 @@
 </div>
 
 <style>
+    @media (min-width: 768px) {
     #cardList {
         display: grid;
         grid-template-columns: auto auto auto;
         row-gap: 3rem;
     }
+}
 </style>

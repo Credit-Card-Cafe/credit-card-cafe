@@ -52,17 +52,23 @@
 
 <style>
   .title {
-    font-size: x-large;
-    margin-bottom: 2rem;
-  }
-  #account {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-  }
-  #wallet, #tracklist {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+      font-size: x-large;
+      text-align: center;
+      padding: 1rem;
+    }
+  @media (min-width: 768px) {
+    .title {
+      margin-bottom: 2rem;
+    }
+    #account {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+    #wallet, #tracklist {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 </style>

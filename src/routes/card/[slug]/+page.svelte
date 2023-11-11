@@ -43,5 +43,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 2rem;
+  }
+  @media (min-width: 768px) { 
+    div {
+      padding-top: 0;
+    }
   }
 </style>

@@ -14,7 +14,7 @@
 </div>
 
 <style>
-a {
+    a {
     text-decoration: none;
     font-size: larger;
 }
@@ -40,8 +40,16 @@ button:hover {
 #dropdown:hover #menu {
   display: flex;
 }
-#dropdown {
-    position: relative;
-    margin-right: 3rem;
+#menu > :nth-child(1) {
+    display: none;
 }
+    @media (min-width: 768px) {
+        #dropdown {
+            position: relative;
+            margin-right: 3rem;
+        }
+        #menu > :nth-child(1) {
+            display: initial;
+        }
+    }
 </style>

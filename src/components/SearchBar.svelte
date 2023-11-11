@@ -13,11 +13,22 @@
 
 </script>
 
-<div id="searchBar">
+<form id="searchBar" on:submit|preventDefault={() => search()}>
     <input type="text" bind:value placeholder="Search cards...">
-    <input type="submit" on:click={() => search()}>
-</div>
+    <input class="searchSubmit" type="submit" on:click={() => search()}>
+</form>
 
 <style>
+    form {
+        display: flex;
 
+    }
+    .searchSubmit {
+        display: none;
+    }
+    @media (min-width: 768px) {
+        .searchSubmit {
+            display: initial;
+        }
+    }
 </style>

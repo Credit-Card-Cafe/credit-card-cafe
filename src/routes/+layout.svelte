@@ -37,45 +37,71 @@
 {/if}
 
 <style>
-#top {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    justify-items: center;
-    margin-bottom: 4rem;
-    padding: 1rem 2rem;
-}
-#title, nav {
-    display: inline;
-}
-#title {
-    margin-right: 2rem;
-}
-#start {
-    display: flex;
-    flex-direction: row;
-}
-a {
-    text-decoration: none;
-    color: black;
-    margin: .5rem;
-    padding: .70rem;
-    font-size: 1rem;
-}
-a:hover {
-    background: rgba(0,0,0,0.1);
-    border-radius: 5px;
-}
-:global(body) {
-    margin: 0;
-}
-.a {
-    position: fixed;
-    top: 2.5rem;
-    right:2rem;
-    background: white;
-    padding: 0.5rem;
-    border: 1px solid black;
+    nav > * {
+        display: none;
+    }
+    nav > :nth-last-child(n+3) {
+        display: initial;
+    }
+    #top {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        padding: 0.5rem 0;
+    }
+    #start {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    #title {
+        display: none;
+    }
+    a {
+        text-decoration: none;
+        color: black;
+        padding: .70rem;
+        font-size: 1rem;
+    }
+    :global(body) {
+        margin: 0;
+    }
+    nav {
+        display: flex;
+    }
+@media (min-width: 768px) {
+    #top {
+        justify-content: space-between;
+        justify-items: center;
+        margin-bottom: 4rem;
+        padding: 1rem 2rem;
+    }
+    #title, nav {
+        display: inline;
+    }
+    #title {
+        margin-right: 2rem;
+        display: block;
+    }
+    a {
+        margin: .5rem;
+    }
+    a:hover {
+        background: rgba(0,0,0,0.1);
+        border-radius: 5px;
+    }
+    .a {
+        position: fixed;
+        top: 2.5rem;
+        right:2rem;
+        background: white;
+        padding: 0.5rem;
+        border: 1px solid black;
+    }
+    nav > * {
+        display: initial;
+    }
 }
 </style>
 

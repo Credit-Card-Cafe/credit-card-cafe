@@ -36,7 +36,13 @@
 
 <style>
     .title {
-    font-size: x-large;
-    margin-bottom: 2rem;
-  }
+        font-size: x-large;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    @media (min-width: 768px) { 
+        .title {
+            text-align: left;
+        }
+    }
 </style>
