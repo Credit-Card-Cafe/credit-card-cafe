@@ -14,7 +14,7 @@ export const dataField = {
   network: {
     name: "Network",
     type: "select",
-    options: ["Visa", "MasterCard", "American Express", "Discover"],
+    options: ["Visa", "MasterCard", "American Express", "Discover", "None"],
   },
   link: { name: "Link to Card", type: "text"},
   foreign_transaction_fee: {
