@@ -103,7 +103,7 @@ export async function addSubmission(obj, type) {
   })
   if (Object.hasOwn(obj, "card") && Object.hasOwn(obj.card, "image")) {
     const imgRef = ref(storage, 'submissions/' + obj.id + ".png");
-    uploadBytes(imgRef, card.image).then(
+    uploadBytes(imgRef, obj.card.image).then(
       obj.card.image = true
     ).catch((e) => {
       console.log(e);
