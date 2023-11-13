@@ -18,11 +18,11 @@
     <a href="/card/{card.id}">
     {#if Object.hasOwn(card, "image") && card.image != false}
         {#await getCardImage(card)}
-            <div id="creditCard" style="background:black;"></div>
+            <div id="creditCard" style="background:rgb(253,248,244);"></div>
         {:then image} 
             <div id="creditCard" style="background-image:url({image})"></div>
         {:catch}
-            <div id="creditCard" style="background:black;"></div>
+            <div id="creditCard" style="background:rgb(253,248,244);"></div>
         {/await}
     {:else}
     <div id="creditCard">

@@ -18,6 +18,7 @@
     card = result;
     loaded = true;
     headerColor.set("rgba(" + result.color + ",0.13)");
+    $oneCard = result;
   });
 
 </script>

@@ -52,7 +52,7 @@
             {:else if dataField[field].type == "dynamic"}
                 <DynamicInput field={field} object={card[field]}></DynamicInput>
             {:else if dataField[field].type == "upload"}
-                <UploadInput field={field} object={card[field]}></UploadInput>
+                <UploadInput field={field} value={card[field]}></UploadInput>
             {/if}
         {/each}
     </div>

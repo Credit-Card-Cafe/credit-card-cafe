@@ -1,6 +1,6 @@
 <script>
     export let field;
-    export let value;
+    export let value = false;
     export let object = false;
     import { dataField } from "$lib/fields";
     import { newCard } from "$lib/stores";
@@ -18,9 +18,9 @@
 </script>
 
 
-<div class={value === undefined ? 'undef' : ''}>
+<div class={value === false ? 'undef' : ''}>
     {#if object} {dataField[object]["data"][field].name} {:else} {dataField[field].name} {/if}
-    <input type="file" bind:value accept=".jpg, .jpeg, .png" on:change={(e) => setUpdate(e.target.files[0])}>
+    <input type="file" accept=".jpg, .jpeg, .png" on:change={(e) => setUpdate(e.target.files[0])}>
 </div>
 
 <style>
