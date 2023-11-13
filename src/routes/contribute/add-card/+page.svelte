@@ -62,7 +62,7 @@
     } 
 
     function genId() {
-        let delWords = ["credit", "card", "union"]
+        let delWords = ["credit", "card", "union","for"]
         let x = name.split(" ").filter((word) =>  !(
                 delWords.includes(word.toLowerCase())
                 ||

@@ -37,11 +37,8 @@
 {/if}
 
 <style>
-    nav > * {
+    nav {
         display: none;
-    }
-    nav > :nth-last-child(n+3) {
-        display: initial;
     }
     #top {
         display: flex;
@@ -99,7 +96,7 @@
         padding: 0.5rem;
         border: 1px solid black;
     }
-    nav > * {
+    nav {
         display: initial;
     }
 }
