@@ -63,8 +63,8 @@
     {/if}
 </div>
     {#if $admin}
-    <div style="display: flex; flex-direction: row; justify-content: space-around;"> 
-        Update:
+    <div style="display: grid; grid-template-columns: 25% 25% 25%; gap: 2rem; margin: 2rem; overflow: hidden;"> 
+        <div>Update Object:</div>
         <pre>{JSON.stringify($newCard,null,1)}</pre>
 
         <pre>{JSON.stringify(card, null, 1)}</pre>

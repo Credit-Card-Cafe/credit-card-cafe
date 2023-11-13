@@ -20,7 +20,7 @@
             checkObject();
         } else {
             $newCard[field] = value;
-            if (value == defaultValue || (!defaultValue && value == "")) {
+            if (value == defaultValue || (!defaultValue && value === "") ) {
                 delete $newCard[field];
             }
         }
