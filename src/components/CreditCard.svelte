@@ -4,6 +4,7 @@
     export let showTrackCard = false;
     import { headerColor, newCard } from "$lib/stores";
     import TrackCard from "./TrackCard.svelte";
+    import { getCardImage } from "$lib/firebase";
 
     var network = "visa";
 
@@ -15,8 +16,14 @@
 
 <div id="card">
     <a href="/card/{card.id}">
-    {#if Object.hasOwn(card, "image") && card.image != ""}
-        <div id="creditCard" style="background-image:url({card.image})"></div>
+    {#if Object.hasOwn(card, "image") && card.image != false}
+        {#await getCardImage(card)}
+            <div id="creditCard" style="background:black;"></div>
+        {:then image} 
+            <div id="creditCard" style="background-image:url({image})"></div>
+        {:catch}
+            <div id="creditCard" style="background:black;"></div>
+        {/await}
     {:else}
     <div id="creditCard">
         {#if Object.hasOwn(card, "bank")}

@@ -44,7 +44,7 @@ export const dataField = {
   },
   image: {
     name: "Image",
-    type: "text"
+    type: "upload"
   },
   physical: {
     name: "Physical Card",

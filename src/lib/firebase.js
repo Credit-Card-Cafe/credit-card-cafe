@@ -3,6 +3,7 @@ import { collection, onSnapshot, getFirestore, setDoc, updateDoc, doc, query, li
 import { getAuth, signOut, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import { user, cardList, oneCard } from "./stores";
 import { firebaseConfig } from "../../firebaseconfig"
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 //lmao lets make the user wait longer for the website to load
 const sleep = (m) => new Promise((r) => setTimeout(r, m));
@@ -11,6 +12,7 @@ const waitTime = 500;
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage();
 
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //----------------------Database read functions-----------------
@@ -76,6 +78,11 @@ async function getSubmissions(db) {
 
 export const getSubmissionList = getSubmissions(db);
 
+export async function getCardImage(card) {
+  const imgRef = ref(storage, 'images/' + card.id + ".png");
+  return await getDownloadURL(imgRef);
+}
+
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //----------------------Database write functions-----------------
 
@@ -94,6 +101,15 @@ export async function addSubmission(obj, type) {
   user.subscribe((usr) => {
     uid = usr.uid;
   })
+  if (Object.hasOwn(obj, "card") && Object.hasOwn(obj.card, "image")) {
+    const imgRef = ref(storage, 'submissions/' + obj.id + ".png");
+    uploadBytes(imgRef, card.image).then(
+      obj.card.image = true
+    ).catch((e) => {
+      console.log(e);
+      obj.card.image = false;
+    });
+  }
   await setDoc(doc(collection(db, "submissions")), {
     obj: obj,
     type: type,
@@ -106,6 +122,15 @@ export async function addSubmission(obj, type) {
 //updates a card in the database
 //DATA NOT SANATIZED, so pretty please dont go live :)
 export async function updateCard(card, id) {
+  if (Object.hasOwn(card, "image")) {
+    const imgRef = ref(storage, 'images/' + id + ".png");
+    uploadBytes(imgRef, card.image).then(
+      card.image = true
+    ).catch((e) => {
+      console.log(e);
+      card.image = false;
+    });
+  }
   const ccard = doc(db, "creditCards", id);
   return updateDoc(ccard, card);
 }
