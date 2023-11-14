@@ -14,9 +14,9 @@
             <a href="/">Home</a>
             <a href="/search">Cards</a>
             {#if $user}
-                <a href="/contribute">Contribute</a>
+                <a href="/contribute" class="mobile">Contribute</a>
                 {#if $user.admin}
-                    <a href="/submissions">Submissions</a>
+                    <a href="/submissions" class="mobile">Submissions</a>
                 {/if}
             {/if}
         </nav>
@@ -37,9 +37,6 @@
 {/if}
 
 <style>
-    nav {
-        display: none;
-    }
     #top {
         display: flex;
         flex-direction: row;
@@ -52,7 +49,7 @@
         flex-direction: row;
         justify-content: space-between;
     }
-    #title {
+    #title, .mobile {
         display: none;
     }
     a {
@@ -96,7 +93,7 @@
         padding: 0.5rem;
         border: 1px solid black;
     }
-    nav {
+    nav, .mobile {
         display: initial;
     }
 }

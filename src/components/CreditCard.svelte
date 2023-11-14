@@ -16,7 +16,7 @@
 
 <div id="card">
     <a href="/card/{card.id}">
-    {#if Object.hasOwn(card, "image") && card.image != false}
+    {#if Object.hasOwn(card, "image") && card.image != false || $newCard.image == "pending"}
         {#await getCardImage(card)}
             <div id="creditCard" style="background:rgb(253,248,244);"></div>
         {:then image} 
@@ -91,7 +91,7 @@
         background: rgb(253,248,244);
         background-image: linear-gradient(146deg, rgb(var(--color)), rgba(var(--color), 0.6), rgb(var(--color)));
         width: 323px;
-        height: 186px;
+        height: 185px;
         padding: 25px;
         border-radius: 18px;
         box-shadow: 10px 10px 5px silver, 0 0 3px silver;
