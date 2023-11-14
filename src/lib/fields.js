@@ -31,7 +31,7 @@ export const dataField = {
   redemption: {
     name: "Rewards Redemption",
     type: "select",
-    options: ["Cash Back", "Miles", "Points"],
+    options: ["Cash Back", "Miles", "Points", "No Rewards"],
   },
   brand: {
     name: "Brand",
