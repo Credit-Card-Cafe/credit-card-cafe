@@ -11,7 +11,8 @@ const waitTime = 500;
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+console.log(app)
+export const db = getFirestore(app);
 const storage = getStorage();
 
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
