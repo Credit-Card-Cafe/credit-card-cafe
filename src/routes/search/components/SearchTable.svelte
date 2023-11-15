@@ -79,7 +79,12 @@
                     {#each Object.keys(dataField[query]["data"]) as field}
                         {#if objects.includes(field) }
                             {#if card[query] && Object.hasOwn(card[query],field)} 
-                                <td>{card[query][field]}</td>  
+                                <td>{#if dataField[query]["data"][field].unit == "$"}
+                                    ${card[query][field]}
+                                    {:else}
+                                    {card[query][field]}{dataField[query]["data"][field].unit}
+                                    {/if}
+                                </td>  
                             {:else}
                                 <td>[Data doesn't exist.] 
                                 {#if $admin}
