@@ -68,7 +68,7 @@ export const dataField = {
       info_location: {
         name: "Account Number Location",
         type: "radio",
-        options: ["Front", "Back", "Both"],
+        options: ["Front", "Back", "Both", "No Number"],
       },
     },
   },
