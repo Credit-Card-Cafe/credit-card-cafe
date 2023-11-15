@@ -3,7 +3,7 @@
 //<select>              :  property: { name: "Display Name", type: "submit", options: ["option 1", "option n"]}
 //<input type="radio">  :  property: { name: "Display Name", type: "radio", options: ["option 1", "option n"]}
 //lists                 :  property: { name: "Display Name", type: "list", action: "Button Name"}
-//<input type="number"> :  property: { name: "Display Name", type: "number"}
+//<input type="number"> :  property: { name: "Display Name", type: "number", unit: "symbol"}
 //<input type="color">  :  property: { name: "Display Name", type: "color"}
 //Object                :  property: { name: "Display Name", type: "object", data: { input1: {}, inputN: {}}
 //Dynamic Object        :  property: { name: "Display Name", action: "Button Name", list: "List in Lists", type: "dynamic"}
@@ -17,11 +17,14 @@ export const dataField = {
     options: ["Visa", "MasterCard", "American Express", "Discover", "None"],
   },
   link: { name: "Link to Card", type: "text"},
-  foreign_transaction_fee: {
-    name: "Foreign Transaction Fee (%)",
-    type: "number",
+  fees: {
+    name: "Fees",
+    type: "object",
+    data: {
+      foreign_transaction_fee: { name: "Foreign Transaction Fee", type: "number", unit:"%" },
+      annual_fee: { name: "Annual Fee", type: "number", unit: "$" },
+    }
   },
-  annual_fee: { name: "Annual Fee ($)", type: "number" },
   rewards: {
     name: "Rewards",
     action: "Add Reward",

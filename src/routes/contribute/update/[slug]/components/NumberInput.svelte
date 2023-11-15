@@ -11,6 +11,10 @@
     const dispatch = createEventDispatcher();
     const checkObject = () => dispatch('update')
 
+    $: if (value < 0) {
+        value = 0;
+    }
+
     function setUpdate() {
         if (object) {
             if (!Object.hasOwn($newCard, object)) {
@@ -20,7 +24,7 @@
             checkObject();
         } else {
             $newCard[field] = value;
-            if (value == defaultValue || (!defaultValue && value === "") ) {
+            if (value == defaultValue || (!defaultValue && value == null) ) {
                 delete $newCard[field];
             }
         }
@@ -31,7 +35,7 @@
 
 <div class={value === undefined ? 'undef' : ''}>
     {#if list} {list[field]} purchases {:else if object} {dataField[object]["data"][field].name} {:else} {dataField[field].name} {/if}
-    <input type="number" bind:value on:input={() => setUpdate()}>
+    <input type="number" min="0" bind:value on:input={() => setUpdate()}>
 </div>
 
 <style>
