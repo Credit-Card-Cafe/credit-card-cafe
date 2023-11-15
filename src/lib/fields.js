@@ -5,8 +5,9 @@
 //lists                 :  property: { name: "Display Name", type: "list", action: "Button Name"}
 //<input type="number"> :  property: { name: "Display Name", type: "number", unit: "symbol"}
 //<input type="color">  :  property: { name: "Display Name", type: "color"}
-//Object                :  property: { name: "Display Name", type: "object", data: { input1: {}, inputN: {}}
+//Objects               :  property: { name: "Display Name", type: "object", data: { input1: {}, inputN: {}}
 //Dynamic Object        :  property: { name: "Display Name", action: "Button Name", list: "List in Lists", type: "dynamic"}
+//<input type="file">   :  property: { name: "Display Name", type: "upload"}
 
 export const dataField = {
   bank: { name: "Bank", type: "text"},
@@ -91,7 +92,7 @@ export const lists = {
     utilities: "Utility",
     car: "Car Rental",
     airline: "Airline",
-    dining: "Dining",
+    dining: "Restaurants / Dining",
     home: "Home Improvement",
     default: "All other",
     drug: "Drug Store",

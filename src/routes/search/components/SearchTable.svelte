@@ -3,8 +3,8 @@
     import {orderCards} from "../../../lib/firebase";
     import { cardList, user, admin } from "../../../lib/stores";
     
-    var queries = ["network"];
-    var objects =[];
+    var queries = ["network", "fees"];
+    var objects =["annual_fee","foreign_transaction_fee"];
     var results = 5;
 
     let searchResults = $cardList
