@@ -1,8 +1,8 @@
 <script lang="js">
 	export let card;
     export let updateAuthorization;
-    import {createEventDispatcher, onDestroy, onMount } from "svelte";
-    import { newCard, admin, oneCard } from "../../../../lib/stores";
+    import {createEventDispatcher, onDestroy } from "svelte";
+    import { newCard, admin } from "../../../../lib/stores";
     import {dataField} from "../../../../lib/fields";
     import CreditCard from "../../../../components/CreditCard.svelte";
 
@@ -72,7 +72,7 @@
     {/if}
 {:else}
 <div id="after">
-    Thx.
+    Thank you for submitting an update. We will review and implement the changes as soon as possible.
 </div>
 {/if}
 

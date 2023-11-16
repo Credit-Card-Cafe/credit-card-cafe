@@ -3,20 +3,23 @@
     import Update from './Update.svelte';
     import { updateCard, getOne, addSubmission } from "$lib/firebase";
     export let data;
+    import { goto } from '$app/navigation';
     import { user, newCard, oneCard, admin } from '$lib/stores';
 
     var updateAuthorization = true;
 
     function sendUpdate() {
       if ($user && $user.admin && $admin) {
-        updateCard($newCard, $newCard.id).then((data) => {
+        updateCard($newCard, $newCard.id).then((e) => {
             updateAuthorization = false; 
             $newCard = {};
+            goto(`/card/${data.slug}`)
         });
       } else if ($user) {
         addSubmission({card: $newCard, id: $newCard.id}, "update").then((data) => {
             updateAuthorization = false; 
             $newCard = {};
+
         });
       } else {
         window.alert("Must log in to update")
