@@ -1,5 +1,5 @@
 <script lang="js">
-    import { user, admin } from "$lib/stores";
+    import { user, admin, cardList } from "$lib/stores";
     import LogInButton from "../components/LogInButton.svelte";
     import { headerColor } from "$lib/stores";
     import SearchBar from "../components/SearchBar.svelte";
@@ -7,6 +7,9 @@
 
 </script>
 
+{#if $cardList.length == 0}
+    <div class="firebase-err">Looks like theres an issue with our database, hang tight! (Or refresh, that sometimes helps.)</div>
+{/if}
 <div id="top" style={`background:${$headerColor}`}>
     <div id="start">
         <div id="title">CreditCardDB</div>
@@ -95,6 +98,12 @@
     }
     nav, .mobile {
         display: initial;
+    }
+    .firebase-err{
+        padding: 0.5rem;
+        background-color: #ffa0a0;
+        text-align: center;
+        font-weight: 600;
     }
 }
 </style>
