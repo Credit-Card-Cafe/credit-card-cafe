@@ -47,17 +47,15 @@
 
 <div>
   {#await getCard()}
-    Not Dope.
     <CreditCard card={card} --color="{card.color}"></CreditCard>
     <CardInfo card={card}></CardInfo>
   {:then} 
-    Dope
     <CreditCard card={$oneCard} --color="{$oneCard.color}" showTrackCard={loaded}></CreditCard>
     <CardInfo card={$oneCard}></CardInfo>
     {#if $user}
       <a href="/contribute/update/{$oneCard.id}">Update Information</a>
     {/if}
-  {:catch}
+  {:catch} 
     Credit Card could not be located / does not exist.
   {/await}
   {#if $admin}
