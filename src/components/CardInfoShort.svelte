@@ -25,10 +25,8 @@
     }
     #cis.right {
         border-radius: 0 18px 18px 0;
-        padding-left: 40px;
     }
     #cis.left {
         border-radius: 18px 0 0 18px;
-        padding-right: 40px
     }
 </style>
