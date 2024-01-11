@@ -1,20 +1,20 @@
-<script lang="js">
+<script lang="ts">
   export let data;
   import CardStack from '../../../components/CardStack.svelte';
   import { cardList } from '$lib/stores.js';
   import { getOneBank } from '$lib/firebase.js';
   import BankInfo from './components/BankInfo.svelte';
+    import type { BankType, CreditCardType } from '$lib/types';
 
-  let bank = {
-    name: "Loading...",
-    info: "Loading..."
-  }
+  let bank:BankType
 
-  let list = [];
+  let list:Array<CreditCardType> = [];
   getOneBank(data.slug).then((result) => {
      bank = result;
      list = $cardList.filter((card) => (
-      Object.hasOwn(card, "bank_id")
+      card.bank_id
+      &&
+      bank.id
       &&
       card.bank_id == bank.id
       )

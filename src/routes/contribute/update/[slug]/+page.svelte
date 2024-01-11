@@ -1,34 +1,50 @@
 <!-- Individual card update page-->
-<script lang="js">
+<script lang="ts">
     import Update from './Update.svelte';
     import { updateCard, getOne, addSubmission } from "$lib/firebase";
     export let data;
     import { goto } from '$app/navigation';
     import { user, newCard, oneCard, admin } from '$lib/stores';
+    import { SubmissionType, type Submission } from '$lib/types';
 
     var updateAuthorization = true;
 
     function sendUpdate() {
-      if ($user && $user.admin && $admin) {
-        updateCard($newCard, $newCard.id).then((e) => {
-            updateAuthorization = false; 
-            $newCard = {};
-            goto(`/card/${data.slug}`)
-        });
-      } else if ($user) {
-        addSubmission({card: $newCard, id: $newCard.id}, "update").then((data) => {
-            updateAuthorization = false; 
-            $newCard = {};
-
-        });
+      if ($newCard) {
+        if ($user && $user.admin && $admin) {
+          updateCard($newCard).then(() => {
+              updateAuthorization = false; 
+              $newCard = undefined;
+              goto(`/card/${data.slug}`)
+          });
+        } else if ($user) {
+          let submission:Submission = {
+              obj: $newCard,
+              type: SubmissionType.Update,
+              user: $user.uid,
+              time: Date.now(),
+              display: true
+          }
+          if ($newCard.image && $newCard.image != "pending" && $newCard.image !== true && "image" in submission.obj) {
+            submission.image = $newCard.image;
+            submission.obj.image = "pending";
+            $newCard.image = true;
+          }
+          addSubmission(submission).then(() => {
+              updateAuthorization = false; 
+              $newCard = undefined;
+          });
+        } else {
+          window.alert("Must log in to update")
+        }
       } else {
-        window.alert("Must log in to update")
+        window.alert("Nothing to Update!")
       }
     }
     
     var skipDatabaseRead = false;
 
-    if (data.slug == $oneCard.id) {
+    if ($oneCard && data.slug == $oneCard.id) {
       skipDatabaseRead = true;
     }
   </script>
@@ -38,7 +54,7 @@
 </svelte:head>
 
   {#if $user}
-    {#if skipDatabaseRead}
+    {#if skipDatabaseRead && $oneCard}
       <Update card={$oneCard} updateAuthorization={updateAuthorization} on:submit={() => sendUpdate()}></Update>
     {:else}
       {#await getOne(data.slug)}
