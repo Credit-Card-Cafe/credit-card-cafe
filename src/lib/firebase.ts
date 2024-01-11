@@ -1,52 +1,52 @@
 import { initializeApp } from "firebase/app";
-import { collection, onSnapshot, getFirestore, setDoc, updateDoc, doc, query, limit,orderBy, getDocs, getDoc, where} from "firebase/firestore";
-import { getAuth, signOut, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
+import { collection, onSnapshot, getFirestore, setDoc, updateDoc, doc, query, limit,orderBy, getDocs, getDoc, where, Firestore, type DocumentData} from "firebase/firestore";
+import { getAuth, signOut, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, OAuthCredential, type UserCredential, type User } from "firebase/auth";
 import { user, cardList, oneCard } from "./stores";
 import { firebaseConfig } from "../../firebaseconfig"
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import type { BankType, CreditCardType, Submission } from "./types";
 
 //lmao lets make the user wait longer for the website to load
-const sleep = (m) => new Promise((r) => setTimeout(r, m));
-const waitTime = 500;
+const sleep = () => new Promise((r) => setTimeout(r, 500));
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db:Firestore = getFirestore(app);
 const storage = getStorage();
 
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //----------------------Database read functions-----------------
 
 //gets a singular doc from its ID
-export async function getOne(id) {
+export async function getOne(id: string) {
   const docRef = doc(db, "creditCards", id);
-  const docSnap = await getDoc(docRef);
+  const docSnap: DocumentData | undefined = await getDoc(docRef);
   oneCard.set(docSnap.data());
-  await sleep(waitTime);
+  await sleep();
   if (docSnap.exists()) {
     return docSnap.data();
   }
 }
 
-export async function getOneBank(id) {
+export async function getOneBank(id: string) {
   const docRef = doc(db, "banks", id);
-  const docSnap = await getDoc(docRef);
+  const docSnap: DocumentData | undefined = await getDoc(docRef);
   oneCard.set(docSnap.data());
-  await sleep(waitTime);
+  await sleep();
   if (docSnap.exists()) {
     return docSnap.data();
   }
 }
 
 //gets an ordered list of cards
-export async function orderCards(param, results) {
+export async function orderCards(param:string, results:number) {
   const order = query(
     collection(db, "creditCards"),
     orderBy(param, "asc"),
     limit(results)
   );
   const queryDocs = await getDocs(order);
-  const queryList = queryDocs.docs.map((doc) => doc.data());
+  const queryList = queryDocs.docs.map((doc) => doc.data() as CreditCardType);
   return queryList;
 }
 
@@ -55,30 +55,34 @@ export async function orderCards(param, results) {
 export const unsubCards = onSnapshot(
   collection(db, "creditCards"),
   (creditCards) => {
-    const list = creditCards.docs.map((doc) => doc.data());
+    const list:Array<CreditCardType> = creditCards.docs.map((doc) => doc.data() as CreditCardType);
     cardList.set(list);
   }
 );
 
-async function getBanks(db) {
+async function getBanks(db:Firestore) {
   const bankCollection = collection(db, "banks");
   const bankDocs = await getDocs(bankCollection);
-  const list = bankDocs.docs.map((doc) => doc.data());
+  const list = bankDocs.docs.map((doc) => doc.data() as BankType);
   return list;
 }
 
 export const getBankList = getBanks(db);
 
-async function getSubmissions(db) {
+async function getSubmissions(db:Firestore) {
   const subCollection = query(collection(db, "submissions"), where('display','==',true));
   const subdocs = await getDocs(subCollection);
-  const list = subdocs.docs.map((doc) => doc);
+  const list = subdocs.docs.map((doc) => {
+    let obj = doc.data()
+    obj.id = doc.id
+    return obj as Submission
+  });
   return list;
 }
 
 export const getSubmissionList = getSubmissions(db);
 
-export async function getCardImage(card) {
+export async function getCardImage(card: CreditCardType) {
   const imgRef = ref(storage, 'images/' + card.id + ".png");
   return await getDownloadURL(imgRef);
 }
@@ -88,57 +92,49 @@ export async function getCardImage(card) {
 
 //adds a new card to the database
 //DATA NOT SANATIZED, so pretty please dont go live :)
-export async function addCard(card) {
+export async function addCard(card: CreditCardType) {
   await setDoc(doc(db, "creditCards", card.id), card);
 }
 
-export async function addBank(bank) {
+export async function addBank(bank: BankType) {
   await setDoc(doc(db, "banks", bank.id), bank);
 }
 
-export async function addSubmission(obj, type) {
-  let uid = ""
-  user.subscribe((usr) => {
-    uid = usr.uid;
-  })
-  if (Object.hasOwn(obj, "card") && Object.hasOwn(obj.card, "image")) {
-    const imgRef = ref(storage, 'images/' + obj.id + ".png");
-    uploadBytes(imgRef, obj.card.image).then(
-      obj.card.image = true
-    ).catch((e) => {
-      console.log(e);
-      obj.card.image = false;
-    });
+export async function addSubmission(submission: Submission) {
+  if (submission.image) { //add image to storage if submission is an update
+    const imgRef = ref(storage, 'images/' + submission.obj.id + ".png");
+    uploadBytes(imgRef, submission.image).then(() => {
+      delete submission.image;
+    }).catch(() => {
+      delete submission.image
+    })
   }
-  await setDoc(doc(collection(db, "submissions")), {
-    obj: obj,
-    type: type,
-    user: uid,
-    time: Date.now(),
-    display: true
-  });
+  await setDoc(doc(collection(db, "submissions")), submission);
 }
 
 //updates a card in the database
 //DATA NOT SANATIZED, so pretty please dont go live :)
-export async function updateCard(card, id) {
-  if (Object.hasOwn(card, "image") && card.image != "pending") {
-    const imgRef = ref(storage, 'images/' + id + ".png");
-    uploadBytes(imgRef, card.image).then(
+export async function updateCard(card:CreditCardType) {
+  if (card.image && card.image != "pending" && typeof card.image != 'boolean') {
+    const imgRef = ref(storage, 'images/' + card.id + ".png");
+    uploadBytes(imgRef, card.image).then(() => {
       card.image = true
-    ).catch((e) => {
+    }).catch((e) => {
       console.log(e);
       card.image = false;
     });
   }
-  const ccard = doc(db, "creditCards", id);
+  const ccard = doc(db, "creditCards", card.id);
   return updateDoc(ccard, card);
 }
 
-export async function updateUser(field, value) {
-  let uid = ""
+
+export async function updateUser(field: "wallet" | "tracking", value:Array<string>) {
+  let uid: string | undefined = "";
   user.subscribe((usr) => {
-    uid = usr.uid;
+    if (usr) {
+      uid = usr.uid;
+    }
   })
   const userDoc = doc(db, "users", uid);
   return updateDoc(userDoc, {
@@ -146,10 +142,13 @@ export async function updateUser(field, value) {
   })
 }
 
-export async function updateSubmission(submission, id) {
-  const subDoc = doc(db, "submissions", id);
-  return updateDoc(subDoc, submission);
+export async function updateSubmission(submission: Submission) {
+  if (submission.id) {
+    const subDoc = doc(db, "submissions", submission.id);
+    return updateDoc(subDoc, submission as object);
+  }
 }
+
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //----------------------Firebase Auth functions-----------------
 
@@ -162,8 +161,8 @@ export async function logIn() {
   signInWithPopup(auth, provider)
     .then((result) => {
       // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
+      //const credential: OAuthCredential | null = GoogleAuthProvider.credentialFromResult(result);
+      //const token = credential.accessToken;
       // The signed-in user info.
       const client = result.user;
       initUserData(client);
@@ -172,27 +171,40 @@ export async function logIn() {
     })
     .catch((error) => {
       // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
+      //const errorCode = error.code;
+      //const errorMessage = error.message;
       // The email of the user's account used.
-      const email = error.customData.email;
+      //const email = error.customData.email;
       // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
+      //const credential = GoogleAuthProvider.credentialFromError(error);
       // ...
     });
 }
 
-async function initUserData(client) {
+async function initUserData(client: User) {
     const docRef = doc(db, "users", client.uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      user.set({ ...client, ...docSnap.data() });
+      user.set({
+        displayName: client.displayName,
+        admin: docSnap.data().admin,
+        wallet: docSnap.data().wallet,
+        tracking: docSnap.data().tracking,
+        uid: client.uid,
+        email: client.email,
+        });
     } else {
       await setDoc(doc(db, "users", client.uid),{
         wallet: [],
         tracking: []
       }).then((obj) => {
-        user.set({ ...client, ...obj });
+        user.set({
+          displayName: client.displayName,
+          wallet: [],
+          tracking: [],
+          uid: client.uid,
+          email: client.email,
+        });
       });
     }
 }
@@ -203,7 +215,7 @@ onAuthStateChanged(auth, (client) => {
   if (client) {
     initUserData(client);
   } else {
-    user.set();
+    user.set(null);
   }
 });
 

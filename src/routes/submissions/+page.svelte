@@ -1,12 +1,13 @@
-<script>
+<script lang="ts">
     import { getSubmissionList, updateSubmission, getBankList} from "$lib/firebase";
     import { saveCardInfo, unavailableBank, newCard, cardList, admin} from "$lib/stores";
     import { goto } from '$app/navigation';
     import { onMount } from "svelte";
+    import {type Submission, type BankType, SubmissionType } from "$lib/types";
 
-    let list = [];
-    let bankList = [];
-    let group = [];
+    let list:Array<Submission> = [];
+    let bankList:Array<BankType> = [];
+    let group:Array<string> = [];
     let display = "";
 
     onMount(() => {
@@ -19,35 +20,49 @@
     });
 
     function removeSubs() {
-        group.forEach((id) => {
-            updateSubmission({display: false}, id);
+        group.forEach((subId) => {
+            let delSub = list.find((sub) => sub.id == subId)
+            if (delSub) {
+                updateSubmission({
+                    display: false,
+                    id: subId,
+                    obj: delSub.obj,
+                    time: delSub.time,
+                    user: delSub.user,
+                    type: delSub.type
+                });
+            }
         });
-        list = list.filter((doc) => !group.includes(doc.id))
+        list = list.filter((doc) => doc.id && !group.includes(doc.id))
         group = [];
     }
 
-    function direct(submission){
+    //directs the user to additional page if submitting a card 
+    function direct(submission: Submission){
         if ($admin) {
-            if (submission.type == "update") {
-                if ($cardList.map((card) => card.id).includes(submission.obj.id)) {
-                    $newCard = submission.obj.card;
-                    if ($newCard.image) {
+            if (submission.type == SubmissionType.Update) {
+                if ($cardList.map((card) => card.id).includes(submission.obj.id)) { //card must exist
+                    $newCard = submission.obj; // Will Be CreditCardType because SubmissionType.Update
+                    if ($newCard && $newCard.image) {
                         $newCard.image = "pending"
                     }
                     goto(`/contribute/update/${submission.obj.id}`)
                 } else {
                     display = "Selected update requires valid Card";
                 }       
-            } else if (submission.type == "add-bank") {
-                $unavailableBank = submission.obj.name;
-                goto(`/contribute/add-bank`)
-            } else if (submission.type == "add-card") {
-                if (bankList.map((bank) => bank.name).includes(submission.obj.bank)) {
+            } else if (submission.type == SubmissionType.AddCard) {
+                if ("bank" in submission.obj && submission.obj.bank && bankList.map((bank) => bank.name).includes(submission.obj.bank)) { //bank must exist
                     $saveCardInfo = submission.obj;
                     goto(`/contribute/add-card`)
                 } else {
                     display = "Selected card requires valid Bank";
                 }
+            } else if (submission.type == SubmissionType.AddBank) {
+                $unavailableBank = submission.obj.name; // Will Be CreditCardType because SubmissionType.AddBank
+                goto(`/contribute/add-bank`)
+            }
+            else {
+                display = "Invalid Submission type. Please delete"
             }
         } else {
             display = "Please enable Admin mode"
@@ -56,7 +71,7 @@
 
 </script>
 
-<div id="submissions">
+<div id="submissions" class="pt-16">
     {#if list.length > 0}
     {#if display !=""}
     <div id="display">{display}</div>
@@ -74,8 +89,8 @@
         {#each list as submission}  
         <tr>
             <td><input type="checkbox" bind:group value={submission.id}></td>
-            <td on:click={() => direct(submission.data())}>{submission.data().type}</td>
-            <td on:click={() => direct(submission.data())}>{submission.data().obj.id}</td>
+            <td on:click={() => direct(submission)}>{submission.type}</td>
+            <td on:click={() => direct(submission)}>{submission.obj.id}</td>
         </tr>
         {/each}
     </table>

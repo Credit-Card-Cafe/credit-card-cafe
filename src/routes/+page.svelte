@@ -7,7 +7,7 @@
   import "./global.css";
 </script>
 
-<div id="home">
+<div id="home" class="dark:text-white-warm md:pt-16 md:ml-12 px-8">
   <div class="title">Welcome to Credit Card DB</div>
   <div>Here you can find advanced details about credit cards</div>
   <div>Disclosure:</div>
@@ -16,12 +16,6 @@
 </div>
 
 <style>
-  :global(body) {
-    margin: 0;
-  }
-  #home {
-    padding: 1rem;
-  }
   .title {
     font-size: larger;
     text-align: center;

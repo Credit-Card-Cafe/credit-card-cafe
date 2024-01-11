@@ -1,14 +1,15 @@
-<script>
-    export let bank;
+<script lang="ts">
+    import type { BankType } from "$lib/types";
+    export let bank:BankType;
 
 </script>
 
 <div id="bankInfo">
     {#if bank}
-        {#if Object.hasOwn(bank, "name")}
+        {#if bank.name}
             <div id="title">{bank.name}</div>
         {/if}
-        {#if Object.hasOwn(bank, "info")}
+        {#if bank.info}
             <div id="info">{bank.info}</div>
         {/if}
     {:else}

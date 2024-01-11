@@ -1,10 +1,10 @@
-<script lang="js">
-	export let card;
-    export let updateAuthorization;
-    import {createEventDispatcher, onDestroy } from "svelte";
-    import { newCard, admin } from "../../../../lib/stores";
-    import {dataField} from "../../../../lib/fields";
-    import CreditCard from "../../../../components/CreditCard.svelte";
+<script lang="ts">
+	export let card: CreditCardType;
+    export let updateAuthorization: boolean;
+    import {createEventDispatcher, onDestroy, onMount } from "svelte";
+    import { newCard, admin } from "$lib/stores";
+    import {dataField} from "$lib/fields";
+    import CreditCard from "components/CreditCard.svelte";
 
     import TextInput from "./components/TextInput.svelte";
     import SelectInput from "./components/SelectInput.svelte";
@@ -15,25 +15,34 @@
     import NumberInput from "./components/NumberInput.svelte";
     import DynamicInput from "./components/DynamicInput.svelte";
     import UploadInput from "./components/UploadInput.svelte";
+    import type { CreditCardType } from "$lib/types";
 
     const dispatch = createEventDispatcher();
     const submit = () => dispatch('submit');
 
     onDestroy(() => {
-        $newCard = {};
+        $newCard = undefined;
     })
 
-    $newCard.id = card.id;
+    onMount(() => {
+        if (!$newCard) {
+            $newCard = {
+                id: card.id,
+                name: card.name,
+            }
+        }
+    })
+
 </script>
 
 {#if updateAuthorization}
-<div id="card">
-    {#if Object.hasOwn($newCard, "color")}
+<div class="flex flex-col items-center mb-4 pt-16">
+    {#if $newCard && $newCard.color}
         <CreditCard card={card} --color="{$newCard.color}"></CreditCard>
     {:else}
         <CreditCard card={card} --color="{card.color}"></CreditCard>
     {/if}
-    <div id="updateFields">
+    <div class="mt-20 flex flex-col align-baseline dark:text-white-warm">
         {#each Object.keys(dataField) as field}
             {#if dataField[field].type == "text"}
                 <TextInput field={field} value={card[field]}></TextInput>
@@ -57,9 +66,9 @@
         {/each}
     </div>
     {#if $admin}
-        <button on:click={() => submit()}>Update Card</button>
+        <button on:click={() => submit()} class="bg-green-500 btn disabled:text-gray-300 disabled:bg-gray-200 disabled:hover:bg-gray-200 hover:bg-green-700">Update Card</button>
     {:else}
-        <button on:click={() => submit()}>Submit Changes</button>
+        <button on:click={() => submit()} class="bg-green-500 btn disabled:text-gray-300 disabled:bg-gray-200 disabled:hover:bg-gray-200 hover:bg-green-700">Submit Changes</button>
     {/if}
 </div>
     {#if $admin}
@@ -77,33 +86,7 @@
 {/if}
 
 <style>
- #card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 10rem;
- }
- #updateFields {
-    margin-top: 5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: baseline;
- }
- button {
-    margin-top: 2rem;
-    border: 2px solid silver;
-    background-color: rgb(253,248,244);
-    padding: 1rem;
-    font-size: 2rem;
-    border-radius: 10px;
-    -webkit-transition: background-color 100ms linear;
-    -ms-transition: background-color 100ms linear;
-    transition: background-color 100ms linear;
- }
- button:hover {
-    background-color: silver;
-    padding: 1rem;
-    font-size: 2rem;
-    border-radius: 10px;
+ .btn {
+    @apply text-white font-bold py-2 text-3xl px-4 rounded-lg transition-all mt-4 mb-8;
  }
 </style>

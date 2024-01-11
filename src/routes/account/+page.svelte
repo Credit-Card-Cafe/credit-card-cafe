@@ -1,16 +1,17 @@
-<script lang="js">
-  import { user, cardList } from '../../lib/stores';
+<script lang="ts">
+  import type { CreditCardType } from '$lib/types';
+  import { user, cardList } from '$lib/stores';
   import Rewards from './components/Rewards.svelte';
-  import CardStack from '../../components/CardStack.svelte';
-  import CreditCard from '../../components/CreditCard.svelte';
+  import CardStack from 'components/CardStack.svelte';
+  import CreditCard from 'components/CreditCard.svelte';
  
-  let wallet = [];
-  let tracking = [];
+  let wallet:Array<CreditCardType> = [];
+  let tracking:Array<CreditCardType> = [];
   
   
   if ($user) {
-    wallet = $cardList.filter((card) => $user && Object.hasOwn($user, "wallet") && $user.wallet.includes(card.id));
-    tracking = $cardList.filter((card) => $user && Object.hasOwn($user, "tracking") && $user.tracking.includes(card.id));
+    wallet = $cardList.filter((card) => card.id && $user && $user.wallet && $user.wallet.includes(card.id));
+    tracking = $cardList.filter((card) => card.id && $user && $user.tracking && $user.tracking.includes(card.id));
   }
   
 </script>
@@ -22,25 +23,27 @@
 {#if $user}
 <div id="account">
   <div id="wallet">
-    <div class="title">Your Wallet</div>
+    <div class="title dark:text-white-warm">Your Wallet</div>
       {#if $user.wallet && $user.wallet.length > 0}
         <CardStack cards={wallet}></CardStack>
-        <Rewards cards={wallet} person={"Your"}></Rewards>
+        <Rewards cards={wallet} title={"Your"}></Rewards>
       {:else}
         <CreditCard card={{
-          name: "You do not have any cards in your wallet. To add a card, find a card you like, then select 'Add to Wallet', from the card's information page."
+          name: "You do not have any cards in your wallet. To add a card, find a card you like, then select 'Add to Wallet', from the card's information page.",
+          id: "null"
         }}></CreditCard>
       {/if}
     </div>
   <div id="tracklist">
-    <div class="title">Tracking</div>
+    <div class="title dark:text-white-warm">Tracking</div>
       {#if $user.tracking && $user.tracking.length > 0}
-        <CardStack cards={tracking} left={true}></CardStack>
-        <Rewards cards={tracking} person={"Potential"} ></Rewards>
+        <CardStack cards={tracking}></CardStack>
+        <Rewards cards={tracking} title={"Potential"} ></Rewards>
       {:else}
         <CreditCard card={{
-          name: "You are not currently tracking any cards. To track a card, find a card you like, then select 'Track Card', from the card's information page. "
-        }}></CreditCard>
+          name: "You are not currently tracking any cards. To track a card, find a card you like, then select 'Track Card', from the card's information page. ",
+          id: "null"
+          }}></CreditCard>
       {/if}
     </div>
 </div>

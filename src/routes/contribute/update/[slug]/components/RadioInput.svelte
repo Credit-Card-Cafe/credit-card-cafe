@@ -1,9 +1,10 @@
-<script>
-    export let field;
-    export let value;
-    export let object = false;
-    import { dataField } from "../../../../../lib/fields";
-    import { newCard } from "../../../../../lib/stores";
+<script lang="ts">
+    export let field: string;
+    export let value: string;
+    export let object: UpdateTypeObjectField = undefined;
+    import type { UpdateTypeObjectField } from "$lib/types";
+    import { dataField } from "$lib/fields";
+    import { newCard } from "$lib/stores";
     import { createEventDispatcher } from "svelte";
 
     const defaultValue = value;
@@ -13,18 +14,20 @@
     const checkObject = () => dispatch('update')
 
     function setUpdate() {
-        if (object) {
-            if (!Object.hasOwn($newCard, object)) {
-                $newCard[object] = {};
-            }
-            $newCard[object][field] = group;
-            checkObject();
-        } else {
-            $newCard[field] = group;
-            if (group == defaultValue || (!defaultValue && group == "")) {
-                delete $newCard[field];
-            }
-        }        
+        if ($newCard) {
+            if (object) {
+                if (!Object.hasOwn($newCard, object)) {
+                    $newCard[object] = {};
+                }
+                $newCard[object][field] = group;
+                checkObject();
+            } else {
+                $newCard[field] = group;
+                if (group == defaultValue || (!defaultValue && group == "")) {
+                    delete $newCard[field];
+                }
+            }        
+        }
     }
 </script>
 

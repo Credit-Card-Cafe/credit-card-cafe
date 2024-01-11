@@ -1,33 +1,27 @@
-<script>
-    export let query;
-    import CreditCard from "../../../components/CreditCard.svelte";
+<script lang="ts">
+    export let query:string | null;
+    import CreditCard from "components/CreditCard.svelte";
     import { getBankList } from "$lib/firebase";
     import { cardList, admin } from "$lib/stores";
-    import BankCard from "../../../components/BankCard.svelte";
+    import BankCard from "components/BankCard.svelte";
+    import type { BankType, CreditCardType } from "$lib/types";
 
-    $: list = [];
+    let list:Array<CreditCardType | BankType> = [];
 
     getBankList.then((banks) => {
-        //cards have banks, banks dont
-        list = banks.concat($cardList).filter((item) => ((
-                Object.hasOwn(item, "bank") 
-                &&
-                Object.hasOwn(item, "search_terms") 
-                &&
-                item.search_terms.join(" ").toLowerCase().includes(query.toLowerCase()) 
-                ||
-                query == "*"
+        list = [...banks, ...$cardList].filter((item) => (
+            "bank" in item && //cards HAVE banks. 
+            item.search_terms &&
+            query &&
+            item.search_terms.join(" ").toLowerCase().includes(query.toLowerCase())
             ) || (
-                Object.hasOwn(item, "nicknames") 
-                &&
-                item.nicknames.concat([item.name]).join(" ").toLowerCase().includes(query.toLowerCase()) 
-                ||
-                query == "*"
+            item.nicknames &&
+            query &&
+            item.nicknames.concat([item.name]).join(" ").toLowerCase().includes(query.toLowerCase())
             ) && (
-                Object.hasOwn(item, "id")
-                &&
-                Object.hasOwn(item, "name")
-            ))
+            item.id &&
+            item.name
+            )
         ).sort((a, b) => { //generic sorting algorithm
             const nameA = a.name.toUpperCase(); // ignore upper and lowercase
             const nameB = b.name.toUpperCase(); // ignore upper and lowercase
@@ -44,15 +38,16 @@
 
 </script>
 
-<div id="cardList">
-{#each list as item}
-        {#if Object.hasOwn(item, "bank")}
-        <div><CreditCard card={item} --color="{item.color}" showTrackCard={true}></CreditCard></div>
-        {:else if Object.hasOwn(item, "id")}
-        <div><BankCard bank={item}></BankCard></div>
-        {/if}
-   
-{/each}
+<div id="cardList" class="grid grid-cols-1 gap-4 justify-center pt-8 md:grid-cols-2 md:gap-12 lg:gap-6 lg:grid-cols-3">
+    {#each list as item}
+        {#key query}
+            {#if "bank" in item} 
+            <div class=""><CreditCard card={item} --color="{item.color}" showTrackCard={true}></CreditCard></div>
+            {:else if Object.hasOwn(item, "id")}
+            <div><BankCard bank={item}></BankCard></div>
+            {/if}
+        {/key}
+    {/each}
 {#if $admin}
     <div class="a">
         <pre>list: {JSON.stringify(list.map((i) => (Object.hasOwn(i,"bank")?"card - ":"bank - ") + i.name),null,1)}</pre>
@@ -61,11 +56,6 @@
 </div>
 
 <style>
-    #cardList {
-        display: grid;
-        grid-template-columns: auto;
-        row-gap: 1rem;
-    }
     .a {
         position: fixed;
         top: 2.5rem;
@@ -81,11 +71,6 @@
         white-space: nowrap;
     }
     @media (min-width: 768px) and (max-width: 1199px) {
-        #cardList {
-            display: grid;
-            grid-template-columns: auto auto;
-            row-gap: 3rem;
-        }
         #cardList > div:nth-child(2n+1){
             z-index: 5;
         }
@@ -97,11 +82,7 @@
         }
     }
     @media (min-width: 1200px) {
-        #cardList {
-            display: grid;
-            grid-template-columns: auto auto auto;
-            row-gap: 3rem;
-        }
+
         #cardList > div:nth-child(3n+1){
             z-index: 5;
         }

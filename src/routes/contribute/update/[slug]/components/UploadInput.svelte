@@ -1,18 +1,22 @@
-<script>
-    export let field;
-    export let value = false;
-    export let object = false;
+<script lang="ts">
+    export let field: UpdateTypeField;
+    export let value: boolean = false;
+    export let object: UpdateTypeObjectField = undefined;
     import { dataField } from "$lib/fields";
     import { newCard } from "$lib/stores";
+    import type { UpdateTypeField, UpdateTypeObjectField } from "$lib/types";
     
-    function setUpdate(file) {
-        if (object) {
-            if (!Object.hasOwn($newCard, object)) {
-                $newCard[object] = {};
+    function setUpdate(e: any) {
+        let file: File = e.target.files[0];
+        if ($newCard) {
+            if (object) {
+                if (!$newCard.object) {
+                    $newCard[object] = {};
+                }
+                $newCard[object][field] = file;
+            } else {
+                $newCard[field] = file;
             }
-            $newCard[object][field] = file;
-        } else {
-            $newCard[field] = file;
         }
     }
 </script>
@@ -20,7 +24,7 @@
 
 <div class={value === false ? 'undef' : ''}>
     {#if object} {dataField[object]["data"][field].name} {:else} {dataField[field].name} {/if}
-    <input type="file" accept=".jpg, .jpeg, .png" on:change={(e) => setUpdate(e.target.files[0])}>
+    <input type="file" accept=".jpg, .jpeg, .png" on:change={setUpdate}>
 </div>
 
 <style>

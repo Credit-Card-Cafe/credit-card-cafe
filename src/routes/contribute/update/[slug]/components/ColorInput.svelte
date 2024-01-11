@@ -1,10 +1,11 @@
-<script>
-    export let field;
-    export let value;
-    export let object = false;
-    import { dataField } from "../../../../../lib/fields";
-    import { newCard } from "../../../../../lib/stores";
-    import { hexToRgb, rgbToHex } from "../../../../../lib/functions";
+<script lang="ts">
+    import type {RGB, HEX, UpdateTypeField, UpdateTypeObjectField} from '$lib/types'
+    export let field: UpdateTypeField;
+    export let value: RGB | HEX;
+    export let object: UpdateTypeObjectField = undefined;
+    import { dataField } from "$lib/fields";
+    import { newCard } from "$lib/stores";
+    import { hexToRgb, rgbToHex } from "$lib/functions";
     import { createEventDispatcher } from "svelte";
 
     const defaultValue = value;
@@ -14,25 +15,26 @@
     if (defaultValue == undefined) {
         value = "#FFEE2D6"
     } else {
-        value = rgbToHex(value[0],value[1],value[2])
+        value = rgbToHex(value as RGB)
     }
     
 
     function setUpdate() {
-        let color = hexToRgb(value);
-        if (object) {
-            if (!Object.hasOwn($newCard, object)) {
-                $newCard[object] = {};
-            }
-            $newCard[object][field] = value;
-            checkObject();
-        } else {
-            $newCard[field] = color;
-            if (JSON.stringify(color) == JSON.stringify(defaultValue) || (!defaultValue && color.length == 0)) {
-                delete $newCard[field];
+        let color = hexToRgb(value as HEX);
+        if ($newCard) {
+            if (object) {
+                if (!$newCard[object]) {
+                    $newCard[object] = {};
+                }
+                $newCard[object][field] = value;
+                checkObject();
+            } else {
+                $newCard[field] = color;
+                if (JSON.stringify(color) == JSON.stringify(defaultValue) || (!defaultValue && color.length != 3)) {
+                    delete $newCard[field];
+                }
             }
         }
-        
     }
 </script>
 

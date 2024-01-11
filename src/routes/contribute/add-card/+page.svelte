@@ -1,5 +1,6 @@
-<script lang="js">
+<script lang="ts">
     import { user, admin, oneCard, bankList, unavailableBank, saveCardInfo} from "$lib/stores";
+    import {type CreditCardType, CardNetwork, CardConsumer, type Submission, SubmissionType} from "$lib/types";
     import { addCard, getBankList, addSubmission } from "$lib/firebase";
     import { goto } from '$app/navigation';
     import { onMount } from "svelte";
@@ -8,14 +9,16 @@
         getBankList.then((list) => {$bankList = [...$bankList, ...list]})
     });
 
-    let unsubmitted = true;
-    let name = "";
-    let bank = "";
-    let network = "";
-    let brand = "";
-    let consumer = "";
+    let unsubmitted: boolean = true;
+    let name: string = "";
+    let bank: string = "";
+    let network: CardNetwork | undefined = undefined;
+    let brand: string = "";
+    let consumer: CardConsumer | undefined = undefined;
+    let tempCard: CreditCardType;
+    let searchTerms: Array<string>;
 
-    $: searchTerms = [name, bank, brand].filter((term) => term!="");
+    $: searchTerms = [name, bank, brand].filter((term) => term != "");
     $: tempCard = {
         name: name,
         bank: bank,
@@ -26,63 +29,64 @@
     } 
 
     if ($saveCardInfo) {
-        (Object.hasOwn($saveCardInfo,"name") ? name = $saveCardInfo.name : name = "");
-        (Object.hasOwn($saveCardInfo,"bank") ? bank = $saveCardInfo.bank : bank = "");
-        (Object.hasOwn($saveCardInfo,"network") ? network = $saveCardInfo.network : network = "");
-        (Object.hasOwn($saveCardInfo,"brand") ? brand = $saveCardInfo.brand : brand = "");
-        (Object.hasOwn($saveCardInfo,"consumer") ? consumer = $saveCardInfo.consumer : consumer = "");
+        ($saveCardInfo.name ? name = $saveCardInfo.name : name = "");
+        ($saveCardInfo.bank ? bank = $saveCardInfo.bank : bank = "");
+        ($saveCardInfo.network ? network = $saveCardInfo.network : network = CardNetwork.None);
+        ($saveCardInfo.brand ? brand = $saveCardInfo.brand : brand = "");
+        ($saveCardInfo.consumer ? consumer = $saveCardInfo.consumer : consumer = CardConsumer.Personal);
         tempCard = $saveCardInfo;
-        $saveCardInfo = false;
+        $saveCardInfo = undefined;
     }
 
 
     $: if (searchTerms && searchTerms.length > 0) {
         tempCard["search_terms"] = searchTerms;
-    } else if (searchTerms && searchTerms.length == 0 && tempCard && Object.hasOwn(tempCard,"search_terms")) {
+    } else if (searchTerms && searchTerms.length == 0 && tempCard && tempCard.search_terms) {
         delete tempCard["search_terms"];
     }
     $: if (brand != "") {
         tempCard["brand"] = brand;
-    } else if (brand == "" && tempCard && Object.hasOwn(tempCard,"brand")){
+    } else if (brand == "" && tempCard && tempCard.brand){
         delete tempCard["brand"];
     }
 
     let validbank = false;
 
     $: if (bank != "") {
-        if (!$bankList.find((b) => b.name == bank)) {
+        const validBank = $bankList.find((b) => b.name == bank)
+        if (validBank) {
+            validbank = true;
+            tempCard["bank_id"] = validBank.id;
+        } else {
             validbank = false;
             $unavailableBank = bank;
-        } else {
-            validbank = true;
-            tempCard["bank_id"] = $bankList.find((b) => b.name == bank).id;
         }
     } else {
         validbank = false;
     } 
 
-    function genId() {
+    function genId():string {
         let delWords = ["credit", "card", "union","for"]
-        let x = name.split(" ").filter((word) =>  !(
-                delWords.includes(word.toLowerCase())
-                ||
-                network.toLowerCase().includes(word.toLowerCase())
-                ||
-                bank.toLowerCase().includes(word.toLowerCase())
-                ||
-                brand.toLowerCase().includes(word.toLowerCase())
-            )).join("-");
-        if (x.length == 0) {x = "card"}
-        if (brand.trim().length > 0) {
-            return brand.trim().concat(" ",x).replace(/ /g, '-').toLowerCase();
-        } else if (bank.trim().length > 0) {
-            return bank.trim().concat(" ",x).replace(/ /g, '-').toLowerCase();
+        if (name) {
+            let x = name.split(" ").filter((word) =>  
+                !( delWords.includes(word.toLowerCase())
+                || network && network && network.toLowerCase().includes(word.toLowerCase())
+                || bank && bank.toLowerCase().includes(word.toLowerCase())
+                || brand && brand.toLowerCase().includes(word.toLowerCase())
+                )).join("-");
+            if (x.length == 0) {x = "card"}
+            if (brand && brand.trim().length > 0) {
+                return brand.trim().concat(" ",x).replace(/ /g, '-').toLowerCase();
+            } else if (bank && bank.trim().length > 0) {
+                return bank.trim().concat(" ",x).replace(/ /g, '-').toLowerCase();
+            }
         }
+        return "";
     }
 
     function submit() {
         if ($user && $user.admin && $admin) {
-            if (name == "" || bank == "" || network == "" || searchTerms.includes("") || consumer == "") {
+            if (name == "" || bank == "" || network == undefined || searchTerms.includes("") || consumer == undefined) {
                 console.log("Something went wrong...")
             } else {
                 addCard(tempCard).then(() => {
@@ -93,10 +97,17 @@
             }
             
         } else if ($user) {
-            if (name == "" || bank == "" || network == "" || searchTerms.includes("") || consumer == "") {
+            if (name == "" || bank == "" || network == undefined || searchTerms.includes("") || consumer == undefined) {
                 console.log("Something went wrong...")
             } else {
-                addSubmission(tempCard, "add-card").then(() => {
+                let submission: Submission = {
+                    obj: tempCard,
+                    display: true,
+                    time: Date.now(),
+                    type: SubmissionType.AddCard,
+                    user: $user.uid
+                }
+                addSubmission(submission).then(() => {
                     unsubmitted = false;
                     goto(`/contribute/update/${tempCard.id}`)
                     $oneCard = tempCard;
@@ -114,39 +125,41 @@
 </svelte:head>
 
 {#if unsubmitted}
-<div id="form">
-    <div class={name == "" ? 'undef' : ''}>Credit Card Name <input bind:value={name} required></div>
-    <div class={bank == "" || !validbank ? 'undef' : ''}>
+<div class="flex flex-col items-center dark:text-white-warm">
+    <div class={`${name == "" ? 'border-2 border-red-400' : ''} rounded-md p-8 mb-3`}>Credit Card Name <input class="bg-slate-100 dark:border-green-500 border-2 outline-0 rounded m-2 dark:bg-neutral-700" bind:value={name} required></div>
+    <div class={`${bank == "" || !validbank ? 'border-2 border-red-400' : ''} rounded-md p-8 mb-3`}>
         {#if !validbank && bank !=""}
-            <div class="err">Not in bank index. <a href="/contribute/add-bank" on:click={() => {$saveCardInfo = tempCard}}>Would you like to add it?</a></div>
+            <div class="mb-4">Not in bank index. <a href="/contribute/add-bank" class="mb-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all" on:click={() => {$saveCardInfo = tempCard}}>Would you like to add it?</a></div>
         {/if}
-        Bank <input bind:value={bank} required>
+        Bank <input class="bg-slate-100 dark:border-green-500 border-2 outline-0 rounded m-2 dark:bg-neutral-700" bind:value={bank} required>
     </div>
-    <div class={network == "" ? 'undef' : ''}>Network 
-        <select bind:value={network} required>
-            <option>Visa</option>
-            <option>MasterCard</option>
-            <option>American Express</option>
-            <option>Discover</option>
-            <option>None</option>
+    <div class={`${network == undefined ? 'border-2 border-red-400' : ''} rounded-md p-8 mb-3`}>Network 
+        <select class="bg-slate-100 dark:border-green-500 border-2 outline-0 rounded m-2 dark:bg-neutral-700" bind:value={network} required>
+            <option disabled value={undefined}>Select Network</option>
+            <option value={CardNetwork.Visa}>Visa</option>
+            <option value={CardNetwork.MasterCard}>MasterCard</option>
+            <option value={CardNetwork.AmericanExpress}>American Express</option>
+            <option value={CardNetwork.Discover}>Discover</option>
+            <option value={CardNetwork.None}>None</option>
         </select>
     </div>
-    <div>Brand <input bind:value={brand}></div>
-    <div class={consumer == "" ? 'undef' : ''}>Consumer 
-        <select bind:value={consumer} required>
-            <option>Personal</option>
-            <option>Business</option>
-            <option>Student</option>
+    <div class="p-8 mb-3">Brand <input class="bg-slate-100 dark:border-green-500 border-2 outline-0 rounded m-2 dark:bg-neutral-700" bind:value={brand}></div>
+    <div class={`${consumer == undefined ? 'border-2 border-red-400' : ''} rounded-md p-8 mb-3`}>Consumer 
+        <select class="bg-slate-100 dark:border-green-500 border-2 outline-0 rounded m-2 dark:bg-neutral-700" bind:value={consumer} required>
+            <option disabled value={undefined}>Select Consumer</option>
+            <option value={CardConsumer.Personal}>Personal</option>
+            <option value={CardConsumer.Business}>Business</option>
+            <option value={CardConsumer.Student}>Student</option>
         </select>
     </div>
     {#if $admin}
-    <button disabled={name == "" || bank == "" || network == "" || consumer == "" || !validbank ? true : false} on:click={() => submit()}>Add Card</button>
+    <button class="bg-green-500 mb-3 text-white font-bold py-2 px-4 rounded transition-all disabled:text-gray-300 disabled:bg-gray-200 disabled:hover:bg-gray-200 hover:bg-green-700" disabled={name == "" || bank == "" || network == undefined || consumer == undefined || !validbank ? true : false} on:click={() => submit()}>Add Card</button>
     {:else}
-    <button disabled={name == "" || bank == "" || network == "" || consumer == "" || !validbank ? true : false} on:click={() => submit()}>Submit Card</button>
+    <button class="bg-green-500 mb-3 text-white font-bold py-2 px-4 rounded transition-all disabled:text-gray-300 disabled:bg-gray-200 disabled:hover:bg-gray-200 hover:bg-green-700" disabled={name == "" || bank == "" || network == undefined || consumer == undefined || !validbank ? true : false} on:click={() => submit()}>Submit Card</button>
     {/if}
 </div>
     {#if $admin}
-    <div class="a">
+    <div class="fixed top-24 left-8">
         <pre>name: {name}<br>bank: {bank}<br>network: {network}<br>brand: {brand}<br>consumer: {consumer}<br>search_terms: {searchTerms}<br></pre>
         <pre>{JSON.stringify(tempCard,null,1)}</pre>
     </div>
@@ -157,29 +170,3 @@
     Loading...
 </div>
 {/if}
-
-
-<style>
-    #form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    #form > div {
-        border-radius: 5px;
-        padding: 2rem;
-        margin-bottom: 0.75rem;
-        transition: 0.25s all ease;
-    }
-    .undef {
-        border: 1px solid red;
-    }
-    .a {
-        position:fixed;
-        top: 6rem;
-        left: 2rem;
-    }
-    .err {
-        margin-bottom: 1rem;
-    }
-</style>

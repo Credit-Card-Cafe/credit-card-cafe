@@ -1,5 +1,6 @@
-<script lang="js">
-      export let bank;
+<script lang="ts">
+    import type { BankType } from "$lib/types";
+      export let bank:BankType;
   </script>
   
   

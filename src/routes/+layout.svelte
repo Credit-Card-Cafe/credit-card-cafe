@@ -1,112 +1,52 @@
-<script lang="js">
+<script lang="ts">
+    import "../app.css";
     import { user, admin, cardList } from "$lib/stores";
-    import LogInButton from "../components/LogInButton.svelte";
-    import { headerColor } from "$lib/stores";
-    import SearchBar from "../components/SearchBar.svelte";
-    import AccountActions from "../components/AccountActions.svelte";
+    import LogInButton from "components/layout/LogInButton.svelte";
+    import SearchBar from "components/layout/SearchBar.svelte";
+    import AccountActions from "components/layout/AccountActions.svelte";
+    import MobileActions from "components/layout/MobileActions.svelte";
+    import Nav from "components/layout/Nav.svelte";
 
+    $: showMobileMenu = false;
 </script>
 
+
 {#if $cardList.length == 0}
-    <div class="firebase-err">Looks like theres an issue with our database, hang tight! (Or refresh, that sometimes helps.)</div>
+    <div class="p-2 bg-red-300 text-center font-semibold hidden lg:block">Trying to connect to the database, give us a sec! (Or refresh, that sometimes helps.)</div>
 {/if}
-<div id="top" style={`background:${$headerColor}`}>
-    <div id="start">
-        <div id="title">CreditCardDB</div>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/search">Cards</a>
-            {#if $user}
-                <a href="/contribute" class="mobile">Contribute</a>
-                {#if $user.admin}
-                    <a href="/submissions" class="mobile">Submissions</a>
-                {/if}
-            {/if}
-        </nav>
+{#if showMobileMenu}
+    <MobileActions bind:showMobileMenu></MobileActions>
+{/if}
+<div class={`flex flex-row lg:items-center justify-between lg:justify-items-center lg:py-4 lg:px-8 py-2 bg-alt dark:bg-main-gray shadow-md shadow-main-dark-green`}>
+    <div class="flex items-center justify-center lg:hidden ml-8 lg:ml-0 lg:mr-8 text-green-500 font-semibold">CreditCardDB</div>
+    <div id="start" class="hidden lg:flex flex-row justify-between items-center">
+        <div class="ml-8 lg:ml-0 lg:mr-8 text-green-500 font-semibold">CreditCardDB</div>
+        <Nav></Nav>
         <SearchBar></SearchBar>
     </div>
-    <div id="end" class="flex">
+    <div id="end" class="hidden lg:flex">
         {#if $user}
             <AccountActions></AccountActions>
         {:else}
             <LogInButton></LogInButton>
         {/if}
     </div>
+    <div class="block lg:hidden p-6">
+        <button on:click={() => showMobileMenu = !showMobileMenu}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 dark:text-green-500">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </button>
+    </div>
 </div>
-{#if $admin}
-    <div class="a">
+{#if $user && $admin}
+    <div class="hidden lg:block fixed top-16 right-8 bg-white p-2 border">
         <pre>uid: {$user.uid}<br>displayName: {$user.displayName}<br>email: {$user.email}</pre>
     </div>
 {/if}
 
-<style>
-    #top {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-evenly;
-        padding: 0.5rem 0;
-    }
-    #start {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    #title, .mobile {
-        display: none;
-    }
-    a {
-        text-decoration: none;
-        color: black;
-        padding: .70rem;
-        font-size: 1rem;
-    }
-    :global(body) {
-        margin: 0;
-    }
-    nav {
-        display: flex;
-    }
-@media (min-width: 768px) {
-    #top {
-        justify-content: space-between;
-        justify-items: center;
-        margin-bottom: 4rem;
-        padding: 1rem 2rem;
-    }
-    #title, nav {
-        display: inline;
-    }
-    #title {
-        margin-right: 2rem;
-        display: block;
-    }
-    a {
-        margin: .5rem;
-    }
-    a:hover {
-        background: rgba(0,0,0,0.1);
-        border-radius: 5px;
-    }
-    .a {
-        position: fixed;
-        top: 2.5rem;
-        right:2rem;
-        background: white;
-        padding: 0.5rem;
-        border: 1px solid black;
-    }
-    nav, .mobile {
-        display: initial;
-    }
-    .firebase-err{
-        padding: 0.5rem;
-        background-color: #ffa0a0;
-        text-align: center;
-        font-weight: 600;
-    }
-}
-</style>
+<div class="w-full min-h-[-webkit-fill-available] bg-alt dark:bg-main-gray"><slot /></div>
 
-<slot />
 
+<!-- Footer -->
+<div class="w-full p-10 h-10 bg-alt dark:bg-main-gray flex flex-row justify-center items-center"><div class="hidden lg:block lg:mr-8 text-green-500 font-semibold">CreditCardDB</div></div>

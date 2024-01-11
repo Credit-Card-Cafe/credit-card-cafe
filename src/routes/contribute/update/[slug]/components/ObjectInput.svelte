@@ -1,11 +1,12 @@
-<script>
-    export let field;
-    export let object;
-    import { dataField } from "../../../../../lib/fields";
+<script lang="ts">
+    export let field: string;
+    export let object: UpdateTypeObject;
+    import { dataField } from "$lib/fields";
     import RadioInput from "./RadioInput.svelte";
     import TextInput from "./TextInput.svelte";
     import NumberInput from "./NumberInput.svelte";
-    import { newCard } from "../../../../../lib/stores";
+    import { newCard } from "$lib/stores";
+    import type { UpdateTypeObject } from "$lib/types";
 
     const keys = Object.keys(dataField[field]["data"]);
 
@@ -31,30 +32,32 @@
             1. Object does not have this field, newCard[field] does have this field, and the field is blank.
             
         */
+       if ($newCard) {
         let rmField = true;
-        for (let prop of keys) {
-            if (Object.hasOwn(object, prop) && object[prop] != "") { //B4
-                if(!Object.hasOwn($newCard[field], prop)) { //B1
-                    $newCard[field][prop] = object[prop];
+            for (let prop of keys) {
+                if (Object.hasOwn(object, prop) && object[prop] != "") { //B4
+                    if(!Object.hasOwn($newCard[field], prop)) { //B1
+                        $newCard[field][prop] = object[prop];
+                    }
+                    if($newCard[field][prop] != object[prop]){ //A2, B3
+                        rmField = false; 
+                    } 
+                } else if (Object.hasOwn($newCard[field], prop)) { //A1, B2
+                    if ($newCard[field][prop] === "" || $newCard[field][prop] == null) { //C2
+                        delete $newCard[field][prop];
+                    } else {
+                        rmField = false; 
+                    }   
                 }
-                if($newCard[field][prop] != object[prop]){ //A2, B3
-                    rmField = false; 
-                } 
-            } else if (Object.hasOwn($newCard[field], prop)) { //A1, B2
-                if ($newCard[field][prop] === "" || $newCard[field][prop] == null) { //C2
-                    delete $newCard[field][prop];
-                } else {
-                    rmField = false; 
-                }   
             }
-        }
-        if(rmField){
-            delete $newCard[field];
+            if(rmField){
+                delete $newCard[field];
+            }
         }
     }
 </script>
 
-<div class="{object == {} ? 'undef' : 'object'}">
+<div class="object">
     <div class="title">{dataField[field].name}</div>
     {#each keys as data}
         {#if dataField[field]["data"][data].type == "text"}
@@ -77,11 +80,5 @@
     .title {
         font-weight: 700;
         font-size: 1.5rem;
-    }
-    .undef {
-        padding: 1rem;
-        margin: 1rem 0;
-        border: 1px solid red;
-        border-radius: 5px;
     }
 </style>

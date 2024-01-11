@@ -9,7 +9,7 @@
 //Dynamic Object        :  property: { name: "Display Name", action: "Button Name", list: "List in Lists", type: "dynamic"}
 //<input type="file">   :  property: { name: "Display Name", type: "upload"}
 
-export const dataField = {
+export const dataField: {[Key: string]:{[Key: string]:any}} = {
   bank: { name: "Bank", type: "text"},
   name: { name: "Name", type: "text",},
   network: {
@@ -77,7 +77,8 @@ export const dataField = {
   search_terms: { name: "Search Terms", type: "list", action: "New Search Term..."}
 };
 
-export const lists = {
+
+export const lists: {[Key: string]:{[Key: string]: string}} = {
   rewardCategories: {
     grocery: "Grocery",
     online: "Online Shopping",
