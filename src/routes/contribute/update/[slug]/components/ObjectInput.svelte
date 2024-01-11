@@ -4,6 +4,7 @@
     import { dataField } from "../../../../../lib/fields";
     import RadioInput from "./RadioInput.svelte";
     import TextInput from "./TextInput.svelte";
+    import NumberInput from "./NumberInput.svelte";
     import { newCard } from "../../../../../lib/stores";
 
     const keys = Object.keys(dataField[field]["data"]);
@@ -17,7 +18,7 @@
 
     function checkObject() {
         /* A. Deletes the $newCard[field], unless:
-            1. newCard[field] has a property that this object doesn't have, and that property is not blank.
+            1. newCard[field] has a property that this object doesn't have, and that property is not blank or null.
             2. newCard[field] has a property that is different than the objects property, but this object does have.
 
            B. Adds add of this object's properties to newCard[field], if:
@@ -40,7 +41,7 @@
                     rmField = false; 
                 } 
             } else if (Object.hasOwn($newCard[field], prop)) { //A1, B2
-                if ($newCard[field][prop] == "") { //C2
+                if ($newCard[field][prop] === "" || $newCard[field][prop] == null) { //C2
                     delete $newCard[field][prop];
                 } else {
                     rmField = false; 
@@ -60,6 +61,8 @@
             <TextInput field={data} value={object[data]} object={field} on:update={() => checkObject()}></TextInput>
         {:else if dataField[field]["data"][data].type == "radio"}
             <RadioInput field={data} value={object[data]} object={field} on:update={() => checkObject()}></RadioInput>
+        {:else if dataField[field]["data"][data].type == "number"}
+            <NumberInput field={data} value={object[data]} object={field} on:update={() => checkObject()}></NumberInput>
         {/if}
     {/each}
 </div>

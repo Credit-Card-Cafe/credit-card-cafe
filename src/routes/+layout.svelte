@@ -1,5 +1,5 @@
 <script lang="js">
-    import { user, admin } from "$lib/stores";
+    import { user, admin, cardList } from "$lib/stores";
     import LogInButton from "../components/LogInButton.svelte";
     import { headerColor } from "$lib/stores";
     import SearchBar from "../components/SearchBar.svelte";
@@ -7,6 +7,9 @@
 
 </script>
 
+{#if $cardList.length == 0}
+    <div class="firebase-err">Looks like theres an issue with our database, hang tight! (Or refresh, that sometimes helps.)</div>
+{/if}
 <div id="top" style={`background:${$headerColor}`}>
     <div id="start">
         <div id="title">CreditCardDB</div>
@@ -14,9 +17,9 @@
             <a href="/">Home</a>
             <a href="/search">Cards</a>
             {#if $user}
-                <a href="/contribute">Contribute</a>
+                <a href="/contribute" class="mobile">Contribute</a>
                 {#if $user.admin}
-                    <a href="/submissions">Submissions</a>
+                    <a href="/submissions" class="mobile">Submissions</a>
                 {/if}
             {/if}
         </nav>
@@ -37,9 +40,6 @@
 {/if}
 
 <style>
-    nav {
-        display: none;
-    }
     #top {
         display: flex;
         flex-direction: row;
@@ -52,7 +52,7 @@
         flex-direction: row;
         justify-content: space-between;
     }
-    #title {
+    #title, .mobile {
         display: none;
     }
     a {
@@ -96,8 +96,14 @@
         padding: 0.5rem;
         border: 1px solid black;
     }
-    nav {
+    nav, .mobile {
         display: initial;
+    }
+    .firebase-err{
+        padding: 0.5rem;
+        background-color: #ffa0a0;
+        text-align: center;
+        font-weight: 600;
     }
 }
 </style>

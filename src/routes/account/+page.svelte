@@ -35,7 +35,7 @@
   <div id="tracklist">
     <div class="title">Tracking</div>
       {#if $user.tracking && $user.tracking.length > 0}
-        <CardStack cards={tracking}></CardStack>
+        <CardStack cards={tracking} left={true}></CardStack>
         <Rewards cards={tracking} person={"Potential"} ></Rewards>
       {:else}
         <CreditCard card={{

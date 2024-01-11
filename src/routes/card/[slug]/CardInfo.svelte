@@ -2,8 +2,7 @@
     export let card;
     import { lists, dataField } from "../../../lib/fields";
 
-    let fees = ["foreign_transaction_fee", "annual_fee"];
-    let displayFees = true
+    let obj = "fees";
     
 </script>
 
@@ -47,15 +46,21 @@
     </div>
     {/if}
     
-    {#if displayFees}
+    {#if card[obj]}
     <div id="fees" class="mb">
-        <div class="large">Fees:</div>
+        <div class="large">{dataField[obj].name}</div>
         <table>
-            {#each fees as fee}
-                {#if Object.hasOwn(card, fee)}
+            {#each Object.keys(dataField[obj]["data"]) as field}
+                {#if Object.hasOwn(card[obj], field)}
                     <tr>
-                        <td>{dataField[fee].name}</td>
-                        <td>{#if card[fee] == 0}No Annual Fee{:else}${card[fee]}{/if}</td>
+                        <td>{dataField[obj]["data"][field].name}</td>
+                        <td>{#if card[obj][field] == 0}No {dataField[obj]["data"][field].name}
+                            {:else if dataField[obj]["data"][field].unit == "$"}
+                                ${card[obj][field]}
+                            {:else}
+                                {card[obj][field]}{dataField[obj]["data"][field].unit}
+                            {/if}
+                        </td>
                     </tr>
                 {/if}
             {/each}

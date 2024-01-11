@@ -1,8 +1,8 @@
 <script lang="js">
 	export let card;
     export let updateAuthorization;
-    import {createEventDispatcher, onDestroy, onMount } from "svelte";
-    import { newCard, admin, oneCard } from "../../../../lib/stores";
+    import {createEventDispatcher, onDestroy } from "svelte";
+    import { newCard, admin } from "../../../../lib/stores";
     import {dataField} from "../../../../lib/fields";
     import CreditCard from "../../../../components/CreditCard.svelte";
 
@@ -63,8 +63,8 @@
     {/if}
 </div>
     {#if $admin}
-    <div style="display: flex; flex-direction: row; justify-content: space-around;"> 
-        Update:
+    <div style="display: grid; grid-template-columns: 25% 25% 25%; gap: 2rem; margin: 2rem; overflow: hidden;"> 
+        <div>Update Object:</div>
         <pre>{JSON.stringify($newCard,null,1)}</pre>
 
         <pre>{JSON.stringify(card, null, 1)}</pre>
@@ -72,7 +72,7 @@
     {/if}
 {:else}
 <div id="after">
-    Thx.
+    Thank you for submitting an update. We will review and implement the changes as soon as possible.
 </div>
 {/if}
 

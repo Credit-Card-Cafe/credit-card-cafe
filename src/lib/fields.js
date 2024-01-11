@@ -3,10 +3,11 @@
 //<select>              :  property: { name: "Display Name", type: "submit", options: ["option 1", "option n"]}
 //<input type="radio">  :  property: { name: "Display Name", type: "radio", options: ["option 1", "option n"]}
 //lists                 :  property: { name: "Display Name", type: "list", action: "Button Name"}
-//<input type="number"> :  property: { name: "Display Name", type: "number"}
+//<input type="number"> :  property: { name: "Display Name", type: "number", unit: "symbol"}
 //<input type="color">  :  property: { name: "Display Name", type: "color"}
-//Object                :  property: { name: "Display Name", type: "object", data: { input1: {}, inputN: {}}
+//Objects               :  property: { name: "Display Name", type: "object", data: { input1: {}, inputN: {}}
 //Dynamic Object        :  property: { name: "Display Name", action: "Button Name", list: "List in Lists", type: "dynamic"}
+//<input type="file">   :  property: { name: "Display Name", type: "upload"}
 
 export const dataField = {
   bank: { name: "Bank", type: "text"},
@@ -17,11 +18,14 @@ export const dataField = {
     options: ["Visa", "MasterCard", "American Express", "Discover", "None"],
   },
   link: { name: "Link to Card", type: "text"},
-  foreign_transaction_fee: {
-    name: "Foreign Transaction Fee (%)",
-    type: "number",
+  fees: {
+    name: "Fees",
+    type: "object",
+    data: {
+      foreign_transaction_fee: { name: "Foreign Transaction Fee", type: "number", unit:"%" },
+      annual_fee: { name: "Annual Fee", type: "number", unit: "$" },
+    }
   },
-  annual_fee: { name: "Annual Fee ($)", type: "number" },
   rewards: {
     name: "Rewards",
     action: "Add Reward",
@@ -31,7 +35,7 @@ export const dataField = {
   redemption: {
     name: "Rewards Redemption",
     type: "select",
-    options: ["Cash Back", "Miles", "Points"],
+    options: ["Cash Back", "Miles", "Points", "No Rewards"],
   },
   brand: {
     name: "Brand",
@@ -65,7 +69,7 @@ export const dataField = {
       info_location: {
         name: "Account Number Location",
         type: "radio",
-        options: ["Front", "Back", "Both"],
+        options: ["Front", "Back", "Both", "No Number"],
       },
     },
   },
@@ -88,7 +92,7 @@ export const lists = {
     utilities: "Utility",
     car: "Car Rental",
     airline: "Airline",
-    dining: "Dining",
+    dining: "Restaurants / Dining",
     home: "Home Improvement",
     default: "All other",
     drug: "Drug Store",

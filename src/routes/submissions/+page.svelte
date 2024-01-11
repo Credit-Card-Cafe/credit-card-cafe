@@ -31,6 +31,9 @@
             if (submission.type == "update") {
                 if ($cardList.map((card) => card.id).includes(submission.obj.id)) {
                     $newCard = submission.obj.card;
+                    if ($newCard.image) {
+                        $newCard.image = "pending"
+                    }
                     goto(`/contribute/update/${submission.obj.id}`)
                 } else {
                     display = "Selected update requires valid Card";

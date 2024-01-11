@@ -15,7 +15,7 @@
 
 <div class="rewards">
     <div class="title">{person} Rewards:</div>
-        <ul>
+    <ul>
             {#each cards as card}
             {#if card.rewards}
                 {#each Object.keys(card.rewards) as reward}
@@ -40,7 +40,16 @@
         margin-bottom: 2rem;
         text-align: center;
     }
+    ul {
+        display: none;
+    }
+    .rewards:hover ul{
+        display: initial;
+    }
     @media (min-width: 768px) { 
+        ul {
+            display: initial;
+        }
         .title {
             text-align: left;
         }

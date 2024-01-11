@@ -1,6 +1,7 @@
 <script>
     export let cards;
     export let showTrackCard = false;
+    export let left = false;
     import CreditCard from "./CreditCard.svelte";
 </script>
 
@@ -8,11 +9,11 @@
     {#each cards as card, i}
     {#if i == cards.length-1}
     <div class="lastcard">
-        <CreditCard card={card} --color="{card.color}" showTrackCard={showTrackCard}></CreditCard>
+        <CreditCard card={card} --color="{card.color}" showTrackCard={showTrackCard} inCardStack={true} left={left}></CreditCard>
     </div>
     {:else}
-      <div class="card">
-        <CreditCard card={card} --color="{card.color}" showTrackCard={showTrackCard}></CreditCard>
+      <div class={left?"left card":"right card"}>
+        <CreditCard card={card} --color="{card.color}" showTrackCard={showTrackCard} inCardStack={true} left={left}></CreditCard>
       </div>
     {/if}
     {/each}
@@ -28,5 +29,13 @@
   }
   .card:hover {
     margin-bottom: 1rem;
+  }
+  @media (min-width: 768px) {
+    .right:hover {
+       margin-left: 2rem;
+    }
+    .left:hover {
+       margin-right: 2rem;
+    }
   }
 </style>

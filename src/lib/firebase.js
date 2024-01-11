@@ -102,8 +102,8 @@ export async function addSubmission(obj, type) {
     uid = usr.uid;
   })
   if (Object.hasOwn(obj, "card") && Object.hasOwn(obj.card, "image")) {
-    const imgRef = ref(storage, 'submissions/' + obj.id + ".png");
-    uploadBytes(imgRef, card.image).then(
+    const imgRef = ref(storage, 'images/' + obj.id + ".png");
+    uploadBytes(imgRef, obj.card.image).then(
       obj.card.image = true
     ).catch((e) => {
       console.log(e);
@@ -122,7 +122,7 @@ export async function addSubmission(obj, type) {
 //updates a card in the database
 //DATA NOT SANATIZED, so pretty please dont go live :)
 export async function updateCard(card, id) {
-  if (Object.hasOwn(card, "image")) {
+  if (Object.hasOwn(card, "image") && card.image != "pending") {
     const imgRef = ref(storage, 'images/' + id + ".png");
     uploadBytes(imgRef, card.image).then(
       card.image = true
