@@ -25,6 +25,7 @@
 
 <svelte:head>
     <title>CreditCardDB | {data.slug}</title>
+    <meta name="description" content="{data.slug} on CreditCardDB">
 </svelte:head>
 
 <div id="bank">

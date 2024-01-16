@@ -55,6 +55,8 @@
 
 <svelte:head>
     <title>CreditCardDB | {card.bank} - {card.name}</title>
+    <meta name="description" content="{card.bank} - {card.name} on CreditCardDB">
+    <meta name="image" content="{'images/' + card.id + '.png'}">
 </svelte:head>
 
 <div class="p-4 md:pt-20 flex flex-col items-center group cardInfo">

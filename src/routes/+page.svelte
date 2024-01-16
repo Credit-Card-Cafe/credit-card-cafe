@@ -1,6 +1,7 @@
 <!--Homepage-->
 <svelte:head>
   <title>CreditCardDB</title>
+  <meta name="description" content="Credit Card Database - Discover and view advanced details about Credit Cards">
 </svelte:head>
 
 <script lang="js">
