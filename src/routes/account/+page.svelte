@@ -21,9 +21,9 @@
 </svelte:head>
 
 {#if $user}
-<div id="account">
-  <div id="wallet">
-    <div class="title dark:text-white-warm">Your Wallet</div>
+<div class="md:flex md:flex-row md:justify-around">
+  <div class="md:flex md:flex-col md:items-center">
+    <div class="title md:mb-8 dark:text-white-warm">Your Wallet</div>
       {#if $user.wallet && $user.wallet.length > 0}
         <CardStack cards={wallet}></CardStack>
         <Rewards cards={wallet} title={"Your"}></Rewards>
@@ -34,8 +34,8 @@
         }}></CreditCard>
       {/if}
     </div>
-  <div id="tracklist">
-    <div class="title dark:text-white-warm">Tracking</div>
+  <div class="md:flex md:flex-col md:items-center">
+    <div class="title md:mb-8 dark:text-white-warm">Tracking</div>
       {#if $user.tracking && $user.tracking.length > 0}
         <CardStack cards={tracking}></CardStack>
         <Rewards cards={tracking} title={"Potential"} ></Rewards>
@@ -55,23 +55,6 @@
 
 <style>
   .title {
-      font-size: x-large;
-      text-align: center;
-      padding: 1rem;
-    }
-  @media (min-width: 768px) {
-    .title {
-      margin-bottom: 2rem;
-    }
-    #account {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-    }
-    #wallet, #tracklist {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+      @apply p-4 text-center text-xl;
   }
 </style>

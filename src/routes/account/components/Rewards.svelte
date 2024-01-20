@@ -2,41 +2,59 @@
     import type { CreditCardType } from "$lib/types";
     export let cards:Array<CreditCardType>;
     export let title: "Your" | "Potential";
-    import { lists } from "../../../lib/fields";
-    console.log(cards)
+    import { lists, redemption } from "$lib/fields";
+    import CreditCard from "components/CreditCard.svelte";
 
-    function acronymitize(card: CreditCardType) {
-        let delWords = ["credit", "card", "union", "bank","federal","the","visa","signature"]
-        if (card.name) {
-            return card.name.split(" ").map((word) => {
-                if (!delWords.includes(word.toLowerCase())) {
-                    return word[0]}
-            }).join('');
+    interface RewardSet {
+    card: CreditCardType,
+    value: string,
+}
+
+    let categories:{[Key: string]:Array<RewardSet>} = {}
+
+    cards.forEach(card => {
+        if (card.rewards && card.redemption) {
+            for (let reward in card.rewards) {
+                if (!categories[reward]) {
+                    categories[reward] = []
+                }
+                //categories[reward].push(card)
+                categories[reward].push({
+                    "card": card,
+                    "value":card.rewards[reward].toString() + redemption[card.redemption]
+                })
+            }
         }
-    }
-
-    //let cardsWithRewards = cards.filter((card)).map((card) => )
-
+    });
 
 </script>
 
 <div class="rewards dark:text-white-warm">
     <div class="text-xl mb-8 text-center md:text-left">{title} Rewards:</div>
-        <ul>
-            {#each cards as card}
-                {#if card.rewards}
-                    {#each Object.keys(card.rewards) as reward}
-                        {#if card.redemption}
-                            {#if card.redemption == "Cash Back"}
-                                <li>({acronymitize(card)}) {card.rewards[reward]}% {card.redemption} on {lists.rewardCategories[reward]} purchases</li>
-                            {:else}
-                                <li>({acronymitize(card)}) {card.rewards[reward]}x {card.redemption} on {lists.rewardCategories[reward]} purchases</li>
-                            {/if}
-                        {:else}
-                            <li>{card.rewards[reward]}x {lists.rewardCategories[reward]}</li>
-                        {/if}
+    <ul>
+        {#each Object.keys(categories) as category}
+            <li class="border border-black dark:border-white-warm p-2 rounded-lg mb-4 mx-1 flex flex-col">
+                {lists.rewardCategories[category]}
+                <span class="my-2">
+                    {#each categories[category] as reward}
+                        <span class="mr-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-col items-center hovertip relative">
+                            <span class="h-8 w-12 rounded-md mb-1" style="background:rgb({reward.card.color})"></span>
+                            <span class="hovertext border border-white-warm rounded-md p-2 absolute bottom-full z-10 dark:bg-main-gray bg-alt dark:text-white-warm text-center">{reward.card.bank} - {reward.card.name}</span>
+                            {reward.value}
+                        </span>
                     {/each}
-                {/if}
-            {/each}
-        </ul>
-    </div>
+                </span>
+            </li>
+        {/each}
+    </ul>
+</div>
+
+<style>
+    .hovertip .hovertext {
+      visibility: hidden;
+    }
+    
+    .hovertip:hover .hovertext {
+      visibility: visible;
+    }
+</style>

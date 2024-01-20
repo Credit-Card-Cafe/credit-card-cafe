@@ -6,8 +6,8 @@
 </script>
 
 <div class="cards">
-    {#each cards as card, i}
-      <div class="mb-[-9rem] hover:mb-12 last:mb-12 transition-all md:hover:ml-8">
+    {#each cards as card}
+      <div class="mb-[-9rem] transition-all last:mb-12 hover:mb-12">
         <CreditCard card={card} --color="{card.color}" showTrackCard={showTrackCard} inCardStack={true}></CreditCard>
       </div>
     {/each}

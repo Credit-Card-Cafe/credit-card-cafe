@@ -77,6 +77,11 @@ export const dataField: {[Key: string]:{[Key: string]:any}} = {
   search_terms: { name: "Search Terms", type: "list", action: "New Search Term..."}
 };
 
+export const redemption: {[key:string]:string} = {
+  "Points": "x",
+  "Miles": "x",
+  "Cash Back": "%",
+}
 
 export const lists: {[Key: string]:{[Key: string]: string}} = {
   rewardCategories: {
