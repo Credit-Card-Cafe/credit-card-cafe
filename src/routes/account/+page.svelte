@@ -21,8 +21,8 @@
 </svelte:head>
 
 {#if $user}
-<div class="md:flex md:flex-row md:justify-around">
-  <div class="md:flex md:flex-col md:items-center">
+<div class="md:flex md:flex-row md:justify-around md:flex-initial">
+  <div class="md:flex md:flex-col md:items-center md:w-1/2">
     <div class="title md:mb-8 dark:text-white-warm">Your Wallet</div>
       {#if $user.wallet && $user.wallet.length > 0}
         <CardStack cards={wallet}></CardStack>
@@ -34,7 +34,7 @@
         }}></CreditCard>
       {/if}
     </div>
-  <div class="md:flex md:flex-col md:items-center">
+  <div class="md:flex md:flex-col md:items-center md:w-1/2">
     <div class="title md:mb-8 dark:text-white-warm">Tracking</div>
       {#if $user.tracking && $user.tracking.length > 0}
         <CardStack cards={tracking}></CardStack>

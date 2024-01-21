@@ -35,7 +35,7 @@
         {#each Object.keys(categories) as category}
             <li class="border border-black dark:border-white-warm p-2 rounded-lg mb-4 mx-1 flex flex-col">
                 {lists.rewardCategories[category]}
-                <span class="my-2">
+                <span class="my-2 flex flex-row justify-start flex-wrap">
                     {#each categories[category] as reward}
                         <span class="m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-col items-center hovertip relative">
                             <span class="h-8 w-12 rounded-md mb-1" style="background:rgb({reward.card.color})"></span>
