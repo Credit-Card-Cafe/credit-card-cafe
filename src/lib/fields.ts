@@ -15,7 +15,7 @@ export const dataField: {[Key: string]:{[Key: string]:any}} = {
   network: {
     name: "Network",
     type: "select",
-    options: ["Visa", "MasterCard", "American Express", "Discover", "None"],
+    options: ["Visa", "MasterCard", "American Express", "Discover", "No Network"],
   },
   link: { name: "Link to Card", type: "text"},
   fees: {
@@ -100,7 +100,7 @@ export const lists: {[Key: string]:{[Key: string]: string}} = {
     airline: "Airline",
     dining: "Restaurants / Dining",
     home: "Home Improvement",
-    default: "All other",
+    default: "All Purchases",
     drug: "Drug Store",
     self: "Through Card's Company",
     high_spend: "Highest spend",

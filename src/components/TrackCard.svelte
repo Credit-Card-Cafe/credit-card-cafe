@@ -45,7 +45,7 @@
 
 
 {#if $user}
-    <div class="flex flex-row my-6 justify-center">
+    <div class="flex flex-row my-6 justify-center z-20">
         {#if show == "both"}
             <button on:click={() => addCardtoUser(Fields.Wallet)} class="btn ml-1 bg-green-500 hover:bg-green-600">Add Card to Wallet</button>
             <button on:click={() => addCardtoUser(Fields.Tracking)} class="btn ml-1 bg-green-500 hover:bg-green-600">Track this card</button>

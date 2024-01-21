@@ -67,7 +67,7 @@
     <CreditCard card={card} --color="{card.color}" showTrackCard={loaded}></CreditCard>
     <CardInfo card={card}></CardInfo>
     {#if $user}
-      <a class="dark:text-white-warm p-3" href="/contribute/update/{card.id}">Update Information</a>
+      <a class="text-main-gray bg-red-300 hover:bg-red-400 text-center py-1 px-4 rounded-full inline-block mx-1 my-1 transition-all cursor-pointer" href="/contribute/update/{card.id}">Update Information</a>
     {/if}
   {:catch} 
     Credit Card could not be located / does not exist.

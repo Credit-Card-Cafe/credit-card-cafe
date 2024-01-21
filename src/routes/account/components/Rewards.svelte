@@ -37,7 +37,7 @@
                 {lists.rewardCategories[category]}
                 <span class="my-2">
                     {#each categories[category] as reward}
-                        <span class="mr-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-col items-center hovertip relative">
+                        <span class="m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-col items-center hovertip relative">
                             <span class="h-8 w-12 rounded-md mb-1" style="background:rgb({reward.card.color})"></span>
                             <span class="hovertext border border-white-warm rounded-md p-2 absolute bottom-full z-10 dark:bg-main-gray bg-alt dark:text-white-warm text-center">{reward.card.bank} - {reward.card.name}</span>
                             {reward.value}
