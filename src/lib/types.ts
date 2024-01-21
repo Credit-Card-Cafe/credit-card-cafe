@@ -2,7 +2,7 @@ export enum CardNetwork {
   Visa = "Visa",
   MasterCard = "MasterCard",
   Discover = "Discover",
-  None = "None",
+  None = "No Network",
   AmericanExpress = "American Express",
 }
 
@@ -26,6 +26,11 @@ export enum CardInfoLocation {
   NoNumber = "No Number"
 }
 
+export enum YesOrNo {
+  Yes = "Yes",
+  No = "No"
+}
+
 export interface CreditCardType {
   [key: string]: any;
   
@@ -42,10 +47,11 @@ export interface CreditCardType {
   consumer?: CardConsumer,
   image?: boolean | "pending" | File, //can only be boolean if read from database. Image path is based off card id. "pending" state is for submissions, and File is the file the image is during the update.
   physical?: {
+    [key: string]: any;
     material: string,
-    chip: "Yes"| "No",
-    tap_to_pay: "Yes" | "No",
-    embossed: "Yes" | "No",
+    chip: YesOrNo,
+    tap_to_pay: YesOrNo,
+    embossed: YesOrNo,
     info_location: CardInfoLocation,
   }
   color?: RGB,
