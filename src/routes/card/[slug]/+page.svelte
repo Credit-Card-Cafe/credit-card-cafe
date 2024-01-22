@@ -4,7 +4,7 @@
   import { rgbToHex } from "$lib/functions";
   export let data;
   import { getOne } from '$lib/firebase';
-  import { user, headerColor, oneCard, admin } from '$lib/stores';
+  import { user, oneCard, admin } from '$lib/stores';
   import CardInfo from './CardInfo.svelte';
   import { onDestroy } from "svelte";
 
@@ -20,17 +20,10 @@
 
   let loaded = false;
 
-  onDestroy(() => {
-    headerColor.set(rgbToHex([253,248,244]));
-  });
-
   async function getCard() {
     let error = false;
     if ($oneCard && data.slug == $oneCard.id) {
       loaded = true;
-      if ($oneCard.color) {
-        headerColor.set(`${rgbToHex($oneCard.color)} + "26"`);
-      }
       card = $oneCard;
     } else {
       getOne(data.slug).then((result: CreditCardType) => {
@@ -38,9 +31,6 @@
           $oneCard = result;
           card = result;
           loaded = true;
-          if ($oneCard.color) {
-            headerColor.set(`${rgbToHex($oneCard.color)} + "26"`);
-          }
         } else {
           error = true;
         }

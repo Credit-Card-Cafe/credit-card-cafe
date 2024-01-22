@@ -45,7 +45,7 @@
             <option>25</option>
         </select></label>
     </div>
-
+    <div class="hidden md:block text-center text-sm">Tip: Sort card by clicking on table headers!</div>
     <table class="dark:text-white-warm rounded-r-xl">
         <!--   Table Header   -->
         <tr class="hidden md:table-row">
