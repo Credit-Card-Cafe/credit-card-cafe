@@ -5,9 +5,9 @@
     
 </script>
 
-<div id="cardInfo" class="dark:text-white-warm mt-4 mb-12 p-4 flex flex-col">
-    <div class="text-4xl text-center mb-1">{card.name}</div>
-    <div class="mb-8">
+<div id="cardInfo" class="dark:text-white-warm mt-4 mb-12 p-4 flex flex-col lg:grid lg:grid-cols-3 lg:gap-x-20">
+    <div class="text-4xl text-center mb-6 lg:col-span-3">{card.name}</div>
+    <div class="mb-8 lg:col-start-2 rounded-md lg:p-6">
         {#if card.brand}<div class="flex flex-row items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" /></svg>
             {card.brand}</div>{/if}
@@ -25,22 +25,29 @@
 
 
     {#if card.rewards}
-    <div id="rewards" class="mb-8">
+    <div class="mb-8 lg:col-start-1 lg:row-start-2 lg:row-span-3 lg:border border-white-warm rounded-md lg:p-6">
         <div class="text-3xl">Rewards:</div>
-        <ul>{#each Object.keys(card.rewards) as reward}
-            {#if card.redemption} 
-                <li>{card.rewards[reward]}{redemption[card.redemption]} {card.redemption} on {lists.rewardCategories[reward]} purchases</li>
-            {:else}
-            <li>{card.rewards[reward]}x {lists.rewardCategories[reward]}</li>
-            {/if}
-        {/each}</ul>
+        <div class="my-2 flex flex-col justify-start flex-wrap">
+            {#each Object.keys(card.rewards) as reward}
+                <div class="m-1 lg:m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center">
+                    <div class="border border-white-warm rounded-md p-2 dark:bg-main-gray bg-alt dark:text-white-warm text-center mr-4">
+                        {#if card.redemption} 
+                            {card.rewards[reward]}{redemption[card.redemption]}
+                        {:else}
+                            {card.rewards[reward]}x
+                        {/if}
+                    </div>
+                    <div class="rounded-md mb-0">{lists.rewardCategories[reward]}</div>
+                </div>
+            {/each}
+        </div>
     </div>
     {/if}
     
     {#if card.fees}
-    <div id="fees" class="mb-8">
+    <div id="fees" class="mb-8 lg:border lg:row-span-3 border-white-warm rounded-md lg:p-6">
         <div class="text-3xl">{dataField["fees"].name}</div>
-        <table class="border dark:border-white-warm border-black rounded-md">
+        <table class="my-2 border lg:border-0 dark:border-white-warm border-black rounded-md">
             {#each Object.keys(dataField["fees"]["data"]) as field}
                 {#if field in card["fees"]}<tr>
                     <td class="p-4 border-r border-b border-white-warm">{dataField["fees"]["data"][field].name}</td>
@@ -61,10 +68,10 @@
     {/if}
 
     {#if card.physical}
-    <div id="physical" class="mb-8">
+    <div id="physical" class="mb-8 lg:col-start-2 lg:row-start-3 lg:border border-white-warm rounded-md lg:p-6">
         <div class="text-3xl">Physical Properties:</div>
         {#each Object.keys(card.physical) as property}
-            <div class="flex flex-row items-center">
+            <div class="my-2 flex flex-row items-center">
                 {#if card.physical[property] == YesOrNo.No}
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2 text-red-500"><path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>  
                 {:else}
@@ -77,7 +84,7 @@
     {/if}
 
     {#if card.link}
-        <div class="flex flex-col items-center"><a class="text-main-gray bg-green-500 hover:bg-green-600 text-center py-1 px-4 rounded-full inline-block mx-1 my-1 transition-all cursor-pointer" href={card.link}>Apply to the card here</a></div>
+        <div class="flex flex-col items-center justify-center lg:col-start-2 lg:row-start-4"><a class="text-main-gray bg-green-500 hover:bg-green-600 text-center py-1 px-4 rounded-full inline-block mx-1 my-1 transition-all cursor-pointer" href={card.link}>Apply to the card here</a></div>
     {/if}
 </div>
 

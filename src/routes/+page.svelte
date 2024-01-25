@@ -26,7 +26,7 @@
     {#await getOne(feature.card)}
       <div id="creditCard" class="creditCard bg-alt dark:bg-main-gray shadow-2xl shadow-stone-400 dark:shadow-stone-900"></div>
     {:then card}
-      <div class="flex md:odd:flex-row md:even:flex-row-reverse flex-col md:justify-between items-center border-2 border-green-500 md:px-12 mb-12 last:mb-0 rounded-lg py-12">
+      <div class="flex lg:odd:flex-row lg:even:flex-row-reverse flex-col lg:justify-between items-center border-2 border-green-500 lg:px-12 mb-12 last:mb-0 rounded-2xl py-12">
         <CreditCard card={card}></CreditCard>
         <div class="mx-8 md:mt-0 mt-4 z-10">{feature.desc}</div>
       </div>
