@@ -41,6 +41,7 @@ export interface CreditCardType {
   network?: CardNetwork,
   link?: string,
   fees?: {[Key: string]:number},
+  sub?: {[Key: string]:number},
   rewards?: {[Key: string]:number},
   redemption?: CardRedemption,
   brand?: string,

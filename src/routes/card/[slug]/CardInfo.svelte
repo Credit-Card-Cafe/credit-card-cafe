@@ -44,6 +44,13 @@
     </div>
     {/if}
     
+    {#if card.sub}
+    <div id="physical" class="mb-8 lg:border border-white-warm rounded-md lg:p-6">
+        <div class="text-3xl">Sign-up Bonus:</div>
+        {card.sub.sub_reward}{#if card.redemption}{redemption[card.redemption]} bonus {card.redemption}{/if} if you spend ${card.sub.sub_quota} in {card.sub.sub_months} months. 
+    </div>
+    {/if}
+
     {#if card.fees}
     <div id="fees" class="mb-8 lg:border lg:row-span-3 border-white-warm rounded-md lg:p-6">
         <div class="text-3xl">{dataField["fees"].name}</div>

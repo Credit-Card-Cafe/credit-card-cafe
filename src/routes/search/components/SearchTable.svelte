@@ -34,6 +34,7 @@
         <TableQuery field={"brand"} bind:queries={queries}></TableQuery>
         <TableQuery field={"consumer"} bind:queries={queries}></TableQuery>
         <TableQuery field={"redemption"} bind:queries={queries}></TableQuery>
+        <TableQuery field={"sub"} bind:queries={queries} isObject={true}></TableQuery>
         <TableQuery field={"fees"} bind:queries={queries} isObject={true}></TableQuery>
         <TableQuery field={"physical"} bind:queries={queries} isObject={true}></TableQuery>
 

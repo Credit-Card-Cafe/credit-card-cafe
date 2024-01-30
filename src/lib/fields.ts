@@ -15,7 +15,7 @@ export const dataField: {[Key: string]:{[Key: string]:any}} = {
   network: {
     name: "Network",
     type: "select",
-    options: ["Visa", "MasterCard", "American Express", "Discover", "No Network"],
+    options: ["Visa", "MasterCard", "American Express", "Discover", "JCB", "No Network"],
   },
   link: { name: "Link to Card", type: "text"},
   fees: {
@@ -24,6 +24,10 @@ export const dataField: {[Key: string]:{[Key: string]:any}} = {
     data: {
       foreign_transaction_fee: { name: "Foreign Transaction Fee", type: "number", unit:"%" },
       annual_fee: { name: "Annual Fee", type: "number", unit: "$" },
+      balance_transfer_fee: { name: "Balance Transfer Fee", type: "number", unit: "%" },
+      apr: { name: "APR", type:"number", unit: "%"},
+      cash_advance_fee: { name: "Cash Advance Fee", type: "number", unit: "%" },
+      late_fee: { name: "Late Fee", type: "number", unit: "%" },
     }
   },
   rewards: {
@@ -36,6 +40,15 @@ export const dataField: {[Key: string]:{[Key: string]:any}} = {
     name: "Rewards Redemption",
     type: "select",
     options: ["Cash Back", "Miles", "Points", "No Rewards"],
+  },
+  sub : {
+    name: "Sign Up Bonus",
+    type: "object",
+    data: {
+      sub_reward: { name: "SUB Bonus", type: "number", unit: ""},
+      sub_quota: { name: "SUB Spend Quota", type: "number", unit: "$"},
+      sub_months: { name: "SUB Months", type: "number"}
+    }
   },
   brand: {
     name: "Brand",
