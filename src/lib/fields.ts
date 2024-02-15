@@ -98,6 +98,7 @@ export const redemption: {[key:string]:string} = {
 
 export const lists: {[Key: string]:{[Key: string]: string}} = {
   rewardCategories: {
+    //custom: "Customizable Rewards",
     grocery: "Grocery",
     online: "Online Shopping",
     online_grocery: "Online Grocery Shopping",

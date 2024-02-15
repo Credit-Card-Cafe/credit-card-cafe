@@ -17,31 +17,31 @@
     function checkObject() {
         if ($newCard) {
             let rmField = true;
-            for (let prop of keys) {
-                if (Object.hasOwn(object, prop)) {
-                    if(!Object.hasOwn($newCard[field], prop)) {
-                        $newCard[field][prop] = object[prop];
-                    }
-                    if($newCard[field][prop] != object[prop]){
-                        rmField = false;
+                for (let prop of keys) {
+                    if (Object.hasOwn(object, prop)) {
+                        if(!Object.hasOwn($newCard[field], prop)) {
+                            $newCard[field][prop] = object[prop];
+                        }
+                        if($newCard[field][prop] != object[prop]){
+                            rmField = false;
+                        } 
+                        if($newCard[field][prop] == null) {
+                            delete $newCard[field][prop];
+                        }
+                    } else if (Object.hasOwn($newCard[field], prop)) {
+                        if ($newCard[field][prop] == "" || $newCard[field][prop] == null) {
+                            delete $newCard[field][prop];
+                        } else {
+                            rmField = false;
+                        }
+                        
                     } 
-                    if($newCard[field][prop] == null) {
-                        delete $newCard[field][prop];
-                    }
-                } else if (Object.hasOwn($newCard[field], prop)) {
-                    if ($newCard[field][prop] == "" || $newCard[field][prop] == null) {
-                        delete $newCard[field][prop];
-                    } else {
-                        rmField = false;
-                    }
                     
-                } 
-                
+                }
+                if(rmField){
+                    delete $newCard[field];
+                }
             }
-            if(rmField){
-                delete $newCard[field];
-            }
-        }
     }
 
     var add = "";
@@ -68,7 +68,8 @@
 <div class="dynamic">
     <div class="title">{dataField[field].name}</div>
     {#each Object.keys(object) as prop}
-        <NumberInput field={prop} value={checkForValue(prop)} object={field.toString()} dynamicObject={dynamicObject} on:update={() => checkObject()}></NumberInput>
+            <!--<svelte:self field={field} object={object['custom']} isSelf={true}></svelte:self>-->
+            <NumberInput field={prop} value={checkForValue(prop)} object={field.toString()} dynamicObject={dynamicObject} on:update={() => checkObject()}></NumberInput>
     {/each}
     {#key addKey}
         <SelectInput field={dataField[field].action} value={dataField[field].action} object={field.toString()} dynamicObject={dynamicObject} on:add={prepAdd}></SelectInput>

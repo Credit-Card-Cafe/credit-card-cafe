@@ -42,7 +42,7 @@ export interface CreditCardType {
   link?: string,
   fees?: {[Key: string]:number},
   sub?: {[Key: string]:number},
-  rewards?: {[Key: string]:number},
+  rewards?: {[Key: string]:number | {[Key: string]:number}},
   redemption?: CardRedemption,
   brand?: string,
   consumer?: CardConsumer,
