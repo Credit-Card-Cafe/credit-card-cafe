@@ -2,12 +2,22 @@
     import type { CreditCardType } from "$lib/types";
     import { lists, redemption } from "$lib/fields";
     import { beforeUpdate } from "svelte";
+    import { user } from "$lib/stores";
     export let card:CreditCardType;
 
     let custom = false;
+    let userCustomChoice = "";
     beforeUpdate(() => {
         if (card.rewards && Object.keys(card.rewards).indexOf("custom") > -1) {
             custom = true;
+            if ($user?.custom_choices && card.custom_rewards) {
+                let userCard = $user.custom_choices.find((choice) => choice[card.id])
+                for(let reward in card.custom_rewards) {
+                    if (userCard && reward == userCard[card.id]) {
+                        userCustomChoice = reward
+                    }
+                }
+            }
         }
     })
 
@@ -24,7 +34,7 @@
                 {#if showCustomRewards}
                     <div class="flex flex-col">
                         {#each Object.keys(card.custom_rewards) as reward}
-                            <div class="m-1 lg:m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center">
+                            <div class={(userCustomChoice == reward) ? "border-4 border-green-500 m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center" : "custom_rewards" }>
                                 <div class="border border-white-warm rounded-md p-2 dark:bg-main-gray bg-alt dark:text-white-warm text-center mr-4">
                                     {#if card.redemption} 
                                         {card.custom_rewards[reward]}{redemption[card.redemption]}
@@ -44,7 +54,7 @@
             {#if showDefaultRewards}
                 {#each Object.keys(card.rewards) as reward}
                     {#if reward != "custom"}
-                        <div class="m-1 lg:m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center">
+                        <div class="m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center">
                             <div class="border border-white-warm rounded-md p-2 dark:bg-main-gray bg-alt dark:text-white-warm text-center mr-4">
                                 {#if card.redemption} 
                                     {card.rewards[reward]}{redemption[card.redemption]}
@@ -67,5 +77,11 @@
     hr {
         margin: 2rem 0;
         border: 2px solid #d6c0a5;
+    }
+    .custom_rewards {
+        @apply m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center;
+    }
+    .custom_rewards:hover {
+        @apply bg-black/[0.4];
     }
 </style>

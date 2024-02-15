@@ -3,12 +3,14 @@
     export let cards:Array<CreditCardType>;
     export let title: "Your" | "Potential";
     import { lists, redemption } from "$lib/fields";
+    import { user } from "$lib/stores";
     import CreditCard from "components/CreditCard.svelte";
 
     interface RewardSet {
-    card: CreditCardType,
-    value: string,
-}
+        card: CreditCardType,
+        value: string,
+        custom: boolean
+    }
 
     let categories:{[Key: string]:Array<RewardSet>} = {}
 
@@ -22,12 +24,33 @@
                     //categories[reward].push(card)
                     categories[reward].push({
                         "card": card,
-                        "value":card.rewards[reward].toString() + redemption[card.redemption]
+                        "value":card.rewards[reward].toString() + redemption[card.redemption],
+                        "custom": false
+                    })
+                }
+            }
+        } 
+        if (card.custom_rewards && card.redemption && $user?.custom_choices) {
+            let userCard = $user.custom_choices.find((choice) => choice[card.id])
+            for (let reward in card.custom_rewards) {
+                if (userCard && reward == userCard[card.id]) {
+                    if (!categories[reward]) {
+                        categories[reward] = []
+                    }
+                    categories[reward].push({
+                        "card": card,
+                        "value":card.custom_rewards[reward].toString() + redemption[card.redemption],
+                        "custom": true
                     })
                 }
             }
         }
     });
+
+    $user?.custom_choices?.forEach(cardName => {
+
+    });
+
 
 </script>
 
@@ -39,7 +62,7 @@
                 {lists.rewardCategories[category]}
                 <span class="my-2 flex flex-row justify-start flex-wrap">
                     {#each categories[category] as reward}
-                        <span class="m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-col items-center hovertip relative">
+                        <span class={reward.custom ? "reward hovertip border-4 border-green-500" : "reward hovertip"}>
                             <span class="h-8 w-12 rounded-md mb-1" style="background:rgb({reward.card.color})"></span>
                             <span class="hovertext border border-white-warm rounded-md p-2 absolute bottom-full z-10 dark:bg-main-gray bg-alt dark:text-white-warm text-center">{reward.card.bank} - {reward.card.name}</span>
                             {reward.value}
@@ -52,6 +75,10 @@
 </div>
 
 <style>
+    .reward {
+        @apply m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-col items-center relative;
+    }
+
     .hovertip .hovertext {
       visibility: hidden;
     }

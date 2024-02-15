@@ -190,6 +190,7 @@ async function initUserData(client: User) {
         admin: docSnap.data().admin,
         wallet: docSnap.data().wallet,
         tracking: docSnap.data().tracking,
+        custom_choices: docSnap.data().custom_choices,
         uid: client.uid,
         email: client.email,
         });
@@ -202,6 +203,7 @@ async function initUserData(client: User) {
           displayName: client.displayName,
           wallet: [],
           tracking: [],
+          custom_choices: [],
           uid: client.uid,
           email: client.email,
         });

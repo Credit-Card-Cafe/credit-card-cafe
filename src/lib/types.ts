@@ -73,6 +73,7 @@ export interface UserType {
     tracking: Array<string>
     uid: string,
     email?: string | null,
+    custom_choices?: Array<{[key: string]: string}>
 }
 
 export enum SubmissionType {
