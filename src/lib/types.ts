@@ -43,6 +43,7 @@ export interface CreditCardType {
   fees?: {[Key: string]:number},
   sub?: {[Key: string]:number},
   rewards?: {[Key: string]:number | {[Key: string]:number}},
+  custom_rewards?: {[Key: string]:number | {[Key: string]:number}},
   redemption?: CardRedemption,
   brand?: string,
   consumer?: CardConsumer,

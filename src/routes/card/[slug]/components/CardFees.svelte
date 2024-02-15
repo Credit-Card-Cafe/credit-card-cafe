@@ -25,9 +25,14 @@
         </table>
         <div class="text-xs">*Some Fees May Not Be Listed</div>
     </div>
+    <hr>
     {/if}
 
     <style>
+        hr {
+            margin: 2rem 0;
+            border: 2px solid #d6c0a5;
+        }
         table {
             border-collapse: separate !important;
         }

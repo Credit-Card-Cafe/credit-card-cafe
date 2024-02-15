@@ -36,12 +36,27 @@ export const dataField: {[Key: string]:{[Key: string]:any}} = {
     list: "rewardCategories",
     type: "dynamic",
   },
+  custom_rewards: {
+    name: "Rewards",
+    action: "Add Reward",
+    list: "rewardCategories",
+    type: "dynamic",
+  },
+  limit: {
+    name: "Rewards Limit",
+    type: "number",
+    unit: "$",
+  },
+  limit_period: {
+    type: "select",
+    options: ["Every Year", "Every Month", "Every Quarter", "Daily", "Weekly"],
+  },
   redemption: {
     name: "Rewards Redemption",
     type: "select",
     options: ["Cash Back", "Miles", "Points", "No Rewards"],
   },
-  sub : {
+  sub: {
     name: "Sign Up Bonus",
     type: "object",
     data: {
@@ -98,7 +113,7 @@ export const redemption: {[key:string]:string} = {
 
 export const lists: {[Key: string]:{[Key: string]: string}} = {
   rewardCategories: {
-    //custom: "Customizable Rewards",
+    custom: "Customizable Rewards",
     grocery: "Grocery",
     online: "Online Shopping",
     online_grocery: "Online Grocery Shopping",

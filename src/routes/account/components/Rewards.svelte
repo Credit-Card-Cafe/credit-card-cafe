@@ -15,14 +15,16 @@
     cards.forEach(card => {
         if (card.rewards && card.redemption) {
             for (let reward in card.rewards) {
-                if (!categories[reward]) {
-                    categories[reward] = []
+                if (reward != "custom") {
+                    if (!categories[reward]) {
+                        categories[reward] = []
+                    }
+                    //categories[reward].push(card)
+                    categories[reward].push({
+                        "card": card,
+                        "value":card.rewards[reward].toString() + redemption[card.redemption]
+                    })
                 }
-                //categories[reward].push(card)
-                categories[reward].push({
-                    "card": card,
-                    "value":card.rewards[reward].toString() + redemption[card.redemption]
-                })
             }
         }
     });
