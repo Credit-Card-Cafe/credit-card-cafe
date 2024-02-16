@@ -1,12 +1,13 @@
 <script lang="ts">
   import { type CreditCardType, CardNetwork, CardConsumer } from "$lib/types";
   import CreditCard from 'components/CreditCard.svelte';
-  import { rgbToHex } from "$lib/functions";
   export let data;
   import { getOne } from '$lib/firebase';
-  import { user, oneCard, admin } from '$lib/stores';
+  import { oneCard, admin } from '$lib/stores';
   import CardInfo from './CardInfo.svelte';
-  import { onDestroy } from "svelte";
+  import CardActions from "./components/CardActions.svelte";
+    import { onMount } from "svelte";
+    import { sendPasswordResetEmail } from "firebase/auth";
 
   let card:CreditCardType = {
       name: "Loading...",
@@ -41,6 +42,36 @@
     }
   };
 
+  let pos = 0;
+  let scrolled = false;
+
+  onMount(() => {
+    document.addEventListener("scroll", (e) => {
+      pos = window.scrollY;
+      let card = document.getElementById("cardscroll")
+      let info = document.getElementById("infoscroll") 
+      const scrollAmount = 50;
+      if (pos <= 0) {
+        pos = 0
+      }
+      if (pos > scrollAmount) {
+        scrolled = true
+      } else {
+        scrolled = false
+      }
+      if (pos <= scrollAmount && card && window.innerWidth >= 1024) {
+        card.style.transform = `translate(-${(window.innerWidth / 4)*(pos/scrollAmount)}px,0)`
+      } else if (pos > scrollAmount && card && window.innerWidth >= 1024) {
+        card.style.transform = `translate(0,0)`
+      } else if (card) {
+        card.style.transform = `translate(-${(window.innerWidth)*(pos/scrollAmount)}px,0)`
+      }
+      if (info) {
+        info.style.opacity = `${pos/scrollAmount}`
+      }
+    })
+  })
+
 </script>
 
 <svelte:head>
@@ -49,16 +80,14 @@
     <meta name="image" content="{'images/' + card.id + '.png'}">
 </svelte:head>
 
-<div class="p-4 md:pt-20 flex flex-col items-center group cardInfo">
+<div class={scrolled ? "pt-20 flex flex-col items-center lg:grid lg:grid-cols-2 lg:h-screen lg:snap-start lg:snap-always transition-all": "pt-20 flex flex-col items-center transition-all"}>
   {#await getCard()}
     <CreditCard card={card} --color="{card.color}"></CreditCard>
     <CardInfo card={card}></CardInfo>
   {:then} 
-    <CreditCard card={card} --color="{card.color}" showTrackCard={loaded}></CreditCard>
-    <CardInfo card={card}></CardInfo>
-    {#if $user}
-      <a class="text-main-gray bg-red-300 hover:bg-red-400 text-center py-1 px-4 rounded-full inline-block mx-1 my-1 transition-all cursor-pointer" href="/contribute/update/{card.id}">Update Information</a>
-    {/if}
+    <div id="cardscroll" class={scrolled? "pt-20 row-start-1 hidden lg:block" : "lg:pt-20 fixed"}><CreditCard card={card} --color="{card.color}" showTrackCard={loaded}></CreditCard></div>
+    <div id="infoscroll" class={scrolled ? "pt-20 lg:px-10 lg:pt-0 col-start-2 row-span-2 h-full overflow-auto lg:border-b border-green-900" : "pt-20 h-full opacity-0 lg:invisible"}><CardInfo card={card}></CardInfo></div>
+    <div class={scrolled ? "row-start-2" : "hidden"}><CardActions card={card}></CardActions></div>
   {:catch} 
     Credit Card could not be located / does not exist.
   {/await}

@@ -7,11 +7,11 @@
 {#if card.fees}
     <div id="fees" class="mb-8">
         <div class="text-3xl mb-4">{dataField["fees"].name}</div>
-        <table class="my-2">
+        <table class="my-2 w-full">
             {#each Object.keys(dataField["fees"]["data"]) as field}
                 {#if field in card["fees"]}<tr>
-                    <td class="p-4 border-r border-b border-white-warm">{dataField["fees"]["data"][field].name}</td>
-                    <td class="p-4 border-b border-white-warm">
+                    <td class="p-4 text-center border-r border-b border-white-warm">{dataField["fees"]["data"][field].name}</td>
+                    <td class="p-4 text-center border-b border-white-warm">
                         {#if card["fees"][field] == 0}
                             No {dataField["fees"]["data"][field].name}
                         {:else if dataField["fees"]["data"][field].unit == "$"}

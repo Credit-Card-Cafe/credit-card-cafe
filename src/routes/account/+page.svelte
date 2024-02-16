@@ -21,7 +21,7 @@
 </svelte:head>
 
 {#if $user}
-<div class="md:flex md:flex-row md:justify-around md:flex-initial">
+<div class="md:flex md:flex-row md:justify-around md:flex-initial pt-16">
   <div class="md:flex md:flex-col md:items-center md:w-1/2">
     <div class="title md:mb-8 dark:text-white-warm">Your Wallet</div>
       {#if $user.wallet && $user.wallet.length > 0}

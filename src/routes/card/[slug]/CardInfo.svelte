@@ -17,9 +17,4 @@
     <CardRewards card={card}></CardRewards>
     <CardFees card={card}></CardFees>
     <CardPhysProps card={card}></CardPhysProps>
-    
-
-    {#if card.link}
-        <div class="flex flex-col items-center justify-center lg:col-start-2 lg:row-start-4"><a class="text-main-gray bg-green-500 hover:bg-green-600 text-center py-1 px-4 rounded-full inline-block mx-1 my-1 transition-all cursor-pointer" href={card.link}>Apply to the card here</a></div>
-    {/if}
 </div>

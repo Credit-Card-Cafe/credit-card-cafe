@@ -35,7 +35,7 @@
 
 <style>
   div {
-    padding-top: 2rem;
+    padding-top: 4rem;
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-around;

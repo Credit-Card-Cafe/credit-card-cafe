@@ -28,7 +28,7 @@
     ));
 </script>
 
-<div class="flex flex-col px-4 pb-4 pt-2 md:pt-8 md:p-10">
+<div class="flex flex-col px-4 pb-4 pt-8 md:p-10">
     <div class="mb-6 md:mb-10 flex flex-row flex-wrap justify-center">
         <TableQuery field={"network"} bind:queries={queries}></TableQuery>
         <TableQuery field={"brand"} bind:queries={queries}></TableQuery>

@@ -19,7 +19,7 @@
 
 </script>
 
-<div id="home" class="dark:text-white-warm md:pt-16 px-8">
+<div id="home" class="dark:text-white-warm pt-16 px-8">
   <div class="pb-12 text-4xl text-center">Welcome to Credit Card DB</div>
   <div class="pb-8 text-2xl text-center">Featured Cards:</div>
   {#each featured as feature, i}

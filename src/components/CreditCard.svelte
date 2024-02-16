@@ -12,7 +12,7 @@
 </script>
 
 
-<div class="flex flex-col items-center transform scale-90 md:scale-100 group-[.cardInfo]:scale-110 hover:z-30">
+<div class="flex flex-col items-center transform scale-110 hover:z-30">
     <a href="/card/{card.id}">
     {#if card.image || ($newCard && $newCard.image == "pending")}
         {#await getCardImage(card)}

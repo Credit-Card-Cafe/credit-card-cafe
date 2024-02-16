@@ -17,7 +17,7 @@
 {#if showMobileMenu}
     <MobileActions bind:showMobileMenu></MobileActions>
 {/if}
-<div class={`flex flex-row lg:items-center justify-between lg:justify-items-center lg:py-4 lg:px-8 py-2 bg-alt dark:bg-main-gray shadow-md shadow-main-dark-green`}>
+<div class={`fixed z-40 w-full flex flex-row lg:items-center justify-between lg:justify-items-center lg:py-4 lg:px-8 backdrop-blur-md py-2 bg-alt/[0.8] dark:bg-main-gray`}>
     <div class="flex items-center justify-center lg:hidden ml-8 lg:ml-0 lg:mr-8 text-green-500 font-semibold">CreditCardDB</div>
     <div id="start" class="hidden lg:flex flex-row justify-between items-center">
         <div class="ml-8 lg:ml-0 lg:mr-8 text-green-500 font-semibold">CreditCardDB</div>
@@ -45,7 +45,7 @@
     </div>
 {/if}
 
-<div class="w-full min-h-[-webkit-fill-available] bg-alt dark:bg-main-gray pb-16"><slot /></div>
+<div class="w-full min-h-[-webkit-fill-available] bg-alt dark:bg-main-gray py-16"><slot /></div>
 
 
 <!-- Footer -->
