@@ -1,22 +1,19 @@
 <script lang="ts">
 	export let card:CreditCardType;
     export let showTrackCard = false;
-    export let inCardStack = false;
-    import { newCard } from "$lib/stores";
     import TrackCard from "./TrackCard.svelte";
-    import { getCardImage } from "$lib/firebase";
-    import CardInfoShort from "./CardInfoShort.svelte";
+    import { getCardImage } from "$lib/database/read";
     import type { CreditCardType } from "$lib/types";
 
     var network = "visa";
 </script>
 
-
+{#if card && card.url}
 <div class="flex flex-col items-center transform scale-110 hover:z-30">
-    <a href="/card/{card.id}">
-    {#if card.image || ($newCard && $newCard.image == "pending")}
+    <a href="/card/{card.url}">
+    {#if card.image}
         {#await getCardImage(card)}
-            <div id="creditCard" class="creditCard bg-alt dark:bg-main-gray shadow-2xl shadow-stone-400 dark:shadow-stone-900"></div>
+            <div id="creditCard" class="creditCard bg-alt dark:bg-main-gray shadow-2xl shadow-stone-400 dark:shadow-stone-900" style="background-color:rgb({card.color})"></div>
         {:then image} 
             <div id="creditCard" class="creditCard bg-alt dark:bg-main-gray shadow-2xl shadow-stone-400 dark:shadow-stone-900" style="background-image:url({image})"></div>
         {:catch}
@@ -26,37 +23,20 @@
     <div id="creditCard" class="creditCard bg-alt dark:bg-main-gray shadow-2xl shadow-stone-400 dark:shadow-stone-900" >
         {#if card.bank}
             <div id="bank">
-            {#if $newCard && $newCard.bank}
-                {$newCard.bank}
-            {:else}
                 {card.bank}
-            {/if}
             </div>
             {#if card.network && (card.bank != card.network)}
                 <div id="network" class={network}>
-                    {#if $newCard && $newCard.network}
-                        {$newCard.network}
-                    {:else}
                         {card.network}
-                    {/if}
                 </div>
             {/if}
         {/if}
         {#if card.name}
             <div id="name">
-            {#if $newCard && $newCard.name}
-                {$newCard.name}
-            {:else}
                 {card.name}
-            {/if}
             </div>
         {/if}
-        {#if 
-        (card.physical && card.physical.chip && card.physical.chip == "Yes" &&
-        !($newCard && $newCard.physical && $newCard.physical.chip))
-        ||
-        ($newCard && $newCard.physical && $newCard.physical.chip && $newCard.physical.chip == "Yes")
-        }
+        {#if card.physical && card.physical.chip && card.physical.chip == "Yes" }
             <div id="chip"/>
         {/if}
     </div>
@@ -65,11 +45,8 @@
     {#if showTrackCard && card.id}
         <TrackCard id={card.id}></TrackCard>
     {/if}
-    {#if inCardStack}
-       <CardInfoShort card={card}></CardInfoShort>
-    {/if}
 </div>
-
+{/if}
 
 
 <style>

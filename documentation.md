@@ -14,6 +14,25 @@ Others necessary packages will be automatically installed with the installation 
 Make sure the `kit{}` object in `svelte.config.js` contains the following: 
 - `alias: {'components': './src/components/',}` 
         
+# $lib/
+- fields.ts: Used as a template for credit card objects to Update and Display. Also includes lists for <Select> drop down menus. 
+- functions.ts: Any functions that may need broad access.
+- index.js: Unused main javascript file
+- state.svelte.ts: Contains user state context functions
+- stores.ts: Contains the initialization functions for svelte stores.
+- types.ts: Contains typescript types for common reoccuring custom types.
+- database/
+- - authentication.ts: functions for firebase authentication
+- - firebase.ts: functions for initializing firebase
+- - read.ts: functions to read from the firebase database
+- - write.ts: functions to write to the firebase database 
+
+# routes/
+- +error.svelte: Top level error landing page. Will display for any error on the website, unless there is a closer to error +error.svelte page
+- +layout.server.ts: Runs scripts on the server before browser. Contains load function to be accessed by ANY page, unless theres a closer +layout.server.ts page.
+- +layout.svelte: Layout for entire website
+- +page.svelte: Homepage / Index page. Any directory under routes/ with its own +page.svelte will replace it if in directory.
+- +page.ts: Script to run before +page.svelte mounts. 
 
 
 ## Update.svelte + fields.ts 

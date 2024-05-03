@@ -1,12 +1,29 @@
-import type {RGB, HEX, CreditCardType} from '$lib/types'
+import { getOneCardByID } from "$lib/database/read";
+import type { CreditCardType, UserType } from "./types"
 
-export function hexToRgb(hex:HEX):RGB{
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return [r,g,b];
+export async function getCardsFromIDList(idList:Array<string>) {
+    let list:CreditCardType[] = []
+    for (let id of idList) {
+        await getOneCardByID(id).then((card) => {
+            list.push(card)
+        }).catch((error) => {
+            console.log(error)
+            console.log("One Card Missing")
+        });
+    }
+    return list
 }
-  
-export function rgbToHex(rgb: RGB):HEX {
-  return `#${(1 << 24 | rgb[0] << 16 | rgb[1] << 8 | rgb[2]).toString(16).slice(1)}`
+
+export function convertJSONtoUser(jsonString:string) {
+    const jsonObject = JSON.parse(jsonString)
+    let userData:UserType = {
+        wallet: [],
+        tracking: [],
+    }
+    if (jsonObject.wallet) { userData.wallet = jsonObject.wallet }
+    if (jsonObject.tracking) { userData.tracking = jsonObject.tracking }
+    if (jsonObject.display_name) { userData.display_name = jsonObject.display_name }
+    if (jsonObject.custom_choices) { userData.custom_choices = jsonObject.custom_choices }
+
+    return userData
 }

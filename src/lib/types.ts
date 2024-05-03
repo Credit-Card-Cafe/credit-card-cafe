@@ -34,7 +34,7 @@ export enum YesOrNo {
 export interface CreditCardType {
   [key: string]: any;
   
-  id: string,
+  url?: string,
   bank?: string,
   bank_id?: string,
   name: string,
@@ -60,18 +60,19 @@ export interface CreditCardType {
   search_terms?: Array<string>,
 }
 export interface BankType {
-    id: string,
+    url: string,
     name: string,
     nicknames?: Array<string>,
-    info?: string
+    info?: string,
+    cards?: Array<string>
 }
 
 export interface UserType {
-    displayName?: string | null,
+    display_name?: string | null,
     admin?: boolean,
     wallet: Array<string>,
     tracking: Array<string>
-    uid: string,
+    uid?: string,
     email?: string | null,
     custom_choices?: Array<{[key: string]: string}>
 }
@@ -93,7 +94,6 @@ export interface Submission {
 
 //used in functions.ts and ColorInput.svelte
 export type RGB = [number,number,number];
-export type HEX = `#${string}`;
 
 //used in Components of Update.svelte in the Contribute directory.
 export type UpdateTypeList = Array<string> | undefined;

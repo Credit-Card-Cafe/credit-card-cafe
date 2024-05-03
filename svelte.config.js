@@ -15,6 +15,7 @@ const config = {
 		alias: {
 			// this will match a file
 			'components': './src/components/',
+			'server':'./src/lib/server/',
 		}
 	}
 };

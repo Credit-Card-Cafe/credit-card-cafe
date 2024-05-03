@@ -2,16 +2,19 @@
     import type { CreditCardType } from "$lib/types";
     import { lists, redemption } from "$lib/fields";
     import { beforeUpdate } from "svelte";
-    import { user } from "$lib/stores";
     export let card:CreditCardType;
+    import { localUserData } from "$lib/stores";
+    import { convertJSONtoUser } from "$lib/functions";
 
+    $: localUser = convertJSONtoUser($localUserData);
+    
     let custom = false;
     let userCustomChoice = "";
     beforeUpdate(() => {
         if (card.rewards && Object.keys(card.rewards).indexOf("custom") > -1) {
             custom = true;
-            if ($user?.custom_choices && card.custom_rewards) {
-                let userCard = $user.custom_choices.find((choice) => choice[card.id])
+            if (localUser.custom_choices && card.custom_rewards) {
+                let userCard = localUser.custom_choices.find((choice) => choice[card.id])
                 for(let reward in card.custom_rewards) {
                     if (userCard && reward == userCard[card.id]) {
                         userCustomChoice = reward

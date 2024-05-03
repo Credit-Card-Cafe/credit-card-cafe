@@ -1,10 +1,10 @@
 <script lang="ts">
-    import type { CreditCardType } from "$lib/types";
-    export let cards:Array<CreditCardType>;
+    import type { CreditCardType, UserType } from "$lib/types";
+    export let cards:CreditCardType[];
     export let title: "Your" | "Potential";
     import { lists, redemption } from "$lib/fields";
-    import { user } from "$lib/stores";
-    import CreditCard from "components/CreditCard.svelte";
+
+    export let localUser:UserType;
 
     interface RewardSet {
         card: CreditCardType,
@@ -13,8 +13,8 @@
     }
 
     let categories:{[Key: string]:Array<RewardSet>} = {}
-
-    cards.forEach(card => {
+    
+    cards.forEach(card => { 
         if (card.rewards && card.redemption) {
             for (let reward in card.rewards) {
                 if (reward != "custom") {
@@ -30,8 +30,8 @@
                 }
             }
         } 
-        if (card.custom_rewards && card.redemption && $user?.custom_choices) {
-            let userCard = $user.custom_choices.find((choice) => choice[card.id])
+        if (card.custom_rewards && card.redemption && localUser?.custom_choices) {
+            let userCard = localUser.custom_choices.find((choice: { [x: string]: any; }) => choice[card.id])
             for (let reward in card.custom_rewards) {
                 if (userCard && reward == userCard[card.id]) {
                     if (!categories[reward]) {
@@ -46,33 +46,29 @@
             }
         }
     });
-
-    $user?.custom_choices?.forEach(cardName => {
-
-    });
-
-
 </script>
 
-<div class="rewards dark:text-white-warm">
-    <div class="text-xl mb-8 text-center md:text-left">{title} Rewards:</div>
-    <ul>
-        {#each Object.keys(categories) as category}
-            <li class="border border-black dark:border-white-warm p-2 rounded-lg mb-4 mx-1 flex flex-col">
-                {lists.rewardCategories[category]}
-                <span class="my-2 flex flex-row justify-start flex-wrap">
-                    {#each categories[category] as reward}
-                        <span class={reward.custom ? "reward hovertip border-4 border-green-500" : "reward hovertip"}>
-                            <span class="h-8 w-12 rounded-md mb-1" style="background:rgb({reward.card.color})"></span>
-                            <span class="hovertext border border-white-warm rounded-md p-2 absolute bottom-full z-10 dark:bg-main-gray bg-alt dark:text-white-warm text-center">{reward.card.bank} - {reward.card.name}</span>
-                            {reward.value}
-                        </span>
-                    {/each}
-                </span>
-            </li>
-        {/each}
-    </ul>
-</div>
+{#if Object.keys(categories).length > 0}
+    <div class="rewards dark:text-white-warm">
+        <div class="text-xl mb-8 text-center md:text-left">{title} Rewards:</div>
+        <ul>
+            {#each Object.keys(categories) as category}
+                <li class="border border-black dark:border-white-warm p-2 rounded-lg mb-4 mx-1 flex flex-col">
+                    {lists.rewardCategories[category]}
+                    <span class="my-2 flex flex-row justify-start flex-wrap">
+                        {#each categories[category] as reward}
+                            <span class={reward.custom ? "reward hovertip border-4 border-green-500" : "reward hovertip"}>
+                                <span class="h-8 w-12 rounded-md mb-1" style="background:rgb({reward.card.color})"></span>
+                                <span class="hovertext border border-white-warm rounded-md p-2 absolute bottom-full z-10 dark:bg-main-gray bg-alt dark:text-white-warm text-center">{reward.card.bank} - {reward.card.name}</span>
+                                {reward.value}
+                            </span>
+                        {/each}
+                    </span>
+                </li>
+            {/each}
+        </ul>
+    </div>
+{/if}
 
 <style>
     .reward {

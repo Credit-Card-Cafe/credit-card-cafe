@@ -5,7 +5,7 @@
   
   
   <div id="bank">
-      <a href="/bank/{bank.id}">
+      <a href="/bank/{bank.url}">
         <div id="bankCard">{bank.name}</div>
       </a>
   </div>

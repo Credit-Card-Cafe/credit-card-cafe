@@ -1,7 +1,12 @@
 <script lang="ts">
-    import { user } from "../lib/stores";
-    import { updateUser } from "$lib/firebase";    
+    import { localUserData } from "$lib/stores";
+    import { convertJSONtoUser } from "$lib/functions";
+    import { onMount } from "svelte";
+
+    //import { updateUser } from "$lib/firebase";    
     export let id: string;
+
+    $: localUser = convertJSONtoUser($localUserData);
 
     enum Fields {
         Wallet = "wallet",
@@ -10,41 +15,41 @@
 
     let show: Fields | "updating" | "both";
     
-    if ($user) {
-        if ($user.wallet && $user.wallet.includes(id)) {
+    onMount(() => {
+        if (localUser) {
+        if (localUser.wallet && localUser.wallet.includes(id)) {
             show = Fields.Wallet
-        } else if ($user.tracking && $user.tracking.includes(id)) {
+        } else if (localUser.tracking && localUser.tracking.includes(id)) {
             show = Fields.Tracking
         } else {
             show = "both"
         }
     }
+    })
     
 
     function addCardtoUser(field: Fields) {
-        if ($user) {
-            $user[field].push(id);
+        if (localUser) {
+            localUser[field].push(id);
             show = "updating"
-            updateUser(field, $user[field]).then((data) => {
-                show = field
-            });
+            $localUserData = JSON.stringify(localUser)
+            show = field
         }
     }
 
     function rmCardFromUser(field: Fields) {
-        if ($user) {
-            let value = $user[field].filter((e) => e != id);
+        if (localUser) {
+            let value = localUser[field].filter((e) => e != id);
             show = "updating"
-            updateUser(field, value).then((data) => {
-                show = "both"
-            });
-            $user[field] = $user[field].filter((cardId) => cardId != id);
+            localUser[field] = localUser[field].filter((cardId) => cardId != id);
+            $localUserData = JSON.stringify(localUser)
+            show = "both"
         }
     }
 </script>
 
 
-{#if $user}
+{#if localUser}
     <div class="flex flex-row my-6 justify-center z-20">
         {#if show == "both"}
             <button on:click={() => addCardtoUser(Fields.Wallet)} class="btn ml-1 bg-green-500 hover:bg-green-600">Add Card to Wallet</button>

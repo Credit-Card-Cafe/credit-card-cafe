@@ -1,7 +1,4 @@
 <script lang="ts">
-    import { user } from "$lib/stores";
-    import { logout } from '$lib/firebase';
-    import LogInButton from "./LogInButton.svelte";
     import SearchBar from "./SearchBar.svelte";
     export let showMobileMenu:boolean;
 </script>
@@ -15,14 +12,10 @@
             </svg>          
         </button>
     </div>
-    <a class="text-black dark:text-white-warm bg-white/30 dark:bg-black/30 navbtn" href="/" on:click={() => showMobileMenu = !showMobileMenu}>Home</a>
-    <a class="text-black dark:text-white-warm bg-white/30 dark:bg-black/30 navbtn" href="/search" on:click={() => showMobileMenu = !showMobileMenu}>Cards</a>
-    {#if $user}
-        <a href="/account" class="dark:text-white-warm bg-white/30 dark:bg-black/30 navbtn" on:click={() => showMobileMenu = !showMobileMenu}>{$user.displayName}</a>
-        <button class="text-black dark:text-white-warm bg-white/30 dark:bg-black/30 navbtn" on:click={logout}>Log out</button>
-    {:else}
-    <LogInButton></LogInButton>
-    {/if}
+    <a class="text-black dark:text-white-warm bg-white/30 dark:bg-black/30 navbtn" href="/" on:click={() => showMobileMenu = !showMobileMenu}>Featured</a>
+    <a class="text-black dark:text-white-warm bg-white/30 dark:bg-black/30 navbtn" href="/table" on:click={() => showMobileMenu = !showMobileMenu}>Table</a>
+    <a class="text-black dark:text-white-warm bg-white/30 dark:bg-black/30 navbtn" href="/account" on:click={() => showMobileMenu = !showMobileMenu}>My Cards</a>
+
     
 </div>
 

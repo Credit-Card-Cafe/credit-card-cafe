@@ -1,50 +1,32 @@
 <script lang="ts">
+  import CreditCard from 'components/CreditCard.svelte';
   export let data;
   import CardStack from '../../../components/CardStack.svelte';
-  import { cardList } from '$lib/stores.js';
-  import { getOneBank } from '$lib/firebase.js';
   import BankInfo from './components/BankInfo.svelte';
-    import type { BankType, CreditCardType } from '$lib/types';
 
-  let bank:BankType
-
-  let list:Array<CreditCardType> = [];
-  getOneBank(data.slug).then((result) => {
-     bank = result;
-     list = $cardList.filter((card) => (
-      card.bank_id
-      &&
-      bank.id
-      &&
-      card.bank_id == bank.id
-      )
-      );
-  });
-
+  let bank = data.bank;
+  let cards = data.cards;
+  
 </script>
 
 <svelte:head>
-    <title>CreditCardDB | {data.slug}</title>
-    <meta name="description" content="{data.slug} on CreditCardDB">
+  {#if bank}
+    <title>CreditCardDB | {bank.name}</title>
+    <meta name="description" content="{bank.name} on CreditCardDB">
+  {/if}
 </svelte:head>
 
-<div id="bank">
-  <CardStack cards={list} showTrackCard={true}></CardStack>
-  <BankInfo bank={bank}></BankInfo>
-</div>
+{#if bank}
+  <div id="bank" class="flex flex-col mt-16 items-center md:block">
+    <div class="mb-12"><BankInfo bank={bank}></BankInfo></div>
+    {#if cards}
+      <div class="block md:hidden"><CardStack cards={cards} showTrackCard={true} allowCardFanning={false}></CardStack></div>
+      <div class="hidden md:block lg:grid grid-cols-1 gap-4 justify-center pt-8 md:grid-cols-2 md:gap-12 lg:gap-6 lg:grid-cols-3">
+            {#each cards as item}<CreditCard card={item} showTrackCard={true}></CreditCard>{/each}
+      </div>
+    {/if}
+  </div>
+{:else}
+  <div>Nothing to display here...</div>
+{/if}
 
-<style>
-  div {
-    padding-top: 4rem;
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: space-around;
-    align-items: center;
-    gap: 1rem;
-  }
-  @media (min-width: 768px) {
-    div {
-      flex-direction: row;
-    }
-}
-</style>
