@@ -17,7 +17,7 @@
 <Nav showMobileMenu={showMobileMenu} on:menuState={changeMenuState}></Nav>
 
 
-<div class="w-full min-h-[-webkit-fill-available] bg-alt dark:bg-main-gray py-16"><slot /></div>
+<div class="w-full min-h-[-webkit-fill-available] bg-alt dark:bg-main-gray py-24"><slot /></div>
 
 
 <!-- Footer -->

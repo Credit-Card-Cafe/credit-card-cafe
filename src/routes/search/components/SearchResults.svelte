@@ -11,11 +11,13 @@
         list = cards
     })
 
+    let e = query;
+
 </script>
 
 <div id="cardList" class="grid grid-cols-1 gap-4 justify-center pt-8 md:grid-cols-2 md:gap-12 lg:gap-6 lg:grid-cols-3">
     {#each list as item}
-        <div class=""><CreditCard card={item} showTrackCard={true}></CreditCard></div>
+        <div class="mb-8"><CreditCard card={item} showTrackCard={true}></CreditCard></div>
     {/each}
 </div>
 
