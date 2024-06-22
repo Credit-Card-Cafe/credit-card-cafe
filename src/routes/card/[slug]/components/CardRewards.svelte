@@ -8,21 +8,39 @@
 
     $: localUser = convertJSONtoUser($localUserData);
     
+    console.log(localUser)
+    console.log(card.id)
+
     let custom = false;
     let userCustomChoice = "";
     beforeUpdate(() => {
         if (card.rewards && Object.keys(card.rewards).indexOf("custom") > -1) {
             custom = true;
             if (localUser.custom_choices && card.custom_rewards) {
-                let userCard = localUser.custom_choices.find((choice) => choice[card.id])
+                let userReward = localUser.custom_choices.find((choice) => choice[card.id])
                 for(let reward in card.custom_rewards) {
-                    if (userCard && reward == userCard[card.id]) {
+                    if (userReward && reward == userReward[card.id]) {
                         userCustomChoice = reward
                     }
                 }
             }
         }
     })
+
+    function setCustomReward(choice: string) {
+        let pushObj = {[card.id]:choice};
+        if (localUser.custom_choices) {
+            let userRewardIndex = localUser.custom_choices.findIndex((choice) => choice[card.id])
+            if (userRewardIndex > -1) {
+                localUser.custom_choices[userRewardIndex] = pushObj;
+            } else {
+                localUser.custom_choices.push(pushObj);
+            }
+        } else {
+            localUser["custom_choices"] = [pushObj]
+        }
+        $localUserData = JSON.stringify(localUser)
+    }
 
     let showCustomRewards = false;
     let showDefaultRewards = true;
@@ -37,7 +55,7 @@
                 {#if showCustomRewards}
                     <div class="flex flex-col">
                         {#each Object.keys(card.custom_rewards) as reward}
-                            <div class={(userCustomChoice == reward) ? "border-4 border-green-500 m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center" : "custom_rewards" }>
+                            <button class={(userCustomChoice == reward) ? "border-4 border-green-500 m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center" : "custom_rewards" } on:click={() => setCustomReward(reward)}>
                                 <div class="border border-white-warm rounded-md p-2 dark:bg-main-gray bg-alt dark:text-white-warm text-center mr-4">
                                     {#if card.redemption} 
                                         {card.custom_rewards[reward]}{redemption[card.redemption]}
@@ -46,7 +64,7 @@
                                     {/if}
                                 </div>
                                 <div class="rounded-md mb-0">{lists.rewardCategories[reward]}</div>
-                            </div>
+                            </button>
                         {/each}
                     </div>
                 {/if}
@@ -88,3 +106,4 @@
         @apply bg-black/[0.4];
     }
 </style>
+

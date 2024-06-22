@@ -8,7 +8,8 @@ export const bankList = writable<Array<BankType>>([]);
 
 const defaultUser = JSON.stringify({
     wallet:[],
-    tracking:[]
+    tracking:[],
+    custom_choices: [],
 })
 
 const USER_LOCAL_STORAGE = "local_user_storage"
