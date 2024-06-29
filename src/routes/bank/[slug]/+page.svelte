@@ -3,7 +3,6 @@
   export let data;
   import CardStack from '../../../components/CardStack.svelte';
   import BankInfo from './components/BankInfo.svelte';
-    import Modifiers from './components/Modifiers.svelte';
 
   let bank = data.bank;
   let cards = data.cards;
@@ -20,9 +19,6 @@
 {#if bank}
   <div id="bank" class="flex flex-col mt-16 items-center md:block">
     <div class="mb-12"><BankInfo bank={bank}></BankInfo></div>
-    {#if bank.modifiers}
-      <div class="mb-12"><Modifiers bank={bank}></Modifiers></div>
-    {/if}
     {#if cards}
       <div class="block md:hidden"><CardStack cards={cards} showTrackCard={true} allowCardFanning={false}></CardStack></div>
       <div class="hidden md:block lg:grid grid-cols-1 gap-4 justify-center pt-8 md:grid-cols-2 md:gap-12 lg:gap-6 lg:grid-cols-3">
