@@ -7,9 +7,6 @@
     import { convertJSONtoUser } from "$lib/functions";
 
     $: localUser = convertJSONtoUser($localUserData);
-    
-    console.log(localUser)
-    console.log(card.id)
 
     let custom = false;
     let userCustomChoice = "";
@@ -90,15 +87,10 @@
             {/if}
         </div>
     </div>
-    <hr>
     {/if}
    
 
 <style>
-    hr {
-        margin: 2rem 0;
-        border: 2px solid #d6c0a5;
-    }
     .custom_rewards {
         @apply m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center;
     }

@@ -24,6 +24,6 @@ export function convertJSONtoUser(jsonString:string) {
     if (jsonObject.tracking) { userData.tracking = jsonObject.tracking }
     if (jsonObject.display_name) { userData.display_name = jsonObject.display_name }
     if (jsonObject.custom_choices) { userData.custom_choices = jsonObject.custom_choices }
-
+    if (jsonObject.modifiers) { userData.modifiers = jsonObject.modifiers }
     return userData
 }

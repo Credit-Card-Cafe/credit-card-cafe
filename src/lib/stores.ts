@@ -10,6 +10,7 @@ const defaultUser = JSON.stringify({
     wallet:[],
     tracking:[],
     custom_choices: [],
+    modifiers: [],
 })
 
 const USER_LOCAL_STORAGE = "local_user_storage"

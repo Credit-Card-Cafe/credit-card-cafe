@@ -34,11 +34,11 @@ export enum YesOrNo {
 export interface CreditCardType {
   [key: string]: any;
   id: string,
-  url?: string,
-  bank?: string,
-  bank_id?: string,
+  url: string,
+  bank: string,
+  bank_id: string,
   name: string,
-  network?: CardNetwork,
+  network: CardNetwork,
   link?: string,
   fees?: {[Key: string]:number},
   sub?: {[Key: string]:number},
@@ -46,7 +46,7 @@ export interface CreditCardType {
   custom_rewards?: {[Key: string]:number | {[Key: string]:number}},
   redemption?: CardRedemption,
   brand?: string,
-  consumer?: CardConsumer,
+  consumer: CardConsumer,
   image?: boolean | "pending" | File, //can only be boolean if read from database. Image path is based off card id. "pending" state is for submissions, and File is the file the image is during the update.
   physical?: {
     [key: string]: any;
@@ -58,12 +58,15 @@ export interface CreditCardType {
   }
   color?: RGB,
   search_terms?: Array<string>,
+  modifiers: {[Key:string]:{[Key: string]: any; level: number}}
 }
 export interface BankType {
+    id: string,
     url: string,
     name: string,
     nicknames?: Array<string>,
     info?: string,
+    modifiers?: {[key:string]:string},
     cards?: Array<string>
 }
 
@@ -74,7 +77,8 @@ export interface UserType {
     tracking: Array<string>
     uid?: string,
     email?: string | null,
-    custom_choices?: Array<{[key: string]: string}>
+    custom_choices?: Array<{[key: string]: string}>,
+    modifiers?: Array<string>
 }
 
 export enum SubmissionType {

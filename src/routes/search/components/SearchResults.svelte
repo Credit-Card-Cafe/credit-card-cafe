@@ -5,7 +5,7 @@
     import BankCard from "components/BankCard.svelte";
     import type { BankType, CreditCardType } from "$lib/types";
 
-    let list:Array<CreditCardType | BankType> = [];
+    let list:Array<CreditCardType> = [];
 
     getCards().then((cards) => {
         list = cards
