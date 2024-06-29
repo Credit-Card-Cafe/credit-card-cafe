@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { convertJSONtoUser, getCardsFromIDList } from '$lib/functions';
+  import { convertJSONtoUser, getCardsFromIDList, applyModifier } from '$lib/functions';
   import { localUserData } from '$lib/stores';
   import type { CreditCardType } from '$lib/types';
   import Rewards from './components/Rewards.svelte';
@@ -10,8 +10,8 @@
   let tracking:CreditCardType[] = [];
   let localUser = convertJSONtoUser($localUserData)
 
-  getCardsFromIDList(localUser.wallet).then(list => wallet = list)
-  getCardsFromIDList(localUser.tracking).then(list => tracking = list)
+  getCardsFromIDList(localUser.wallet).then(list => wallet = list.map((card) => applyModifier(card, localUser)))
+  getCardsFromIDList(localUser.tracking).then(list => tracking = list.map((card) => applyModifier(card, localUser)))
 </script>
 
 <svelte:head>
@@ -39,7 +39,7 @@
     {:else}
       <CreditCard card={{
         name: "You are not currently tracking any cards. To track a card, find a card you like, then select 'Track Card', from the card's information page. ",
-        url: "null"
+        url: "null",
         }}></CreditCard>
     {/if}
   </div>

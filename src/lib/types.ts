@@ -58,7 +58,7 @@ export interface CreditCardType {
   }
   color?: RGB,
   search_terms?: Array<string>,
-  modifiers: {[Key:string]:{[Key: string]: any; level: number}}
+  modifiers: {[Key:string]:{[Key: string]: any}}
 }
 export interface BankType {
     id: string,

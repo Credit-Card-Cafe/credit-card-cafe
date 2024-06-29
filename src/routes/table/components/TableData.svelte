@@ -5,6 +5,8 @@
     export let card:CreditCardType;
     export let queries:Array<string>;
     export let isTD:boolean;
+
+    
 </script>
 
 {#each queries as query}

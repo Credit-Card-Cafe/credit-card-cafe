@@ -4,8 +4,16 @@
   import CardInfo from './CardInfo.svelte';
   import CardActions from "./components/CardActions.svelte";
   import { onMount } from "svelte";
+  import { localUserData } from '$lib/stores';
+  import { convertJSONtoUser, applyModifier } from '$lib/functions';
 
   let card = data.card;
+  let localUser = convertJSONtoUser($localUserData)
+  
+  if (card) {
+    card = applyModifier(card, localUser)
+  }
+
 
   let pos = 0;
   let scrolled = true;

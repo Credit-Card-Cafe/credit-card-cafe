@@ -1,6 +1,21 @@
 import { getOneCardByID } from "$lib/database/read";
 import type { CreditCardType, UserType } from "./types"
 
+export function applyModifier(card: CreditCardType, localUser: UserType) {
+    if (card.modifiers && localUser.modifiers) {
+        const userModifiers = localUser.modifiers
+        const modifierId = userModifiers.find((mod) => mod in card.modifiers)
+        if (modifierId) {
+            let modifierObject = card.modifiers[modifierId]
+            
+            for (const property in modifierObject) {
+                card[property] = modifierObject[property]
+            }
+        }
+    }
+    return card
+}
+
 export async function getCardsFromIDList(idList:Array<string>) {
     let list:CreditCardType[] = []
     for (let id of idList) {
