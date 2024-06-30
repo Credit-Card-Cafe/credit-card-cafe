@@ -1,4 +1,4 @@
-import { getOneBankById, getOneBankByURL, getOneCardByID } from "$lib/database/read";
+import { getOneBankById, getOneBankByURL, getOneBrandById, getOneCardByID } from "$lib/database/read";
 import type { CreditCardType, UserType } from "./types"
 
 //use to display locally modified changed to a card based on user selected modifiers
@@ -27,6 +27,21 @@ export async function injectBankToCard(card: CreditCardType):Promise<CreditCardT
             }
         } catch (error) {
             card.bank_name = "Cannot find Bank"
+        }
+    }
+    return card;
+}
+
+export async function injectBrandToCard(card: CreditCardType):Promise<CreditCardType> {
+    if (card.brand_id) {
+        try {
+            const brand = await getOneBrandById(card.brand_id);
+            if (brand) {
+                card.brand_name = brand.name;
+                card.brand_url = brand.url;
+            }
+        } catch (error) {
+            delete card.brand_id
         }
     }
     return card;

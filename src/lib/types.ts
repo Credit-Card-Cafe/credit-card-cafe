@@ -43,7 +43,7 @@ export interface CreditCardType {
   //static info
   link?: string,
   redemption?: CardRedemption,
-  brand?: string,
+  brand_id?: string,
   consumer?: CardConsumer,
   color?: RGB,
   image?: boolean,
@@ -67,16 +67,16 @@ export interface CreditCardType {
   //injected from injectBankToCard()
   bank_name?: string,
   bank_url?: string,
+  //injected from injectBrandkToCard()
+  brand_name?: string,
+  brand_url?: string,
 }
 
 export interface BankType {
     id: string,
     url: string,
     name: string,
-    nicknames?: Array<string>,
-    info?: string,
     modifiers?: {[key:string]:string},
-    cards?: Array<string>
 }
 
 export interface UserType {

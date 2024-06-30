@@ -4,19 +4,22 @@
     import TableData from "./TableData.svelte";
     import TableQuery from "./TableQuery.svelte";
     import type { CreditCardType } from "$lib/types";
-    import { injectBankToCard } from "$lib/functions";
+    import { injectBankToCard, injectBrandToCard } from "$lib/functions";
     
     export let tablelist:CreditCardType[];
     
     Promise.all(
         tablelist.map(async (card) => {
-            const updatedCard = await injectBankToCard(card);
+            let updatedCard = await injectBankToCard(card);
+            if (card.brand_id) {
+                updatedCard = await injectBrandToCard(card);
+            }
             return updatedCard;
         })
     ).then((updatedTablelist) => {
         tablelist = updatedTablelist;
     });
-    
+
     //default queries 
     var queries = ["network", "fees", "annual_fee"];
 
@@ -32,7 +35,7 @@
 <div class="flex flex-col px-4 pb-4 pt-8 md:p-10">
     <div class="mb-6 md:mb-10 flex flex-row flex-wrap justify-center">
         <TableQuery field={"network"} bind:queries={queries}></TableQuery>
-        <TableQuery field={"brand"} bind:queries={queries}></TableQuery>
+        <TableQuery field={"brand_name"} bind:queries={queries}></TableQuery>
         <TableQuery field={"consumer"} bind:queries={queries}></TableQuery>
         <TableQuery field={"redemption"} bind:queries={queries}></TableQuery>
         <TableQuery field={"sub"} bind:queries={queries} isObject={true}></TableQuery>

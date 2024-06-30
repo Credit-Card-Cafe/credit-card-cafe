@@ -33,6 +33,14 @@ export async function getOneCardByID(id: string) {
     } 
   }
 
+  export async function getOneBrandById(id: string) {
+    const docRef = doc(db, "brands", id);
+    const docSnap: DocumentData | undefined = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return {...docSnap.data(), id:id} as BankType;
+    }
+  }
+
   export async function getOneBankByURL(url: string) {
     const docQuery = query(collection(db, "banks"), where("url", "==", url));
     const docs = await getDocs(docQuery);

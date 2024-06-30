@@ -5,7 +5,7 @@
   import CardActions from "./components/CardActions.svelte";
   import { onMount } from "svelte";
   import { localUserData } from '$lib/stores';
-  import { convertJSONtoUser, applyModifier, injectBankToCard } from '$lib/functions';
+  import { convertJSONtoUser, applyModifier, injectBankToCard, injectBrandToCard } from '$lib/functions';
 
   let card = data.card;
   let localUser = convertJSONtoUser($localUserData)
@@ -15,6 +15,11 @@
     injectBankToCard(card).then((cardWithBank) => {
       card = cardWithBank
     })
+    if (card.brand_id) {
+      injectBrandToCard(card).then((cardWithBrand) => {
+        card = cardWithBrand
+      })
+    }
   }
 
   let pos = 0;

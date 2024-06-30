@@ -65,7 +65,7 @@ export const dataField: {[Key: string]:{[Key: string]:any}} = {
       sub_months: { name: "SUB Months", type: "number"}
     }
   },
-  brand: {
+  brand_name: {
     name: "Brand",
     type: "text",
   },
