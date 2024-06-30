@@ -12,6 +12,11 @@
 
   getCardsFromIDList(localUser.wallet).then(list => wallet = list.map((card) => applyModifier(card, localUser)))
   getCardsFromIDList(localUser.tracking).then(list => tracking = list.map((card) => applyModifier(card, localUser)))
+
+  const displayCard = {
+        name: "You do not have any cards in your wallet. To add a card, find a card you like, then select 'Add to Wallet', from the card's information page.",
+        url: "null",
+      } as CreditCardType
 </script>
 
 <svelte:head>
@@ -25,10 +30,7 @@
       <CardStack cards={wallet} allowCardFanning={true}></CardStack>
       <Rewards cards={wallet} localUser={localUser} title={"Your"}></Rewards>
     {:else}
-      <CreditCard card={{
-        name: "You do not have any cards in your wallet. To add a card, find a card you like, then select 'Add to Wallet', from the card's information page.",
-        url: "null"
-      }}></CreditCard>
+      <CreditCard card={displayCard}></CreditCard>
     {/if}
   </div>
   <div class="md:flex md:flex-col md:items-center md:w-1/2">
@@ -37,10 +39,7 @@
       <CardStack cards={tracking}></CardStack>
       <Rewards cards={tracking} localUser={localUser} title={"Potential"} ></Rewards>
     {:else}
-      <CreditCard card={{
-        name: "You are not currently tracking any cards. To track a card, find a card you like, then select 'Track Card', from the card's information page. ",
-        url: "null",
-        }}></CreditCard>
+      <CreditCard card={displayCard}></CreditCard>
     {/if}
   </div>
 </div>

@@ -2,12 +2,14 @@
     import { page } from '$app/stores';
     import SearchResults from "./components/SearchResults.svelte";
 
-    $: hasQuery = $page.url.searchParams.has("q")
+    let hasQuery = $page.url.searchParams.has("q")
+    const q = $page.url.searchParams.get("q")
+
 </script>
 
 <div>
 {#if hasQuery}
-<SearchResults query={$page.url.searchParams.get("q")}></SearchResults>
+<SearchResults query={q}></SearchResults>
 {/if}
 </div>
 

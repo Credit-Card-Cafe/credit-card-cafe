@@ -5,15 +5,17 @@
   import CardActions from "./components/CardActions.svelte";
   import { onMount } from "svelte";
   import { localUserData } from '$lib/stores';
-  import { convertJSONtoUser, applyModifier } from '$lib/functions';
+  import { convertJSONtoUser, applyModifier, injectBankToCard } from '$lib/functions';
 
   let card = data.card;
   let localUser = convertJSONtoUser($localUserData)
   
   if (card) {
     card = applyModifier(card, localUser)
+    injectBankToCard(card).then((cardWithBank) => {
+      card = cardWithBank
+    })
   }
-
 
   let pos = 0;
   let scrolled = true;

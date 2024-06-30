@@ -25,6 +25,14 @@ export async function getOneCardByID(id: string) {
     } 
   } 
   
+  export async function getOneBankById(id: string) {
+    const docRef = doc(db, "banks", id);
+    const docSnap: DocumentData | undefined = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return {...docSnap.data(), id:id} as BankType;
+    } 
+  }
+
   export async function getOneBankByURL(url: string) {
     const docQuery = query(collection(db, "banks"), where("url", "==", url));
     const docs = await getDocs(docQuery);
@@ -33,6 +41,18 @@ export async function getOneCardByID(id: string) {
       return {...bank.data(), id:bank.id } as BankType | undefined;
     } 
   }
+
+  export async function getCardsFromBankId(id: string) {
+    let list:CreditCardType[] = []
+    const docQuery = query(collection(db, "creditCards"), where("bank_id", "==", id));
+    const docs = await getDocs(docQuery);
+    if (!docs.empty) {
+      docs.docs.forEach((card) => {
+        list.push({...card.data(), id:card.id} as CreditCardType);
+      });
+    } 
+    return list
+  } 
   
   //gets an ordered list of cards
   export async function orderCards(param:string, results:number) {
@@ -75,4 +95,19 @@ export async function getOneCardByID(id: string) {
     const imgRef = ref(storage, 'images/' + card.id + ".png");
     return await getDownloadURL(imgRef);
   }
+
+  export async function searchCreditCards(searchTerm:string ) {
+    const cardsRef = collection(db, "creditCards");
+    const q = query(cardsRef, where('search_terms', 'array-contains', searchTerm));
+    let list:CreditCardType[] = []
+    try {
+        const docs = await getDocs(q);
+        docs.docs.forEach((card) => {
+          list.push({...card.data(), id:card.id} as CreditCardType);
+        });
+    } catch (error) {
+        console.error("Error searching credit cards:", error);
+    }
+    return list
+}
 

@@ -33,22 +33,28 @@ export enum YesOrNo {
 
 export interface CreditCardType {
   [key: string]: any;
+  //required 
   id: string,
   url: string,
-  bank: string,
   bank_id: string,
   name: string,
   network: CardNetwork,
+
+  //static info
   link?: string,
+  redemption?: CardRedemption,
+  brand?: string,
+  consumer?: CardConsumer,
+  color?: RGB,
+  image?: boolean,
+
+  //nested objects
+  modifiers?: {[Key:string]:{[Key: string]: any}},
   fees?: {[Key: string]:number},
   sub?: {[Key: string]:number},
   rewards?: {[Key: string]:number | {[Key: string]:number}},
   custom_rewards?: {[Key: string]:number | {[Key: string]:number}},
-  redemption?: CardRedemption,
-  brand?: string,
-  consumer: CardConsumer,
-  image?: boolean | "pending" | File, //can only be boolean if read from database. Image path is based off card id. "pending" state is for submissions, and File is the file the image is during the update.
-  physical?: {
+    physical?: {
     [key: string]: any;
     material: string,
     chip: YesOrNo,
@@ -56,10 +62,13 @@ export interface CreditCardType {
     embossed: YesOrNo,
     info_location: CardInfoLocation,
   }
-  color?: RGB,
   search_terms?: Array<string>,
-  modifiers: {[Key:string]:{[Key: string]: any}}
+
+  //injected from injectBankToCard()
+  bank_name?: string,
+  bank_url?: string,
 }
+
 export interface BankType {
     id: string,
     url: string,

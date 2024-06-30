@@ -62,7 +62,7 @@
             {:else if show == Fields.Tracking}
                 <button on:click={() => rmCardFromUser(Fields.Tracking)} class="btn bg-red-300 hover:bg-red-400">Stop tracking this Card</button>
             {:else}
-                <div>Something went wrong...</div>
+                <div>Loading...</div>
             {/if}
         {/if}
     </div>

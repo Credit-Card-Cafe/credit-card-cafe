@@ -1,10 +1,11 @@
-import { getOneCardByID } from "$lib/database/read";
+import { getOneBankById, getOneBankByURL, getOneCardByID } from "$lib/database/read";
 import type { CreditCardType, UserType } from "./types"
 
+//use to display locally modified changed to a card based on user selected modifiers
 export function applyModifier(card: CreditCardType, localUser: UserType) {
     if (card.modifiers && localUser.modifiers) {
         const userModifiers = localUser.modifiers
-        const modifierId = userModifiers.find((mod) => mod in card.modifiers)
+        const modifierId = userModifiers.find((mod) => card.modifiers ? mod in card.modifiers : undefined)
         if (modifierId) {
             let modifierObject = card.modifiers[modifierId]
             
@@ -14,6 +15,21 @@ export function applyModifier(card: CreditCardType, localUser: UserType) {
         }
     }
     return card
+}
+
+export async function injectBankToCard(card: CreditCardType):Promise<CreditCardType> {
+    if (card.bank_id) {
+        try {
+            const bank = await getOneBankById(card.bank_id);
+            if (bank) {
+                card.bank_name = bank.name;
+                card.bank_url = bank.url;
+            }
+        } catch (error) {
+            card.bank_name = "Cannot find Bank"
+        }
+    }
+    return card;
 }
 
 export async function getCardsFromIDList(idList:Array<string>) {

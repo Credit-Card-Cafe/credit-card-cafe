@@ -4,8 +4,18 @@
     import TableData from "./TableData.svelte";
     import TableQuery from "./TableQuery.svelte";
     import type { CreditCardType } from "$lib/types";
+    import { injectBankToCard } from "$lib/functions";
     
     export let tablelist:CreditCardType[];
+    
+    Promise.all(
+        tablelist.map(async (card) => {
+            const updatedCard = await injectBankToCard(card);
+            return updatedCard;
+        })
+    ).then((updatedTablelist) => {
+        tablelist = updatedTablelist;
+    });
     
     //default queries 
     var queries = ["network", "fees", "annual_fee"];
@@ -58,11 +68,11 @@
             <td class="flex md:table-cell flex-col items-center md:text-left odd:rounded-xl md:odd:rounded-r-none md:odd:rounded-l-xl">
                 <a href="/card/{card.id}" class="font-medium mb-6 md:mb-0 md:font-normal">{card.name}</a>
                 <table class="md:hidden w-full">
-                    <tr class='tr border-b-2 border-gray-300 dark:border-gray-700 last:border-0'><td>Bank</td><td class='border-l-2 border-gray-300 w-1/2'>{#if card.bank_id}<a href="/bank/{card.bank_id}">{card.bank}</a>{:else}{card.bank}{/if}</td></tr>
+                    <tr class='tr border-b-2 border-gray-300 dark:border-gray-700 last:border-0'><td>Bank</td><td class='border-l-2 border-gray-300 w-1/2'>{#if card.bank_url}<a href="/bank/{card.bank_url}">{card.bank_url}</a>{:else}{card.bank_name}{/if}</td></tr>
                     <TableData queries={queries} card={card} isTD={false}></TableData>
                 </table>
             </td>
-            <td class="even:bg-black/5 odd:last:rounded-r-xl hidden md:table-cell">{#if card.bank_id}<a href="/bank/{card.bank_id}">{card.bank}</a>{:else}{card.bank}{/if}</td>
+            <td class="even:bg-black/5 odd:last:rounded-r-xl hidden md:table-cell">{#if card.bank_url}<a href="/bank/{card.bank_url}">{card.bank_name}</a>{:else}{card.bank_name}{/if}</td>
             <TableData class="even:bg-black/5 odd:last:rounded-r-xl hidden md:table-cell" queries={queries} card={card} isTD={true}></TableData>
         </tr>
         {/each}
