@@ -3,12 +3,17 @@
     import CreditCard from "components/CreditCard.svelte";
     import { searchCreditCards } from "$lib/database/read";
     import type { CreditCardType } from "$lib/types";
+    import { goto } from "$app/navigation";
 
     let list:Array<CreditCardType> = [];
 
     if (query) {
         searchCreditCards(query.toLowerCase()).then((cards) => {
-            list = cards
+            if (cards.length == 1) {
+                goto(`../card/${cards[0].url}`)
+            } else {
+                list = cards
+            }
         })
     }
 
