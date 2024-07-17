@@ -10,9 +10,9 @@
 
 {#if localUser}
     {#await getCardsFromIDList([...localUser.wallet, ...localUser.tracking])}
-        <Table tablelist={[]}></Table>
+        <Table tablelist={[]} walletIDList={[]} trackingIDList={[]}></Table>
     {:then tableList} 
-        <Table tablelist={tableList}></Table>
+        <Table tablelist={tableList} walletIDList={localUser.wallet} trackingIDList={localUser.tracking}></Table>
     {/await}
 {:else}
     <div>Sign up / Log in to compare cards! (Although we should be able to do this without an account)</div>

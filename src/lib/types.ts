@@ -26,15 +26,10 @@ export enum CardInfoLocation {
   NoNumber = "No Number"
 }
 
-export enum YesOrNo {
-  Yes = "Yes",
-  No = "No"
-}
-
 export interface CreditCardType {
   [key: string]: any;
   //required 
-  id: string,
+  id: string, //injected from read.ts
   url: string,
   bank_id: string,
   name: string,
@@ -57,9 +52,9 @@ export interface CreditCardType {
     physical?: {
     [key: string]: any;
     material: string,
-    chip: YesOrNo,
-    tap_to_pay: YesOrNo,
-    embossed: YesOrNo,
+    chip: boolean,
+    tap_to_pay: boolean,
+    embossed: boolean,
     info_location: CardInfoLocation,
   }
   search_terms?: Array<string>,
@@ -90,28 +85,18 @@ export interface UserType {
     modifiers?: Array<string>
 }
 
-export enum SubmissionType {
-  Update = "update",
-  AddCard = "add-card",
-  AddBank = "add-bank"
-}
-export interface Submission {
-  obj: CreditCardType | BankType,
-  display: Boolean,
-  id?: string,
-  time: number,
-  type: SubmissionType,
-  user: string,
-  image?: File
-}
-
 //used in functions.ts and ColorInput.svelte
 export type RGB = [number,number,number];
 
-//used in Components of Update.svelte in the Contribute directory.
+//used in the offline uploader.
 export type UpdateTypeList = Array<string> | undefined;
-export type UpdateTypeField = string | number;
 export type UpdateTypeObjectField = string | undefined;
-export type UpdateTypeValue = string | number;
 export type UpdateTypeObject = {[key:string]: any};
 export type UpdateTypeDynamic = {[key:string]:string} | undefined;
+
+//Table List Switch
+export enum TLS {
+  Both,
+  Wallet,
+  Tracking
+}

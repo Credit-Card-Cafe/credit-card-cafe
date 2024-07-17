@@ -1,17 +1,7 @@
-//type: (string), UpdateCard.svelte will use this to send information to proper component.
-//<input type="text">   :  property: { name: "Display Name", type: "text"}
-//<select>              :  property: { name: "Display Name", type: "submit", options: ["option 1", "option n"]}
-//<input type="radio">  :  property: { name: "Display Name", type: "radio", options: ["option 1", "option n"]}
-//lists                 :  property: { name: "Display Name", type: "list", action: "Button Name"}
-//<input type="number"> :  property: { name: "Display Name", type: "number", unit: "symbol"}
-//<input type="color">  :  property: { name: "Display Name", type: "color"}
-//Objects               :  property: { name: "Display Name", type: "object", data: { input1: {}, inputN: {}}
-//Dynamic Object        :  property: { name: "Display Name", action: "Button Name", list: "List in Lists", type: "dynamic"}
-//<input type="file">   :  property: { name: "Display Name", type: "upload"}
 
 export const dataField: {[Key: string]:{[Key: string]:any}} = {
   bank: { name: "Bank", type: "text"},
-  name: { name: "Name", type: "text",},
+  name: { name: "Name", type: "text"},
   network: {
     name: "Network",
     type: "select",
@@ -74,25 +64,21 @@ export const dataField: {[Key: string]:{[Key: string]:any}} = {
     type: "select",
     options: ["Personal", "Business", "Student"],
   },
-  image: {
-    name: "Image",
-    type: "upload"
-  },
   physical: {
     name: "Physical Card",
     type: "object",
     data: {
       material: { name: "Material", type: "text" },
-      chip: { name: "Chip Enabled", type: "radio", options: ["Yes", "No"] },
+      chip: { name: "Chip Enabled", type: "radio", options: [true, false] },
       tap_to_pay: {
         name: "Tap-to-pay Enabled",
         type: "radio",
-        options: ["Yes", "No"],
+        options: [true, false],
       },
       embossed: {
         name: "Embossed Name",
         type: "radio",
-        options: ["Yes", "No"],
+        options: [true, false],
       },
       info_location: {
         name: "Account Number Location",
@@ -101,8 +87,6 @@ export const dataField: {[Key: string]:{[Key: string]:any}} = {
       },
     },
   },
-  color: { name: "Color RGB", type: "color" },
-  search_terms: { name: "Search Terms", type: "list", action: "New Search Term..."}
 };
 
 export const redemption: {[key:string]:string} = {

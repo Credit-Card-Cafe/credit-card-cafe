@@ -1,27 +1,47 @@
 <script lang="ts">
     import { dataField } from "$lib/fields";
-    import { orderCards } from "$lib/database/read";
     import TableData from "./TableData.svelte";
     import TableQuery from "./TableQuery.svelte";
-    import type { CreditCardType } from "$lib/types";
+    import { type CreditCardType, TLS } from "$lib/types";
     import { injectBankToCard, injectBrandToCard } from "$lib/functions";
+    import TableListSwitch from "./TableListSwitch.svelte";
     
     export let tablelist:CreditCardType[];
+    export let walletIDList:string[];
+    export let trackingIDList:string[];
+
+    let cardIDList:string[]
+    let userSelection = 0
+
+    $: cardIDList = (() => {
+        if (userSelection == TLS.Wallet) {
+            return walletIDList;
+        } else if (userSelection == TLS.Tracking) {
+            return trackingIDList;
+        } else if (userSelection == TLS.Both) {
+            return [...walletIDList, ...trackingIDList];
+        } else {
+            return [];
+        }
+    })();
+
     
-    Promise.all(
-        tablelist.map(async (card) => {
-            let updatedCard = await injectBankToCard(card);
-            if (card.brand_id) {
-                updatedCard = await injectBrandToCard(card);
-            }
-            return updatedCard;
-        })
-    ).then((updatedTablelist) => {
-        tablelist = updatedTablelist;
-    });
+    if (tablelist.length > 0) {
+        Promise.all(
+            tablelist.map(async (card) => {
+                let updatedCard = await injectBankToCard(card);
+                if (card.brand_id) {
+                    updatedCard = await injectBrandToCard(card);
+                }
+                return updatedCard;
+            })
+        ).then((updatedTablelist) => {
+            tablelist = updatedTablelist;
+        });
+    }
 
     //default queries 
-    var queries = ["network", "fees", "annual_fee"];
+    var queries = ["network"];
 
     function order(param:string, objectField:string | undefined) {
         if (false && !objectField) {
@@ -43,7 +63,12 @@
         <TableQuery field={"physical"} bind:queries={queries} isObject={true}></TableQuery>
 
     </div>
-    <div class="hidden md:block text-center text-sm">Track cards or add card to your wallet to view them on the table!</div>
+    <div>
+        <TableListSwitch bind:selection={userSelection}></TableListSwitch>
+    </div>
+    {#if tablelist.length < 1}
+    <div class="hidden md:block text-center text-sm">Track cards or add cards to your wallet to view them on the table!</div>
+    {/if}
     <table class="dark:text-white-warm rounded-r-xl">
         <!--   Table Header   -->
         <tr class="hidden md:table-row">
@@ -67,17 +92,19 @@
 
         <!--    Table Data    -->
         {#each tablelist as card}
-        <tr class="even:bg-green-100 dark:even:bg-inherit dark:border-t-2 dark:border-green-500/10">
-            <td class="flex md:table-cell flex-col items-center md:text-left odd:rounded-xl md:odd:rounded-r-none md:odd:rounded-l-xl">
-                <a href="/card/{card.id}" class="font-medium mb-6 md:mb-0 md:font-normal">{card.name}</a>
-                <table class="md:hidden w-full">
-                    <tr class='tr border-b-2 border-gray-300 dark:border-gray-700 last:border-0'><td>Bank</td><td class='border-l-2 border-gray-300 w-1/2'>{#if card.bank_url}<a href="/bank/{card.bank_url}">{card.bank_url}</a>{:else}{card.bank_name}{/if}</td></tr>
-                    <TableData queries={queries} card={card} isTD={false}></TableData>
-                </table>
-            </td>
-            <td class="even:bg-black/5 odd:last:rounded-r-xl hidden md:table-cell">{#if card.bank_url}<a href="/bank/{card.bank_url}">{card.bank_name}</a>{:else}{card.bank_name}{/if}</td>
-            <TableData class="even:bg-black/5 odd:last:rounded-r-xl hidden md:table-cell" queries={queries} card={card} isTD={true}></TableData>
-        </tr>
+            {#if cardIDList.includes(card.id)}
+            <tr class="even:bg-green-100 dark:even:bg-inherit dark:border-t-2 dark:border-green-500/10">
+                <td class="flex md:table-cell flex-col items-center md:text-left odd:rounded-xl md:odd:rounded-r-none md:odd:rounded-l-xl">
+                    <a href="/card/{card.id}" class="font-medium mb-6 md:mb-0 md:font-normal">{card.name}</a>
+                    <table class="md:hidden w-full">
+                        <tr class='tr border-b-2 border-gray-300 dark:border-gray-700 last:border-0'><td>Bank</td><td class='border-l-2 border-gray-300 w-1/2'>{#if card.bank_url}<a href="/bank/{card.bank_url}">{card.bank_name}</a>{:else}{card.bank_name}{/if}</td></tr>
+                        <TableData queries={queries} card={card} isTD={false}></TableData>
+                    </table>
+                </td>
+                <td class="even:bg-black/5 odd:last:rounded-r-xl hidden md:table-cell">{#if card.bank_url}<a href="/bank/{card.bank_url}">{card.bank_name}</a>{:else}{card.bank_name}{/if}</td>
+                <TableData class="even:bg-black/5 odd:last:rounded-r-xl hidden md:table-cell" queries={queries} card={card} isTD={true}></TableData>
+            </tr>
+            {/if}
         {/each}
         <!---------------------->
 
