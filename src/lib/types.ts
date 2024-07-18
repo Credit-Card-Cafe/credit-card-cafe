@@ -98,5 +98,5 @@ export type UpdateTypeDynamic = {[key:string]:string} | undefined;
 export enum TLS {
   Both,
   Wallet,
-  Tracking
+  Tracking,
 }

@@ -63,9 +63,11 @@
         <TableQuery field={"physical"} bind:queries={queries} isObject={true}></TableQuery>
 
     </div>
+    {#if walletIDList.length > 0 && trackingIDList.length > 0}
     <div>
         <TableListSwitch bind:selection={userSelection}></TableListSwitch>
     </div>
+    {/if}
     {#if tablelist.length < 1}
     <div class="hidden md:block text-center text-sm">Track cards or add cards to your wallet to view them on the table!</div>
     {/if}
@@ -92,7 +94,7 @@
 
         <!--    Table Data    -->
         {#each tablelist as card}
-            {#if cardIDList.includes(card.id)}
+            {#if cardIDList.includes(card.id) || !(walletIDList.length > 0 && trackingIDList.length > 0)}
             <tr class="even:bg-green-100 dark:even:bg-inherit dark:border-t-2 dark:border-green-500/10">
                 <td class="flex md:table-cell flex-col items-center md:text-left odd:rounded-xl md:odd:rounded-r-none md:odd:rounded-l-xl">
                     <a href="/card/{card.id}" class="font-medium mb-6 md:mb-0 md:font-normal">{card.name}</a>
