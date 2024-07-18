@@ -23,9 +23,10 @@
     <title>CreditCardDB | Account</title>
 </svelte:head>
 
-<div class="md:flex md:flex-row md:justify-around md:flex-initial pt-16">
-  <div class="md:flex md:flex-col md:items-center md:w-1/2">
-    <div class="title md:mb-8 dark:text-white-warm">Your Wallet</div>
+
+<div class="lg:flex lg:flex-col lg:flex-initial pt-16">
+  <div class="lg:flex flex-1 flex-row justify-evenly lg:mx-20 lg:gap-20">
+    <div class="title lg:mb-8 dark:text-white-warm lg:hidden">Your Wallet</div>
     {#if localUser.wallet && wallet.length > 0}
       <CardStack cards={wallet} allowCardFanning={true}></CardStack>
       <Rewards cards={wallet} localUser={localUser} title={"Your"}></Rewards>
@@ -33,8 +34,9 @@
       <CreditCard card={displayCard}></CreditCard>
     {/if}
   </div>
-  <div class="md:flex md:flex-col md:items-center md:w-1/2">
-    <div class="title md:mb-8 dark:text-white-warm">Tracking</div>
+  <hr class="hidden md:block w-3/4 m-auto">
+  <div class="lg:flex flex-1 flex-row justify-evenly lg:mx-10 gap-16 pt-16">
+    <div class="title lg:mb-8 dark:text-white-warm lg:hidden">Tracking</div>
     {#if localUser.tracking && tracking.length > 0}
       <CardStack cards={tracking}></CardStack>
       <Rewards cards={tracking} localUser={localUser} title={"Potential"} ></Rewards>
@@ -49,4 +51,7 @@
   .title {
       @apply p-4 text-center text-xl;
   }
+    hr {
+        border: 2px solid #d6c0a5;
+    }
 </style>

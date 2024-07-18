@@ -4,7 +4,7 @@
 
 </script>
 
-<div class="inline-flex flex-row flex-wrap justify-center bg-black/[0.1] dark:bg-black/[0.3] mx-1 rounded-xl lg:rounded-full py-1 lg:py-0 mb-2 lg:mb-0">
+<div class="inline-flex flex-row flex-wrap justify-center bg-black/[0.1] dark:bg-black/[0.3] mx-1 rounded-xl lg:rounded-full py-1 lg:py-0 mb-2 lg:mb-0 dark:text-white-warm">
 
     <input type="radio" id="tls_wallet" name="tls" value={TLS.Wallet} bind:group={selection} class="hidden">
     <label for="tls_wallet" class={`label ml-1 ${selection == TLS.Wallet ? "yellow" : ""}`}>Wallet</label>
@@ -21,12 +21,12 @@
         @apply text-center py-1 px-4 inline-block my-1 transition-all cursor-pointer rounded-full;
     }
     .label:hover {
-        @apply bg-gray-300;
+        @apply bg-gray-300 text-black;
     }
     .yellow {
-        @apply bg-amber-200;
+        @apply bg-amber-200 text-black;
     }
     .yellow:hover {
-        @apply bg-amber-300;
+        @apply bg-amber-300 text-black;
     }
 </style>

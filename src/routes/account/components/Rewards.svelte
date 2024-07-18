@@ -2,7 +2,8 @@
     import type { CreditCardType, UserType } from "$lib/types";
     export let cards:CreditCardType[];
     export let title: "Your" | "Potential";
-    import { lists, redemption } from "$lib/fields";
+    import { redemption } from "$lib/fields";
+    import Reward from "./Reward.svelte";
 
     export let localUser:UserType;
 
@@ -46,40 +47,24 @@
             }
         }
     });
+
+    let sortedKeys: string[] = Object.keys(categories).sort((a, b) => {
+        return categories[b].length - categories[a].length;
+    });
+
+
 </script>
 
 {#if Object.keys(categories).length > 0}
     <div class="rewards dark:text-white-warm">
-        <div class="text-xl mb-8 text-center md:text-left">{title} Rewards:</div>
-        <ul>
-            {#each Object.keys(categories) as category}
-                <li class="border border-black dark:border-white-warm p-2 rounded-lg mb-4 mx-1 flex flex-col">
-                    {lists.rewardCategories[category]}
-                    <span class="my-2 flex flex-row justify-start flex-wrap">
-                        {#each categories[category] as reward}
-                            <span class={reward.custom ? "reward hovertip border-4 border-green-500" : "reward hovertip"}>
-                                <span class="h-8 w-12 rounded-md mb-1" style="background:rgb({reward.card.color})"></span>
-                                <span class="hovertext border border-white-warm rounded-md p-2 absolute bottom-full z-10 dark:bg-main-gray bg-alt dark:text-white-warm text-center">{reward.card.bank} - {reward.card.name}</span>
-                                {reward.value}
-                            </span>
-                        {/each}
-                    </span>
+        <div class="text-xl text-center md:text-center">{title} Rewards:</div>
+        <div class="text-sm mb-8 text-center md:text-center">Click boxes to reveal</div>
+        <ul class="flex md:flex-row flex-col md:flex-wrap">
+            {#each sortedKeys as category}
+                <li>
+                    <Reward categories={categories} category={category}></Reward>
                 </li>
             {/each}
         </ul>
     </div>
 {/if}
-
-<style>
-    .reward {
-        @apply m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-col items-center relative;
-    }
-
-    .hovertip .hovertext {
-      visibility: hidden;
-    }
-    
-    .hovertip:hover .hovertext {
-      visibility: visible;
-    }
-</style>
