@@ -27,7 +27,7 @@
 
 <div id="home" class="dark:text-white-warm pt-16 group">
   <div class="mb-96 mt-10">
-    <div class="text-6xl md:text-8xl text-green-500 font-semibold text-center">CreditCardDB</div>
+    <div class="text-5xl md:text-8xl text-green-500 font-semibold text-center">CreditCardDB</div>
     <div class="text-3xl md:text-6xl font-semibold text-center">the <magic>ultimate</magic> credit card research tool</div>
   </div>
   <div id="scrollBouncy" class="text-xl font-semibold text-center absolute bottom-4 left-0 right-0 mx-auto group-hover:animate-bounce">Scroll to explore cards!</div>

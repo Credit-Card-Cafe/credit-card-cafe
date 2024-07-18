@@ -1,7 +1,8 @@
 <script lang="ts">
     import { lists } from "$lib/fields";
+    import { type RewardSet } from "$lib/types";
     export let category;
-    export let categories;
+    export let categories: {[Key: string]:Array<RewardSet>};
 
     let context = false;
 
@@ -12,6 +13,8 @@
     if (categories[category].length > 1) {
         context = true
     }
+
+    categories[category].sort((a,b) => parseFloat(b.value) - parseFloat(a.value))
 </script>
 
 <button class="border border-black dark:border-white-warm p-2 rounded-lg mb-4 mx-auto md:mx-1 flex flex-col md:w-auto w-11/12" on:click={() => toggleContext()}>

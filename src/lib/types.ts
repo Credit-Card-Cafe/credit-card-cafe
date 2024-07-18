@@ -100,3 +100,10 @@ export enum TLS {
   Wallet,
   Tracking,
 }
+
+//used for Account Rewards 
+export interface RewardSet {
+  card: CreditCardType,
+  value: string,
+  custom: boolean
+}

@@ -1,17 +1,11 @@
 <script lang="ts">
-    import type { CreditCardType, UserType } from "$lib/types";
+    import type { CreditCardType, RewardSet, UserType } from "$lib/types";
     export let cards:CreditCardType[];
     export let title: "Your" | "Potential";
     import { redemption } from "$lib/fields";
     import Reward from "./Reward.svelte";
 
     export let localUser:UserType;
-
-    interface RewardSet {
-        card: CreditCardType,
-        value: string,
-        custom: boolean
-    }
 
     let categories:{[Key: string]:Array<RewardSet>} = {}
     
