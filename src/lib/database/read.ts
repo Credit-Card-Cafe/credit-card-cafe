@@ -11,6 +11,7 @@ export async function getOneCardByID(id: string) {
     const docRef = doc(db, "creditCards", id);
     const docSnap: DocumentData | undefined = await getDoc(docRef);
     if (docSnap.exists()) {
+      console.log('ping!')
       return {...docSnap.data(), id:id};
     }
   }

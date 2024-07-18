@@ -1,6 +1,7 @@
 <script lang="ts">
 	export let card:CreditCardType;
     export let showTrackCard = false;
+    export let scale = 110;
     import TrackCard from "./TrackCard.svelte";
     import { getCardImage } from "$lib/database/read";
     import type { CreditCardType } from "$lib/types";
@@ -9,7 +10,7 @@
 </script>
 
 {#if card && card.url}
-<div class="flex flex-col items-center transform scale-110 hover:z-30">
+<div class={`flex flex-col items-center transform scale-${scale} hover:z-30`}>
     <a href="/card/{card.url}">
     {#if card.image}
         {#await getCardImage(card)}
@@ -36,7 +37,7 @@
                 {card.name}
             </div>
         {/if}
-        {#if card.physical && card.physical.chip && card.physical.chip == "Yes" }
+        {#if card.physical && card.physical.chip }
             <div id="chip"/>
         {/if}
     </div>
