@@ -14,7 +14,7 @@
   getCardsFromIDList(localUser.tracking).then(list => tracking = list.map((card) => applyModifier(card, localUser)))
 
   const displayCard = {
-        name: "You do not have any cards in your wallet. To add a card, find a card you like, then select 'Add to Wallet', from the card's information page.",
+        name: "Track cards to view rewards.",
         url: "null",
       } as CreditCardType
 </script>
@@ -35,7 +35,7 @@
     {/if}
   </div>
   <hr class="hidden md:block w-3/4 m-auto">
-  <div class="lg:flex flex-1 flex-row justify-evenly lg:mx-10 gap-16 pt-16">
+  <div class="lg:flex flex-1 flex-row justify-evenly lg:mx-20 gap-16 pt-16">
     <div class="title lg:mb-8 dark:text-white-warm lg:hidden">Tracking</div>
     {#if localUser.tracking && tracking.length > 0}
       <CardStack cards={tracking}></CardStack>
