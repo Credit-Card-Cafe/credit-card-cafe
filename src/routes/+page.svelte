@@ -26,15 +26,15 @@
 </script>
 
 <div id="home" class="dark:text-white-warm pt-16 group">
-  <div class="mb-96 mt-10">
+  <div class="mb-[27rem] md:mb-96 mt-10 md:snap-end">
     <div class="text-5xl md:text-8xl text-green-500 font-semibold text-center">CreditCardDB</div>
     <div class="text-3xl md:text-6xl font-semibold text-center">the <magic>ultimate</magic> credit card research tool</div>
   </div>
   <div id="scrollBouncy" class="text-xl font-semibold text-center absolute bottom-4 left-0 right-0 mx-auto group-hover:animate-bounce">Scroll to explore cards!</div>
   {#each categories as category}
-    <div class="bg-gradient-to-t from-green-100 dark:from-green-700 to-alt dark:to-main-gray to-80%">
-      <button on:click={() => goto(`/table/${category.id}`)} class="block p-4 text-2xl text-center shadow rounded-md bg-black/[0.05] dark:bg-white/[0.05] mb-2 lg:mb-4 mx-auto mb-2 w-11/12 lg:w-1/2 hover:bg-black/[0.3] transition-all">{category.title}</button>
-      <div class="flex flex-col md:flex-row md:gap-16 p-10 pb-14 mb-16 md:overflow-x-auto md:overscroll-x-auto">
+    <div class="pt-20 md:pt-0 bg-gradient-to-t from-green-100 dark:from-green-700 to-alt dark:to-main-gray to-80% md:min-h-[calc(100vh-4rem)] flex flex-col justify-end md:snap-end">
+      <button on:click={() => goto(`/table/${category.id}`)} class="block p-4 text-2xl text-center shadow rounded-md bg-black/[0.05] dark:bg-white/[0.05] mb-2 lg:mb-16 mx-auto mb-2 w-11/12 lg:w-1/2 hover:bg-black/[0.3] transition-all">{category.title}</button>
+      <div class="flex flex-col md:flex-row md:gap-16 p-4 mb-16 md:overflow-x-auto md:overscroll-x-auto">
         {#each category.list as cardID}
         <IntersectionObserver once={true} let:intersecting={intersecting}>
           {#if intersecting}
