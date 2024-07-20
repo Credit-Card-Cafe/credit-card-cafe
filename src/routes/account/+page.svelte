@@ -14,9 +14,10 @@
   getCardsFromIDList(localUser.tracking).then(list => tracking = list.map((card) => applyModifier(card, localUser)))
 
   const displayCard = {
-        name: "Track cards to view rewards.",
-        url: "null",
-      } as CreditCardType
+      name: "Track cards to view rewards.",
+      url: "null",
+      bank: "CreditCardDB"
+  } as unknown as CreditCardType
 </script>
 
 <svelte:head>
@@ -31,7 +32,9 @@
       <CardStack cards={wallet} allowCardFanning={true}></CardStack>
       <Rewards cards={wallet} localUser={localUser} title={"Your"}></Rewards>
     {:else}
+      <div class="pb-16">
       <CreditCard card={displayCard}></CreditCard>
+      </div>
     {/if}
   </div>
   <hr class="hidden md:block w-3/4 m-auto">

@@ -106,7 +106,7 @@ export const lists: {[Key: string]:{[Key: string]: string}} = {
     flights_portal: "Flights through Card's Portal",
     gas: "Gas Station",
     ev: "Electric Vehicle Charging",
-    gas_ev: "Gas Station + Electric Vehicle Charging",
+    gas_ev: "Gas Station + EV Charging",
     streaming: "Streaming",
     utilities: "Utility",
     car: "Car Rental",

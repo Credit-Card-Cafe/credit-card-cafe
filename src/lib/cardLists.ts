@@ -35,7 +35,7 @@ export const categories = [
         list: ["pentagon-federal-credit-union-platinum-rewards-signature"] 
     },
     { 
-        title: "Positive Philantrophy",
+        title: "Positive Philanthrophy",
         id: "positive-philantrophy",
         list: ["the-nature-conservancy-customized-cash-rewards"]
     }

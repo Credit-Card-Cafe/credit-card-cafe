@@ -10,7 +10,7 @@
     
 </script>
 
-<div id="cardInfo" class="dark:text-white-warm mt-4 mb-12 p-4 flex flex-col">
+<div id="cardInfo" class="dark:text-white-warm mt-4 mb-12 p-4 flex flex-col select-none">
     <CardName card={card}></CardName>
     <hr>
 

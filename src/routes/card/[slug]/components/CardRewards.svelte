@@ -52,7 +52,7 @@
                 {#if showCustomRewards}
                     <div class="flex flex-col">
                         {#each Object.keys(card.custom_rewards) as reward}
-                            <button class={(userCustomChoice == reward) ? "border-4 border-green-500 m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center" : "custom_rewards" } on:click={() => setCustomReward(reward)}>
+                            <button class={(userCustomChoice == reward) ? "outline outline-green-500 m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center" : "custom_rewards" } on:click={() => setCustomReward(reward)}>
                                 <div class="border border-white-warm rounded-md p-2 dark:bg-main-gray bg-alt dark:text-white-warm text-center mr-4">
                                     {#if card.redemption} 
                                         {card.custom_rewards[reward]}{redemption[card.redemption]}
@@ -61,15 +61,28 @@
                                     {/if}
                                 </div>
                                 <div class="rounded-md mb-0">{lists.rewardCategories[reward]}</div>
+                                {#if userCustomChoice==reward}
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-500 mx-2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                                <div>Selected Custom Reward</div>                                  
+                                {/if}
                             </button>
                         {/each}
                     </div>
+                {:else if userCustomChoice}
+                    <button class="m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center">
+                        <div class="border border-white-warm rounded-md p-2 dark:bg-main-gray bg-alt dark:text-white-warm text-center mr-4">
+                            {#if card.redemption} 
+                                {card.custom_rewards[userCustomChoice]}{redemption[card.redemption]}
+                            {:else}
+                                {card.custom_rewards[userCustomChoice]}x
+                            {/if}
+                        </div>
+                        <div class="rounded-md mb-0">{lists.rewardCategories[userCustomChoice]}</div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-500 mx-2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                        <div>Selected Custom Reward</div>                                  
+                    </button>
                 {/if}
             {/if}
-            {#if custom}
-                <button on:click={() => showDefaultRewards = !showDefaultRewards} class="m-1 lg:m-2 p-2 bg-black/[0.1] rounded-md text-center border border-white-warm hover:border-green-500 hover:bg-black/[0.4] transition-all">{#if showDefaultRewards}Hide{:else}Show{/if} Default Rewards</button>
-            {/if}
-            {#if showDefaultRewards}
                 {#each Object.keys(card.rewards) as reward}
                     {#if reward != "custom"}
                         <div class="m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center">
@@ -84,7 +97,6 @@
                         </div>
                     {/if}
                 {/each}
-            {/if}
         </div>
     </div>
     {/if}
