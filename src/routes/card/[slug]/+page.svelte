@@ -65,7 +65,7 @@
 {#if card}
 <div class={scrolled ? "pt-20 flex flex-col items-center lg:grid lg:grid-cols-2 lg:h-screen lg:snap-start lg:snap-proximity overflow-auto transition-all": "pt-20 flex flex-col items-center transition-all"}>
     <div id="cardscroll" class={scrolled? "pt-20 row-start-1 hidden lg:block" : "lg:pt-20 fixed"}>
-      <CreditCard card={card} --color="{card.color}" showTrackCard={scrolled}></CreditCard></div>
+      <CreditCard card={card} --color="{card.color}" showTrackCard={scrolled} scale={110}></CreditCard></div>
     <div id="infoscroll" class={scrolled ? "pt-20 lg:px-10 lg:pt-0 col-start-2 row-span-2 h-full overflow-auto lg:border-b border-green-900" : "pt-20 h-full opacity-0 lg:invisible"}>
       <CardInfo card={card}></CardInfo></div>
     <div class={scrolled ? "row-start-2" : "hidden"}>

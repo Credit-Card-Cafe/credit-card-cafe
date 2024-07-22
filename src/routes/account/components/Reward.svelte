@@ -18,7 +18,7 @@
 </script>
 
 <button class="md:shadow-lg dark:border dark:border-white-warm p-1 md:p-2 rounded-lg mb-1 md:mb-4 mx-auto md:mx-1 flex flex-col md:w-auto w-11/12" on:click={() => toggleContext()}>
-    {lists.rewardCategories[category]}
+    {lists.rewardCategories[category]} ({categories[category].length})
     <span class={`my-2 flex flex-row justify-start flex-wrap md:${context ? "inline" : "hidden"}`}>
         {#each categories[category] as reward}
             <span class={reward.custom ? "reward dark:bg-white/[0.1] bg-black/[0.1] hovertip outline outline-green-500" : "reward bg-black/[0.1] dark:bg-white/[0.1] hovertip"}>

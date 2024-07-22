@@ -32,7 +32,7 @@
           {#if intersecting}
             <div class="md:snap-center md:snap-always">
             {#await getOneCardByID(cardID)}
-              <CreditCard card={loadingCard} scale={90}></CreditCard>
+              <CreditCard card={loadingCard} scale={90} --color="212,212,212"></CreditCard>
             {:then promisedCard} 
               <CreditCard card={promisedCard} scale={90} showTrackCard={true}></CreditCard>
             {/await}
