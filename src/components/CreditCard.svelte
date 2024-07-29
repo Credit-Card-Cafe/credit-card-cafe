@@ -11,7 +11,7 @@
 
 {#if card && card.url}
 <div class={`flex flex-col items-center transform scale-${scale} hover:z-30`}>
-    <a href="/card/{card.url}">
+    <a href="/card/{card.url}" >
     {#if card.image && (card.id != "null" || card.url != "null")}
         {#await getCardImage(card)}
             <div id="creditCard" class="creditCard bg-alt dark:bg-main-gray shadow-2xl shadow-stone-400 dark:shadow-stone-900" style="background-color:rgb({card.color})"></div>
@@ -39,6 +39,11 @@
         {/if}
         {#if card.physical && card.physical.chip }
             <div id="chip"/>
+        {/if}
+        {#if card.name=="" && card.bank==""}
+            <div class="text-8xl text-center mt-4">
+                <slot></slot>
+            </div>
         {/if}
     </div>
     {/if}
@@ -74,7 +79,7 @@
         text-decoration: none;
         position: absolute;
         display: inline-block;
-        top: 1.25in;
+        top: 1.20in;
         font-size: .25in;
         font-weight: 600;
         text-align: center;

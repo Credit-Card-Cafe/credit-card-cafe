@@ -50,7 +50,7 @@
 </script>
 
 {#if Object.keys(categories).length > 0}
-    <div class="rewards dark:text-white-warm">
+    <div class="dark:text-white-warm">
         <div class="text-xl text-center md:text-center mb-8 md:mb-0">{title} Rewards:</div>
         <div class="text-sm mb-8 text-center md:text-center hidden md:block">Click boxes to reveal</div>
         <ul class="flex md:flex-row flex-col md:flex-wrap">

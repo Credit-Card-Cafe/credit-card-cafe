@@ -49,13 +49,13 @@ export interface CreditCardType {
   sub?: {[Key: string]:number},
   rewards?: {[Key: string]:number | {[Key: string]:number}},
   custom_rewards?: {[Key: string]:number | {[Key: string]:number}},
-    physical?: {
+  physical?: {
     [key: string]: any;
-    material: string,
-    chip: boolean,
-    tap_to_pay: boolean,
-    embossed: boolean,
-    info_location: CardInfoLocation,
+    material?: string,
+    chip?: boolean,
+    tap_to_pay?: boolean,
+    embossed?: boolean,
+    info_location?: CardInfoLocation,
   }
   search_terms?: Array<string>,
 

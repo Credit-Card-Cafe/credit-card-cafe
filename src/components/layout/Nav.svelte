@@ -1,6 +1,7 @@
 <script lang="ts">
     import AccountActions from "./AccountActions.svelte";
     import SearchBar from "./SearchBar.svelte";
+    import { page } from '$app/stores';   
 
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
@@ -17,12 +18,12 @@
 
 
 <div class={`fixed z-40 w-full flex flex-row lg:items-center justify-between lg:justify-items-center lg:py-4 lg:px-8 backdrop-blur-md py-2 bg-alt/[0.8] dark:bg-main-gray`}>
-    <div class="flex items-center justify-center lg:hidden ml-8 lg:ml-0 lg:mr-8 text-green-500 font-semibold">CreditCardDB</div>
+    <a href="/" class="flex items-center justify-center lg:hidden ml-8 lg:ml-0 lg:mr-8 text-green-500 font-semibold">CreditCardDB</a>
     <div id="start" class="hidden lg:flex flex-row justify-between items-center">
-        <div class="ml-8 lg:ml-0 lg:mr-8 text-green-500 font-semibold">CreditCardDB</div>
+        <a href="/" class="ml-8 lg:ml-0 lg:mr-8 text-green-500 font-semibold">CreditCardDB</a>
         <nav class="inline">
             <a class="text-black dark:text-white-warm p-3 m-2 hover:bg-black/[0.1] hover:rounded transition-all" href="/">Featured</a>
-            <a class="text-black dark:text-white-warm p-3 m-2 hover:bg-black/[0.1] hover:rounded transition-all" href="/table">Table</a>
+            <a class="text-black dark:text-white-warm p-3 m-2 hover:bg-black/[0.1] hover:rounded transition-all" href="/cardfinder">CardFinder A.I.</a>
         </nav>
         <SearchBar></SearchBar>
     </div>

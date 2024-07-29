@@ -33,7 +33,7 @@
       <Rewards cards={wallet} localUser={localUser} title={"Your"}></Rewards>
     {:else}
       <div class="pb-16">
-      <CreditCard card={displayCard}></CreditCard>
+      <CreditCard card={displayCard} --color="169,169,169"></CreditCard>
       </div>
     {/if}
   </div>
@@ -44,7 +44,7 @@
       <CardStack cards={tracking}></CardStack>
       <Rewards cards={tracking} localUser={localUser} title={"Potential"} ></Rewards>
     {:else}
-      <CreditCard card={displayCard}></CreditCard>
+      <CreditCard card={displayCard} --color="169,169,169"></CreditCard>
     {/if}
   </div>
 </div>

@@ -64,6 +64,7 @@ Common variables: **Specific Cases Can alter typical assignment**
 - object: the object storing the information 
 - objectField: the name of the object which the field is inside. If the field is not in an object, object is undefined
 - dynamicObject - an object storing just strings 
+
 - list: the array which the data is read from / set to. The field of the Basic Input will be an index of the list. 
 - const defaultValue - stores the original value from the database
 - dataField: fields.ts exports dataField as an object. 
