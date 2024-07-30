@@ -1,20 +1,9 @@
 <script lang="ts">
     import "../app.css";
-    import MobileActions from "components/layout/MobileActions.svelte";
     import Nav from "components/layout/Nav.svelte";
-
-    let showMobileMenu = false;
-
-    function changeMenuState(event: { detail: { state: boolean; }; }) {
-        showMobileMenu = event.detail.state
-    }
-
 </script>
 
-{#if showMobileMenu}
-    <MobileActions bind:showMobileMenu></MobileActions>
-{/if}
-<Nav showMobileMenu={showMobileMenu} on:menuState={changeMenuState}></Nav>
+<Nav></Nav>
 
 
 <div class="w-full min-h-[-webkit-fill-available] bg-alt dark:bg-main-gray py-24"><slot /></div>

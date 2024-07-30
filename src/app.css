@@ -5,3 +5,6 @@
 html {
     scroll-snap-type: y mandatory;
 }
+body {
+    padding-bottom: env(safe-area-inset-bottom);
+}

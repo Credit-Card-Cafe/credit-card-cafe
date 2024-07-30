@@ -1,12 +1,12 @@
-<div class="pt-20 mx-20 flex flex-col items-center">
+<div class="pt-20 md:mx-20 flex flex-col items-center">
     <div class="flipText">
         <div class="text-5xl md:text-8xl text-purple-500 font-semibold text-center">CardFinder A.I.</div>
         <div class="text-5xl md:text-8xl text-purple-500 font-semibold text-center blur-sm">CardFinder A.I.</div>
     </div>  
-    <div class="w-2/3 md:min-h-[calc(100vh-4rem)] pt-20 flex flex-col justify-between flex-1 items-center border-t-2">
+    <div class="px-4 md:px-0 md:w-2/3 md:min-h-[calc(100vh-4rem)] pt-20 flex flex-col justify-between flex-1 items-center border-t-4">
         <div class="mt-2">
             <div class="human">Which card has the best travel perks?</div>
-            <div class="ai">Great Question!<br><br>Choosing the best credit card for travel perks can depend on your specific needs and preferences, so let's figure that out.<br> Which perks are you looking for? 
+            <div class="ai">Great Question!<br><br>Choosing the best credit card for travel perks can depend on your specific needs and preferences, so let's figure that out.<br> Which perks are you looking for? Examples:
                 <ul class="ml-2">
                     <li>- Travel Insurance</li>
                     <li>- Lounge Access</li>
@@ -29,7 +29,7 @@
   -webkit-mask-image: linear-gradient(transparent 50%, white 90%);
 }
 .human {
-    @apply bg-gray-200 float-right my-1 mx-2 py-2 px-4 rounded-lg text-right;
+    @apply bg-gray-200 float-right my-1 mx-2 py-2 px-4 rounded-b-xl rounded-l-xl text-right;
     max-width: 66%;
 }
 .ai {

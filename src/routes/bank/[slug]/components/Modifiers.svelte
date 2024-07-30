@@ -38,7 +38,7 @@
         {#if localUserModifiers.includes(modifierId)}
         <button on:click={() => rmModifierFromUser(modifierId)} class="m-2 p-2 bg-green-500 dark:text-gray-900 text-alt hover:bg-green-600 rounded-md inline-flex flex-row items-center">{modifierName}</button>
         {:else}
-        <button on:click={() => addModifierToUser(modifierId)} class="m-2 p-2 bg-black/[0.1] hover:bg-black/[0.4] rounded-md inline-flex flex-row items-center">{modifierName}</button>
+        <button on:click={() => addModifierToUser(modifierId)} class="m-2 p-2 bg-black/[0.1] dark:bg-white/[0.1] hover:bg-black/[0.4] darkhover:bg-white/[0.4] rounded-md inline-flex flex-row items-center">{modifierName}</button>
         {/if}
     {/each}
 {/if}

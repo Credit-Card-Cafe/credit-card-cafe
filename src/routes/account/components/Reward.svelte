@@ -6,6 +6,22 @@
 
     let context = false;
 
+    function hoverCard(cardURL: string) {
+        let element = document.getElementById(cardURL)
+        if (element && window.outerWidth > 1024) {
+            element.classList.remove("mb-[-9rem]")
+            element.classList.add("mb-12");
+        }
+    }
+
+    function unHoverCard(cardURL: string) {
+        let element = document.getElementById(cardURL)
+        if (element) {
+            element.classList.add("mb-[-9rem]")
+            element.classList.remove("mb-12");
+        }
+    }
+
     function toggleContext() {
         context = !context
     }
@@ -21,7 +37,8 @@
     {lists.rewardCategories[category]} ({categories[category].length})
     <span class={`my-2 flex flex-row justify-start flex-wrap md:${context ? "inline" : "hidden"}`}>
         {#each categories[category] as reward}
-            <span class={reward.custom ? "reward dark:bg-white/[0.1] bg-black/[0.1] hovertip outline outline-green-500" : "reward bg-black/[0.1] dark:bg-white/[0.1] hovertip"}>
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <span on:mouseenter={() => hoverCard(reward.card.url)} on:mouseleave={() => unHoverCard(reward.card.url)} class={reward.custom ? "reward dark:bg-white/[0.1] bg-black/[0.1] hovertip outline outline-green-500" : "reward bg-black/[0.1] dark:bg-white/[0.1] hovertip"}>
                 <span class="h-8 w-12 rounded-md mb-1" style="background:rgb({reward.card.color})"></span>
                 {reward.value}
             </span>

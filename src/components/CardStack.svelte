@@ -9,7 +9,7 @@
 <div class="cards">
     {#each cards as card}
     {#if allowCardFanning}
-      <div class="mb-[-9rem] transition-all last:mb-12 hover:mb-12">
+      <div id="{card.url}" class="mb-[-9rem] transition-all last:mb-12 hover:mb-12">
         <CreditCard card={card} showTrackCard={showTrackCard}></CreditCard>
       </div>
     {:else if !allowCardFanning}

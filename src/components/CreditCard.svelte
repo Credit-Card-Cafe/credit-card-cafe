@@ -2,6 +2,7 @@
 	export let card:CreditCardType;
     export let showTrackCard = false;
     export let scale = 110;
+    export let altLink: undefined | string = undefined;
     import TrackCard from "./TrackCard.svelte";
     import { getCardImage } from "$lib/database/read";
     import type { CreditCardType } from "$lib/types";
@@ -11,7 +12,7 @@
 
 {#if card && card.url}
 <div class={`flex flex-col items-center transform scale-${scale} hover:z-30`}>
-    <a href="/card/{card.url}" >
+    <a href={altLink ? altLink : `/card/${card.url}`} >
     {#if card.image && (card.id != "null" || card.url != "null")}
         {#await getCardImage(card)}
             <div id="creditCard" class="creditCard bg-alt dark:bg-main-gray shadow-2xl shadow-stone-400 dark:shadow-stone-900" style="background-color:rgb({card.color})"></div>
