@@ -3,6 +3,19 @@
   import "./global.css";
     import ScrollBouncy from "components/home/ScrollBouncy.svelte";
     import HomeComponent1 from "components/home/HomeComponent1.svelte";
+    import { onMount } from "svelte";
+
+    onMount(() => {
+      let footer = document.getElementById("footer")
+      if (footer) {
+        footer.classList.add("md:snap-end")
+      }
+      return () => {
+        if (footer) {
+          footer.classList.remove("md:snap-end")
+        }
+      }
+    })
 
 </script>
 

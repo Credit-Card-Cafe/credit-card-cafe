@@ -17,7 +17,7 @@
 </script>
 
 {#each categories as category}
-    <div class="pt-20 md:pt-20 bg-gradient-to-t from-green-100 dark:from-green-700 to-alt dark:to-main-gray to-80% min-h-[100dvh] flex flex-col justify-evenly lg:snap-start">
+    <div class="pt-20 md:pt-20 bg-gradient-to-t from-green-100 dark:from-green-700 to-alt dark:to-main-gray to-80% min-h-[100dvh] flex flex-col justify-evenly lg:snap-center last:bg-none">
       <div class="flex flex-col md:flex-row justify-between mx-16">
         <div class="text-3xl md:text-6xl font-semibold text-center">{category.title}</div>
         <button on:click={() => goto(`/table/${category.id}`)} class="block px-4 py-2 md:px-8 md:py-4 my-4 md:my-0 text-lg md:text-2xl text-center rounded-md md:mx-0 mx-auto hover:bg-black/[0.3] transition-all flex flex-row items-center">View Cards In Table
