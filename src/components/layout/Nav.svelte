@@ -40,7 +40,7 @@
         </button>
     </div>
     {#if showMobileMenu || windowWidth >= 768}
-    <a on:click={() => closeMenu()} href="/" class="hidden md:inline lg:mx-8 float-right text-green-500 font-semibold">CreditCardDB</a>
+    <a on:click={() => closeMenu()} href="/" class="hidden md:inline float-right"><img class="h-4" src="../../../../creditcardcafelogo.png" alt="creditcard.cafe"></a>
     <nav class="inline-flex flex-col md:flex-row flex-1">
         <a on:click={() => closeMenu()} class="text-black dark:text-white-warm p-3 md:mx-1 lg:mx-2 my-2 hover:bg-black/[0.1] hover:rounded transition-all" href="/">Featured</a>
         <a on:click={() => closeMenu()} class="text-black dark:text-white-warm p-3 md:mx-1 lg:mx-2 my-2 hover:bg-black/[0.1] hover:rounded transition-all" href="/cardfinder">CardFinder A.I.</a>

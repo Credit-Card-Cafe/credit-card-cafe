@@ -26,6 +26,7 @@
   let scrolled = true;
 
   onMount(() => {
+    let footer = document.getElementById("footer") // footer lock 
     document.addEventListener("scroll", (e) => {
       pos = window.scrollY;
       let card = document.getElementById("cardscroll")
@@ -36,8 +37,14 @@
       }
       if (pos > scrollAmount) {
         scrolled = true
+        if (footer) {
+          footer.classList.add("md:snap-end")
+        }
       } else {
         scrolled = false
+        if (footer) {
+          footer.classList.remove("md:snap-end")
+        }
       }
       if (pos <= scrollAmount && card && window.innerWidth >= 1024) {
         card.style.transform = `translate(-${(window.innerWidth / 4)*(pos/scrollAmount)}px,0)`
@@ -50,6 +57,11 @@
         info.style.opacity = `${pos/scrollAmount}`
       }
     })
+    return () => {
+      if (footer) {
+        footer.classList.remove("md:snap-end")
+      }
+    }
   })
 
 </script>
