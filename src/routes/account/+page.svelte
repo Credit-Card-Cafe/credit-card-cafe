@@ -21,7 +21,7 @@
 </script>
 
 <svelte:head>
-    <title>CreditCardDB | Account</title>
+    <title>Credit Card Cafe | Account</title>
 </svelte:head>
 
 

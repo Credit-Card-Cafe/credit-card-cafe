@@ -11,7 +11,7 @@
 
 <svelte:head>
   {#if bank}
-    <title>CreditCardDB | {bank.name}</title>
+    <title>Credit Card Cafe | {bank.name}</title>
     <meta name="description" content="{bank.name} on CreditCardDB">
   {/if}
 </svelte:head>

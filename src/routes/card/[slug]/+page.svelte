@@ -68,7 +68,7 @@
 
 <svelte:head>
     {#if card}
-    <title>CreditCardDB | {card.bank} - {card.name}</title>
+    <title>Credit Card Cafe | {card.bank} - {card.name}</title>
     <meta name="description" content="{card.bank} - {card.name} on CreditCardDB">
     <meta name="image" content="{'images/' + card.id + '.png'}">
     {/if}

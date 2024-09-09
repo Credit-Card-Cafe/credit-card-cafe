@@ -32,6 +32,6 @@
 
 <!--Homepage-->
 <svelte:head>
-  <title>CreditCardDB</title>
+  <title>Credit Card Cafe</title>
   <meta name="description" content="Credit Card Database - Discover and view advanced details about Credit Cards">
 </svelte:head>
