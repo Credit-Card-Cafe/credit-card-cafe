@@ -1,0 +1,20 @@
+{
+	"/": [
+		"src/routes/+page.ts"
+	],
+	"/account": [],
+	"/bank/[slug]": [
+		"src/routes/bank/[slug]/+page.server.ts"
+	],
+	"/brand/[slug]": [
+		"src/routes/brand/[slug]/+page.server.ts"
+	],
+	"/card/[slug]": [
+		"src/routes/card/[slug]/+page.server.ts"
+	],
+	"/search": [],
+	"/table": [],
+	"/table/[slug]": [
+		"src/routes/table/[slug]/+page.server.ts"
+	]
+}
