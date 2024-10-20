@@ -8,6 +8,9 @@
 	}
 
     let windowWidth = 0
+    let y_pos = 0;
+    let scrolled = false;
+
 
     function closeMenu() {
         showMobileMenu = false
@@ -21,11 +24,24 @@
         addEventListener("resize", (event) => {
             windowWidth = window.outerWidth
         });
+        document.addEventListener("scroll", (e) => {
+            y_pos = window.scrollY;
+            let header = document.getElementById("header") 
+            if (y_pos <= 0) {
+                y_pos = 0
+            }
+            if (header) {
+                if (y_pos <= 80) {
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) header.style.backgroundColor = `rgba(38, 38, 38, ${y_pos/100})`;
+                    else header.style.backgroundColor = `rgba(240, 253, 250, ${y_pos/100})`;
+                }
+            }
+        })
     })
 </script>
 
 
-<header class={`fixed z-40 w-full flex flex-col justify-between md:flex-row md:items-center md:justify-items-center md:py-4 md:px-2 lg:px-8 py-2 backdrop-blur-md md:bg-alt/[0.8] md:dark:bg-main-gray ${(showMobileMenu || windowWidth >= 768) ? "bg-green-300 dark:bg-green-900" : "bg-alt/[0.8] dark:bg-main-gray"}`}>
+<header id="header" class="fixed z-40 w-full flex flex-col justify-between md:flex-row md:items-center md:justify-items-center md:py-4 md:px-2 lg:px-8 py-2 backdrop-blur-md">
     <div class="inline md:hidden p-6">
         <button on:click={() => mobileMenu()}>
             {#if showMobileMenu}
@@ -44,9 +60,9 @@
     <SearchBar></SearchBar>
     <hr class="md:hidden w-11/12 mx-auto my-2 justify-end">
     <nav class="inline-flex flex-col md:flex-row">
-        <a on:click={() => closeMenu()} class="text-black dark:text-white-warm p-3 md:mx-1 lg:mx-2 my-2 hover:bg-black/[0.1] hover:rounded transition-all" href="/">Featured</a>
-        <a on:click={() => closeMenu()} class="text-black dark:text-white-warm p-3 md:mx-1 lg:mx-2 my-2 hover:bg-black/[0.1] hover:rounded transition-all" href="/table">Table</a>
-        <a on:click={() => closeMenu()} class="text-black dark:text-white-warm p-3 md:mx-1 lg:mx-2 my-2 hover:bg-black/[0.1] hover:rounded transition-all" href="/account" >My Cards</a>
+        <a on:click={() => closeMenu()} class="text-black dark:theme-text-white p-3 md:mx-1 lg:mx-2 my-2 hover:bg-black/[0.1] hover:rounded transition-all" href="/">Featured</a>
+        <a on:click={() => closeMenu()} class="text-black dark:theme-text-white p-3 md:mx-1 lg:mx-2 my-2 hover:bg-black/[0.1] hover:rounded transition-all" href="/table">Table</a>
+        <a on:click={() => closeMenu()} class="text-black dark:theme-text-white p-3 md:mx-1 lg:mx-2 my-2 hover:bg-black/[0.1] hover:rounded transition-all" href="/account" >My Cards</a>
     </nav>
     {/if}
 </header>

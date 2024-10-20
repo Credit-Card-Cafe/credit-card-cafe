@@ -6,7 +6,7 @@
 <Nav></Nav>
 
 
-<main class="w-full min-h-[-webkit-fill-available] bg-alt dark:bg-main-gray py-24"><slot /></main>
+<slot />
 
 
 <!-- Footer -->
