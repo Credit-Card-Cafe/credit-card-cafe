@@ -7,6 +7,7 @@
     let localUser = convertJSONtoUser($localUserData)
 </script>
 
+<!-- <main> tag in Table component-->
 {#if localUser}
     {#await getCardsFromIDList([...localUser.wallet, ...localUser.tracking])}
         <Table tablelist={[]} walletIDList={[]} trackingIDList={[]}></Table>

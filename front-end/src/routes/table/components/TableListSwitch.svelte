@@ -21,12 +21,12 @@
         @apply text-center py-1 px-4 inline-block my-1 transition-all cursor-pointer rounded-full;
     }
     .label:hover {
-        @apply bg-gray-300 text-black;
+        @apply bg-theme-lightgray text-black;
     }
     .yellow {
-        @apply bg-amber-200 text-black;
+        @apply bg-theme-yellow text-black;
     }
     .yellow:hover {
-        @apply bg-amber-300 text-black;
+        @apply bg-theme-yellow-hov text-black;
     }
 </style>

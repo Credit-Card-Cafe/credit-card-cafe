@@ -10,7 +10,7 @@
 {#if card && card.card_url}
 <div class={`flex flex-col items-center transform scale-${scale} hover:z-30`}>
     <a href={altLink ? altLink : `/card/${card.card_url}`} >
-        <div id="creditCard" class="creditCard bg-alt dark:bg-main-gray shadow-2xl shadow-stone-400 dark:shadow-stone-900" style="background-color:{card.card_color}"></div>
+        <div id="creditCard" class="creditCard shadow-2xl shadow-theme-shadow dark:shadow-theme-shadow-dark" style="background-color:{card.card_color}"></div>
     </a>
     {#if showTrackCard && card.card_id}
         <TrackCard id={card.card_id}></TrackCard>

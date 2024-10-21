@@ -4,20 +4,7 @@ magic {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-main {
-    padding-top: 6rem;
-    padding-bottom: 12rem;
-    --tw-bg-opacity: 1;
-    --tw-text-opacity: 1;
-    background-color: rgb(253 248 244 / var(--tw-bg-opacity));
-    width: 100%;
-    @media (prefers-color-scheme: dark) {
-        background-color: rgb(38 38 38 / var(--tw-bg-opacity));
-        color: rgb(214 192 165 / var(--tw-text-opacity));
-    }
-    min-height: -webkit-fill-available;
-    
-}
+
 
     .translate-x-0 { transform: translateX(0); }
     .translate-x-12 { transform: translateX(3rem); }

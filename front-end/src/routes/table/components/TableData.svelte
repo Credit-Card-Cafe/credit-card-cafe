@@ -14,7 +14,7 @@
 
 <style>
     .tdTwo {
-        @apply border-l-2 border-gray-300 w-1/2;
+        @apply border-l-2 border-theme-lightgray w-1/2;
     }
     td {
         @apply p-4;

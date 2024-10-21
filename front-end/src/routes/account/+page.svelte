@@ -25,9 +25,9 @@
 </svelte:head>
 
 
-<div class="lg:flex lg:flex-col lg:flex-initial pt-16">
-  <div class="lg:flex flex-1 flex-row justify-evenly lg:mx-20 lg:gap-20">
-    <div class="title lg:mb-8 dark:text-white-warm lg:hidden">Your Wallet</div>
+<main class="lg:flex lg:flex-col lg:flex-initial">
+  <section class="lg:flex flex-1 flex-row justify-evenly lg:mx-20 lg:gap-20">
+    <div class="p-4 text-center text-xl lg:mb-8 dark:text-theme-text-white lg:hidden">Your Wallet</div>
     {#if localUser.wallet && wallet.length > 0}
       <CardStack cards={wallet} allowCardFanning={true}></CardStack>
       <Rewards cards={wallet} localUser={localUser} title={"Your"}></Rewards>
@@ -36,25 +36,15 @@
       <CreditCard card={displayCard} --color="169,169,169"></CreditCard>
       </div>
     {/if}
-  </div>
-  <hr class="hidden md:block w-3/4 m-auto">
-  <div class="lg:flex flex-1 flex-row justify-evenly lg:mx-20 gap-16 pt-16">
-    <div class="title lg:mb-8 dark:text-white-warm lg:hidden">Tracking</div>
+  </section>
+  <hr class="hidden md:block w-3/4 m-auto border-2 border-theme-text-white">
+  <section class="lg:flex flex-1 flex-row justify-evenly lg:mx-20 gap-16 pt-16">
+    <div class="p-4 text-center text-xl lg:mb-8 dark:theme-text-white lg:hidden">Tracking</div>
     {#if localUser.tracking && tracking.length > 0}
       <CardStack cards={tracking}></CardStack>
       <Rewards cards={tracking} localUser={localUser} title={"Potential"} ></Rewards>
     {:else}
       <CreditCard card={displayCard} --color="169,169,169"></CreditCard>
     {/if}
-  </div>
-</div>
-
-  
-<style>
-  .title {
-      @apply p-4 text-center text-xl;
-  }
-    hr {
-        border: 2px solid #d6c0a5;
-    }
-</style>
+  </section>
+</main>

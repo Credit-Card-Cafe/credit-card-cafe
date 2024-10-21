@@ -58,9 +58,7 @@
 
 </script>
 
-<div class="flex flex-col px-4 pb-4 pt-8 md:p-10">
-
-
+<main class="flex flex-col px-4">
     <div class="mb-6 md:mb-10 flex flex-row flex-wrap justify-center">
         {#each queryList as property}
             <TableQuery field={property} bind:queries={queries}></TableQuery>
@@ -91,7 +89,7 @@
         <!--    Table Data    -->
         {#each tablelist as card}
             {#if card.card_id && cardIDList.includes(card.card_id) || !(walletIDList.length > 0 && trackingIDList.length > 0)}
-            <tr class="even:bg-green-100 dark:even:bg-inherit dark:border-t-2 dark:border-green-500/10">
+            <tr class="even:bg-green-100 dark:even:bg-inherit dark:border-t-2 dark:border-theme-green/10">
                 <td class="flex md:table-cell flex-col items-center md:text-left odd:rounded-xl md:odd:rounded-r-none md:odd:rounded-l-xl">
                     <a href="/card/{card.card_url}" class="font-medium mb-6 md:mb-0 md:font-normal">{card.card_name}</a>
                 </td>
@@ -104,7 +102,7 @@
 
 
     </table>
-</div>
+</main>
 
 <style>
     th, td {

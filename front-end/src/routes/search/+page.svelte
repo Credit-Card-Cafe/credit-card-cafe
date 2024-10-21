@@ -7,11 +7,11 @@
 
 </script>
 
-<div>
+<main>
 {#if hasQuery}
 <SearchResults query={q}></SearchResults>
 {/if}
-</div>
+</main>
 
 <style>
     
