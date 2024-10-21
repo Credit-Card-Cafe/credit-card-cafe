@@ -18,4 +18,8 @@
     
 
 <input id={`query${field}`} class="hidden" type="checkbox" value={field} on:change={() => addQuery()}>
-<label for={`query${field}`} class={`text-center py-1 px-4 rounded-full inline-block mx-1 my-1 transition-colors cursor-pointer ${isChecked ? "bg-theme-green dark:text-theme-text-white text-theme-text-white" : "bg-theme-lightgray hover:bg-theme-lightgray-hov dark:bg-theme-darkgray dark:hover:bg-darkgray-hov"}`}>{field}</label>
+<label for={`query${field}`} class={`text-center py-1 px-4 rounded-full inline-block mx-1 my-1 transition-colors cursor-pointer 
+${isChecked ? 
+"bg-theme-green hover:bg-theme-green-hov dark:text-theme-text-white text-theme-text-black" : 
+"bg-theme-lightgray hover:bg-theme-lightgray-hov dark:bg-theme-darkgray dark:hover:bg-darkgray-hov"
+}`}>{field}</label>
