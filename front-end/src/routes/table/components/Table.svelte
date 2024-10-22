@@ -4,6 +4,7 @@
     import {type COData, type CardObject, COP, TLS } from "$lib/types";
     import { injectBankToCard, injectBrandToCard } from "$lib/functions";
     import TableListSwitch from "./TableListSwitch.svelte";
+    import { cardFieldNames } from "$lib/fields";
     
     export let tablelist:CardObject[];
     export let walletIDList:string[];
@@ -79,7 +80,7 @@
             <th>Card</th>
             <th><button on:click={() => order(COP.card_bank)}>Bank</button></th>
             {#each queries as query}
-                <th><button on:click={() => order(query)}>{query}</button></th>
+                <th><button on:click={() => order(query)}>{cardFieldNames[query]}</button></th>
             {/each}
         </tr>
         <!---------------------->

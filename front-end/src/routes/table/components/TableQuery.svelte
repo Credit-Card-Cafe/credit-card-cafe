@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { cardFieldNames } from "$lib/fields";
     import { COP } from "$lib/types";
 
     export let field:COP;
@@ -22,4 +23,4 @@
 ${isChecked ? 
 "bg-theme-green hover:bg-theme-green-hov dark:text-theme-text-white text-theme-text-black" : 
 "bg-theme-lightgray hover:bg-theme-lightgray-hov dark:bg-theme-darkgray dark:hover:bg-darkgray-hov"
-}`}>{field}</label>
+}`}>{cardFieldNames[field]}</label>
