@@ -74,7 +74,8 @@
     <div class="hidden md:block text-center text-sm">Track cards or add cards to your wallet to view them on the table!</div>
     {/if}
 
-    <table class="dark:text-white-warm rounded-r-xl">
+    <div class="w-full overflow-x-scroll">
+    <table class="dark:text-white-warm max-w-fit rounded-r-xl table-fixed overflow-x-scroll">
         <!--   Table Header   -->
         <tr class="hidden md:table-row">
             <th>Card</th>
@@ -90,7 +91,7 @@
         <!--    Table Data    -->
         {#each tablelist as card}
             {#if card.card_id && cardIDList.includes(card.card_id) || !(walletIDList.length > 0 && trackingIDList.length > 0)}
-            <tr class="even:bg-green-100 dark:even:bg-inherit dark:border-t-2 dark:border-theme-green/10">
+            <tr class="even:bg-theme-green/25 dark:even:bg-inherit dark:border-t-2 dark:border-theme-green/10">
                 <td class="flex md:table-cell flex-col items-center md:text-left odd:rounded-xl md:odd:rounded-r-none md:odd:rounded-l-xl">
                     <a href="/card/{card.card_url}" class="font-medium mb-6 md:mb-0 md:font-normal">{card.card_name}</a>
                 </td>
@@ -103,6 +104,7 @@
 
 
     </table>
+    </div>
 </main>
 
 <style>
