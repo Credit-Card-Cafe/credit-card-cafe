@@ -9,9 +9,9 @@
 </script>
 
 <main class="bg-gradient-to-tr from-theme-white dark:from-theme-black from-65% to-theme-green dark:to-theme-green">
-  <section class="flex flex-row items-center px-8 mb-48">
+  <section class="flex flex-row items-center px-16 mb-48">
     <div class="mt-20 basis-1/3">
-      <h1 class="text-4xl md:text-7xl font-bold"><span class="text-theme-green">CreditCard</span><span class="text-sm md:text-2xl">&#9632;</span><span class="text-theme-brown">Cafe</span></h1>
+      <h1 class="text-4xl md:text-7xl font-bold"><span class="text-theme-green">creditcard</span><span class="text-sm md:text-2xl">&#9632;</span><span class="text-theme-brown">cafe</span></h1>
       <h2 class="text-2xl md:text-6xl font-semibold">the ultimate community credit card research tool</h2>
     </div>
     <CardStack cards={data.cards} allowCardFanning={false}></CardStack>
