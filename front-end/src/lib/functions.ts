@@ -41,6 +41,10 @@ export function convertJSONtoUser(jsonString:string) {
     if (jsonObject.display_name) { userData.display_name = jsonObject.display_name }
     if (jsonObject.custom_choices) { userData.custom_choices = jsonObject.custom_choices }
     if (jsonObject.modifiers) { userData.modifiers = jsonObject.modifiers }
+    if (jsonObject.table_setting_acronym) { userData.table_setting_acronym = jsonObject.table_setting_acronym }
+    if (jsonObject.table_setting_advanced) { userData.table_setting_advanced = jsonObject.table_setting_advanced }
+    if (jsonObject.table_setting_queries) { userData.table_setting_queries = jsonObject.table_setting_queries }
+    if (jsonObject.table_setting_userselection) { userData.table_setting_userselection = jsonObject.table_setting_userselection }
     return userData
 }
 

@@ -1,7 +1,7 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/environment"
 
-import type { BankObject, ModifiedCardObject } from "./types";
+import { COP, TLS, type BankObject, type ModifiedCardObject } from "./types";
 
 export const cardList = writable<Array<ModifiedCardObject>>([]);
 export const bankList = writable<Array<BankObject>>([]);
@@ -11,6 +11,10 @@ const defaultUser = JSON.stringify({
     tracking:[],
     custom_choices: [],
     modifiers: [],
+    table_setting_acronym: false,
+    table_setting_advanced: false,
+    table_setting_queries: [COP.card_network, COP.card_af, COP.card_ftf, COP.card_apr],
+    table_setting_userselection: TLS.Both
 })
 
 const USER_LOCAL_STORAGE = "local_user_storage"

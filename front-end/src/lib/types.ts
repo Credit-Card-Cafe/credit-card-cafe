@@ -135,6 +135,10 @@ export interface UserType {
     email?: string | null,
     custom_choices?: Array<{[key: string]: string}>,
     modifiers?: Array<string>
+    table_setting_acronym?: boolean,
+    table_setting_advanced?: boolean,
+    table_setting_queries?: COP[],
+    table_setting_userselection?: TLS
 }
 
 //used in the offline uploader.

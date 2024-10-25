@@ -1,9 +1,14 @@
 <script lang="ts">
-    import { cardFieldNames } from "$lib/fields";
     import { COP } from "$lib/types";
 
     export let field:COP;
     export let queries:COP[];
+    export let cardName
+    export let useAcronyms;
+
+    import { localUserData } from "$lib/stores";
+    import { convertJSONtoUser } from "$lib/functions";
+    let localUser = convertJSONtoUser($localUserData)
     
     $: isChecked = queries.includes(field);
 
@@ -13,14 +18,17 @@
         } else {
             queries = queries.filter((query) => query !== field)
         }
+        localUser.table_setting_queries = queries;
+        $localUserData = JSON.stringify(localUser)
     }
 
 </script>
     
-
+{#key useAcronyms}
 <input id={`query${field}`} class="hidden" type="checkbox" value={field} on:change={() => addQuery()}>
 <label for={`query${field}`} class={`text-center py-1 px-4 rounded-full inline-block mx-1 my-1 transition-colors cursor-pointer 
 ${isChecked ? 
 "bg-theme-green hover:bg-theme-green-hov dark:text-theme-text-white text-theme-text-black" : 
 "bg-theme-lightgray hover:bg-theme-lightgray-hov dark:bg-theme-darkgray dark:hover:bg-darkgray-hov"
-}`}>{cardFieldNames[field]}</label>
+}`}>{cardName(field)}</label>
+{/key}
