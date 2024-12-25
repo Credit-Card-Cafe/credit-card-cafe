@@ -3,6 +3,12 @@
 
     export let field:COP;
     export let queries:COP[];
+    export let cardName
+    export let useAcronyms;
+
+    import { localUserData } from "$lib/stores";
+    import { convertJSONtoUser } from "$lib/functions";
+    let localUser = convertJSONtoUser($localUserData)
     
     $: isChecked = queries.includes(field);
 
@@ -12,28 +18,17 @@
         } else {
             queries = queries.filter((query) => query !== field)
         }
+        localUser.table_setting_queries = queries;
+        $localUserData = JSON.stringify(localUser)
     }
 
 </script>
-    <input id={`query${field}`} class="hidden" type="checkbox" value={field} on:change={() => addQuery()}>
-    <label for={`query${field}`} class={`label ${isChecked ? "grn dark:text-gray-900 text-alt" : "bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700"}`}>{field}</label>
-<style>
-.label {
-    @apply text-center py-1 px-4 rounded-full inline-block mx-1 my-1 transition-colors cursor-pointer;
-}
-.objlabel {
-    @apply text-center py-0.5 px-3 rounded-full inline-block mx-1 my-1 transition-colors cursor-pointer;
-}
-.grn {
-    @apply bg-green-500 ;
-}
-.grn:hover{ 
-    @apply bg-green-600;
-}  
-.blu {
-    @apply bg-blue-500;
-}
-.blu:hover{
-    @apply bg-blue-600;
-}
-</style>
+    
+{#key useAcronyms}
+<input id={`query${field}`} class="hidden" type="checkbox" value={field} on:change={() => addQuery()}>
+<label for={`query${field}`} class={`text-center py-1 px-4 rounded-full inline-block mx-1 my-1 transition-colors cursor-pointer 
+${isChecked ? 
+"bg-theme-green hover:bg-theme-green-hov text-theme-black" : 
+"bg-theme-lightgray hover:bg-theme-lightgray-hov dark:bg-theme-darkgray dark:hover:bg-theme-darkgray-hov"
+}`}>{cardName(field)}</label>
+{/key}

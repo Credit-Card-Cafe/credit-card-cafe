@@ -3,21 +3,29 @@ const colors = require('tailwindcss/colors')
 
 module.exports = {
   content: ['./src/**/*.{html,js,svelte,ts}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        'main': "#1fde78",
-        'main-gray': "#262626",
-        'white-warm': "#d6c0a5",
-        'main-dark-green': '#00330f',
-        "main-dark": "#052112",
-        'alt': "#fdf8f4",
-        'alt-dark': "#807d7b",
-        'accent-one': "#78DEAB",
-        'accent-one-hover': '#67bf93',
-        'accent-one-dark': "#305945",
-        'accent-two': "#69eae6",
-        'accent-two-dark': "#285958"
+        "theme-green": "#22c55e",
+        "theme-green-hov": "#16a34a",
+        "theme-white": "#f7fcf9",
+        "theme-black": "#262626",
+        "theme-text-white": "#d6c0a5",
+        "theme-text-black-hov": "#4d4d4d",
+        "theme-blue": "#0ea4e9",
+        "theme-blue-hov": "#0284c7",
+        "theme-red": "#fda4ae",
+        "theme-red-hov": "#fb7186",
+        "theme-yellow": "#fce26d",
+        "theme-yellow-hov": "#fada4d",
+        "theme-brown": "#854d0e",
+        "theme-lightgray": "#ececec",
+        "theme-lightgray-hov": "#e0e0e0",
+        "theme-darkgray": "#373737",
+        "theme-darkgray-hov": "#2c2c2c",
+        "theme-shadow": "#656b67",
+        "theme-shadow-dark": "#4a4a4a",
       },
       boxShadow: {
         't-sm': '0 -1px 2px 0 rgba(0, 0, 0, 0.05)',

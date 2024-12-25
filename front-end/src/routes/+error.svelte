@@ -1,11 +1,12 @@
 <script>
     import { page } from '$app/stores';
+    console.log("Yes Grandma, I would like another Stawberry.")
 </script>
 
-<div class="flex flex-col pt-16 h-full w-full pb-20 items-center bg-gradient-to-r from-green-300 via-blue-500 to-purple-600">
-    <div class="mb-10">Yikes something went wrong (Your Fault, not the devs!)</div>
+<main class="flex flex-col h-full w-full pb-20 items-center bg-gradient-to-r from-green-300 via-blue-500 to-purple-600">
+    <p class="text-4xl md:text-6xl pt-16 pb-4 font-semibold">Yikes, something went wrong!</p>
     {#if $page.error}
-    <h1 class="mb-10">{$page.status}: {$page.error.message}</h1>
+    <p class="text-3xl font-light pb-16">{$page.status}: {$page.error.message}</p>
     {/if}
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=-d2rXovcatCVH59S&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
+    <a href="/" class="text-3xl font-light hover:underline">Lets bring you back to the fun -></a>
+</main>

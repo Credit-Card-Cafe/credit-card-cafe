@@ -1,5 +1,5 @@
-import { getOneCardByID } from "../database/read_cards";
-import { getOneBankById, getOneBankByURL } from "../database/read_banks";
+
+import { getOneCardByID, getCardRewards, getOneCardByURL } from "../routes/api/cards/cards";
 import { type CardObject, CardRedemption, COP, type ModifiedCardObject, type UserType } from "./types"
 
 //use to display locally modified changed to a card based on user selected modifiers
@@ -18,10 +18,22 @@ export async function injectBrandToCard(card: CardObject):Promise<ModifiedCardOb
 }
 
 export async function getCardsFromIDList(idList:Array<string>) {
-    let list:CardObject[] = []
+    let list:ModifiedCardObject[] = []
     for (let id of idList) {
-        await getOneCardByID(id).then((card) => {
-            if (card) list.push(card)
+        await getOneCardByID(id).then(async (card) => {
+            if (card) list.push({...card, card_rewards: await getCardRewards(card)})
+        }).catch((error) => {
+            console.log(error)
+            console.log("One Card Missing")
+        });
+    }
+    return list
+}
+export async function getCardsFromURLList(urlList:Array<string>) {
+    let list:ModifiedCardObject[] = []
+    for (let url of urlList) {
+        await getOneCardByURL(url).then(async (card) => {
+            if (card) list.push({...card, card_rewards: await getCardRewards(card)})
         }).catch((error) => {
             console.log(error)
             console.log("One Card Missing")
@@ -41,6 +53,10 @@ export function convertJSONtoUser(jsonString:string) {
     if (jsonObject.display_name) { userData.display_name = jsonObject.display_name }
     if (jsonObject.custom_choices) { userData.custom_choices = jsonObject.custom_choices }
     if (jsonObject.modifiers) { userData.modifiers = jsonObject.modifiers }
+    if (jsonObject.table_setting_acronym) { userData.table_setting_acronym = jsonObject.table_setting_acronym }
+    if (jsonObject.table_setting_advanced) { userData.table_setting_advanced = jsonObject.table_setting_advanced }
+    if (jsonObject.table_setting_queries) { userData.table_setting_queries = jsonObject.table_setting_queries }
+    if (jsonObject.table_setting_userselection) { userData.table_setting_userselection = jsonObject.table_setting_userselection }
     return userData
 }
 
@@ -60,7 +76,7 @@ export function parseDatabaseString(card: CardObject , query: COP):string {
         return cardString.toString() + "%"
     }
     if (query === "card_btf" || query == "card_caf" || query == "card_lpf") {
-        if (typeof cardString == "string") {
+        if (typeof cardString === "string") {
             if (cardString.includes("|")) {
                 let vals = cardString.split("|")
                 return vals[1] + "%, $" + vals[0] +" minimum"
@@ -106,3 +122,4 @@ export function parseDatabaseString(card: CardObject , query: COP):string {
     }
     return newString
 }
+

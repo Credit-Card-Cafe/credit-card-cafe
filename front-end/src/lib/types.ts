@@ -34,17 +34,11 @@ export enum BankType {
   FinancialService= "Financial Service"
 } 
 
-export enum COP { //Card Object Properties. This will be used a lot, so I have shortened it. 
-  //Used as querys in Table.svelte, as enum string in cards/ 
-  card_id = "card_id",
-  card_name = "card_name",
+export enum COP { //Filterable card Properties. 
   card_bank = "card_bank",
   card_brand = "card_brand",
   card_network = "card_network",
   card_type = "card_type",
-  card_url = "card_url",
-  card_link = "card_link",
-  card_image = "card_image",
   card_af = "card_af",
   card_ftf = "card_ftf",
   card_btf = "card_btf",
@@ -57,7 +51,6 @@ export enum COP { //Card Object Properties. This will be used a lot, so I have s
   card_il = "card_il",
   card_ttp = "card_ttp",
   card_weight = "card_weight",
-  card_color = "card_color",
   card_redemption = "card_redemption",
   card_caapr = "card_caapr",
   card_btapr = "card_btapr",
@@ -68,9 +61,7 @@ export enum COP { //Card Object Properties. This will be used a lot, so I have s
   card_auc = "card_auc"
 }
 
-export type COData = Exclude<COP, COP.card_id | COP.card_name | COP.card_bank | COP.card_url | COP.card_link | COP.card_color | COP.card_image>
-
-interface CardDetails {
+export interface CardDetails {
   card_modifiers?: {[Key:string]:{[Key: string]: any}},
   card_rewards?: {[Key: string]:number | {[Key: string]:number}},
   card_custom?: {[Key: string]:number | {[Key: string]:number}},
@@ -79,36 +70,38 @@ interface CardDetails {
 } 
 
 export interface CardObject {
-  [COP.card_id]?: string;
-  [COP.card_name]: string,
-  [COP.card_bank]: string,
-  [COP.card_brand]?: string,
-  [COP.card_network]: CardNetwork,
-  [COP.card_type]?: CardType,
-  [COP.card_url]: string,
-  [COP.card_link]?: string,
-  [COP.card_image]?: null,
-  [COP.card_af]?: number | string,
-  [COP.card_ftf]?: number | string,
-  [COP.card_btf]?: number | string,
-  [COP.card_apr]?: number | string,
-  [COP.card_caf]?: number | string,
-  [COP.card_lpf]?: number | string,
-  [COP.card_chip]?: boolean,
-  [COP.card_embossed]?: boolean,
-  [COP.card_material]?: string,
-  [COP.card_il]?: CardInfoLocation,
-  [COP.card_ttp]?: boolean,
-  [COP.card_weight]?: number,
-  [COP.card_color]: string,
-  [COP.card_redemption]: CardRedemption,
-  [COP.card_caapr]?: number | string,
-  [COP.card_btapr]?: number | string,
-  [COP.card_lpapr]?: number | string,
-  [COP.card_subv]?: number | string,
-  [COP.card_subq]?: number | string,
-  [COP.card_subt]?: number | string,
-  [COP.card_auc]?: number | string
+  card_id: string;  // UUID
+  card_name: string;
+  [COP.card_bank]: string;
+  [COP.card_brand]: string | null;
+  [COP.card_network]: CardNetwork;
+  [COP.card_type]: CardType | null;
+  card_url: string;
+  card_link: string | null;
+  [COP.card_af]: string | null;      // varchar(50)
+  [COP.card_ftf]: string | null;     // varchar(50)
+  [COP.card_btf]: string | null;     // varchar(50)
+  [COP.card_apr]: string | null;     // varchar(50)
+  [COP.card_caf]: string | null;     // varchar(50)
+  [COP.card_lpf]: string | null;     // varchar(50)
+  [COP.card_chip]: boolean | null;
+  [COP.card_embossed]: boolean | null;
+  [COP.card_material]: string | null; // varchar(100)
+  [COP.card_il]: CardInfoLocation | null;
+  [COP.card_ttp]: boolean | null;
+  [COP.card_weight]: number | null;   // smallint
+  card_color: string;                // varchar(50)
+  [COP.card_redemption]: CardRedemption;
+  [COP.card_caapr]: string | null;   // varchar(50)
+  [COP.card_btapr]: string | null;   // varchar(50)
+  [COP.card_lpapr]: string | null;   // varchar(50)
+  [COP.card_subv]: number | null;    // integer
+  [COP.card_subq]: number | null;    // integer
+  [COP.card_subt]: number | null;    // integer
+  [COP.card_auc]: number | null;     // smallint
+  card_meta_lastupdate: Date | null;
+  card_meta_rating: number;          // real (constraint: <= 5)
+  card_meta_ratings: number | null;  // bigint
 }
 
 export interface ModifiedCardObject extends CardObject, CardDetails {};
@@ -135,6 +128,10 @@ export interface UserType {
     email?: string | null,
     custom_choices?: Array<{[key: string]: string}>,
     modifiers?: Array<string>
+    table_setting_acronym?: boolean,
+    table_setting_advanced?: boolean,
+    table_setting_queries?: COP[],
+    table_setting_userselection?: TLS
 }
 
 //used in the offline uploader.

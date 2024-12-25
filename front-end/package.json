@@ -23,6 +23,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@supabase/supabase-js": "^2.46.1",
 		"firebase": "^10.6.0",
 		"firebase-admin": "^12.0.0"
 	}

@@ -16,7 +16,7 @@
 </svelte:head>
 
 {#if brand}
-  <div id="brand" class="flex flex-col mt-16 items-center md:block">
+  <main id="brand" class="bg-theme-white dark:text-theme-text-white dark:bg-theme-black flex flex-col items-center md:block">
     <div class="mb-12"><BrandInfo brand={brand}></BrandInfo></div>
     {#if creditCards}
       <div class="block md:hidden"><CardStack cards={creditCards} showTrackCard={true} allowCardFanning={false}></CardStack></div>
@@ -24,8 +24,8 @@
             {#each creditCards as card}<CreditCard card={card} showTrackCard={true}></CreditCard>{/each}
       </div>
     {/if}
-  </div>
+    </main>
 {:else}
-  <div>Nothing to display here...</div>
+  <main>Nothing to display here...</main>
 {/if}
 

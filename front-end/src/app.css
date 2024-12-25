@@ -10,3 +10,16 @@ body {
     padding-bottom: env(safe-area-inset-bottom);
     font-family: "Poppins", sans-serif;
 }
+main {
+    padding-top: 6rem;
+    padding-bottom: 12rem;
+    --tw-bg-opacity: 1;
+    --tw-text-opacity: 1;
+    background-color: rgb(247, 252, 249);
+    width: 100%;
+    min-height: -webkit-fill-available;
+    font-family: "Poppins", sans-serif;
+}
+@media (min-width: 1024px) {
+    main {padding-top: 8rem;}
+}

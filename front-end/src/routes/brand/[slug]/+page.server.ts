@@ -1,6 +1,6 @@
-import { getOneBrandByURL } from '../../../database/read_brands.js';
-import { getCardsFromBrandName } from '../../../database/read_cards.js';
 import type { CardObject } from '$lib/types.js';
+import { getOneBrandByURL } from '../../api/brands/brands.js';
+import { getCardsFromBrandName } from '../../api/cards/cards.js';
 
 export const load = async ({ params }) => {
   let brand = await getOneBrandByURL(params.slug);
