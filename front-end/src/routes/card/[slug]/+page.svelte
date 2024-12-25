@@ -4,8 +4,9 @@
   import CardInfo from './CardInfo.svelte';
   import { localUserData } from '$lib/stores';
   import { applyModifier, convertJSONtoUser, injectBankToCard, injectBrandToCard, parseDatabaseString } from '$lib/functions';
-    import CardName from './components/CardName.svelte';
+    import CardName from 'global-components/CardName.svelte';
     import { COP } from '$lib/types';
+    import CardSettings from './components/CardSettings.svelte';
 
   let card = data.card;
   let localUser = convertJSONtoUser($localUserData)
@@ -33,7 +34,8 @@
 </svelte:head>
 
 {#if card}
-<main class="flex flex-col lg:flex-row pt-48">
+<main class="bg-theme-white dark:text-theme-text-white dark:bg-theme-black">
+  <section class="flex flex-col lg:flex-row lg:pt-20">
   <div class="lg:w-1/2 px-8 flex flex-col justify-between">
     <div id="info">
       <CardName card={card}></CardName>
@@ -46,7 +48,7 @@
       </span>
     </div>
     <div id="applyNow" class="mb-20 h-[15vh] lg:mb-0 lg:h-full flex items-center">
-      <a href={card.card_link} class="bg-theme-blue hover:bg-theme-blue-hov py-4 lg:px-20 w-full lg:w-fit justify-center text-white inline-flex flex-row rounded-lg text-xl font-semibold items-center">
+      <a href={card.card_link} target="_blank" class="bg-theme-blue hover:bg-theme-blue-hov py-4 lg:px-20 w-full lg:w-fit justify-center text-white inline-flex flex-row rounded-lg text-xl font-semibold items-center">
         Apply Now 
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 ml-4">
           <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
@@ -54,37 +56,36 @@
       </a>
     </div>
   </div>
-  <div class="lg:w-1/2 shadow-l-xl lg:rounded-l-2xl flex flex-col items-center">
-      <div class="mt-[-4rem]"><CreditCard card={card} --color="{card.card_color}" showTrackCard={true} scale={110}></CreditCard></div>
-      <div class="grid grid-cols-2 gap-x-16 lg:gap-x-48 lg:gap-y-2 mb-8 p-8 lg:p-0">
-        <div class="griditem flex flex-col">
-          <span class="font-bold text-2xl">Network</span>
-          {card.card_network}
-        </div>
-        <div class="griditem flex flex-col">
-          <span class="font-bold text-2xl">Annual Fee</span>
-          {parseDatabaseString(card, COP.card_af)}
-        </div>
-        <div class="griditem flex flex-col">
-          <span class="font-bold text-2xl">APR</span>
-          {parseDatabaseString(card, COP.card_apr)}
-        </div>
-        <div class="griditem flex flex-col">
-          <span class="font-bold text-2xl">Type</span>
-          {card.card_type}
-        </div>
-      </div>
+  <div class="lg:w-1/2 shadow-all-xl dark:shadow-theme-shadow-dark lg:rounded-l-2xl flex flex-col items-center">
+      <div class="mt-[-4rem]"><CreditCard card={card} --color="{card.card_color}" showTrackCard={true}></CreditCard></div>
+      <table class="table-auto mx-8 lg:mx-16 mb-8">
+        <tr class="font-bold text-2xl">
+            <td class="w-1/4">{parseDatabaseString(card, COP.card_af)}</td>
+            <td class="w-1/4">{parseDatabaseString(card, COP.card_apr)}</td>
+        </tr>
+        <tr class="text-xl font-light">
+            <td class="pb-4">Annual Fee</td>
+            <td class="pb-4">APR</td>
+        </tr>
+        <tr class="font-bold text-2xl">
+            <td>{parseDatabaseString(card, COP.card_network)}</td>
+            <td>{parseDatabaseString(card, COP.card_type)}</td>
+        </tr>
+        <tr class="text-xl font-light">
+            <td>Network</td>
+            <td>Card Type</td>
+        </tr>
+    </table>
   </div>
+  </section>
+  <section class="mt-20">
+      <CardInfo card={card}></CardInfo>
+  </section>
+  <section class="mt-20">
+    <CardSettings></CardSettings>
+  </section>
+  <section>
+    Last Update: {card.card_meta_lastupdate?.toLocaleString}
+  </section>
 </main>
-
-
-<div class="mt-16 lg:mx-80 rounded-2xl">
-    <CardInfo card={card}></CardInfo>
-</div>
 {/if}
-
-<style>
-  .griditem {
-    @apply p-4 text-xl font-light;
-  }
-</style>

@@ -3,6 +3,27 @@
 		"src/routes/+page.ts"
 	],
 	"/account": [],
+	"/api/banks/name/[name]": [
+		"src/routes/api/banks/name/[name]/+server.ts"
+	],
+	"/api/banks/url/[url]": [
+		"src/routes/api/banks/url/[url]/+server.ts"
+	],
+	"/api/brands/name/[name]": [
+		"src/routes/api/brands/name/[name]/+server.ts"
+	],
+	"/api/brands/url/[url]": [
+		"src/routes/api/brands/url/[url]/+server.ts"
+	],
+	"/api/cards/bank/[bank]": [
+		"src/routes/api/cards/bank/[bank]/+server.ts"
+	],
+	"/api/cards/id/[id]": [
+		"src/routes/api/cards/id/[id]/+server.ts"
+	],
+	"/api/cards/url/[url]": [
+		"src/routes/api/cards/url/[url]/+server.ts"
+	],
 	"/bank/[slug]": [
 		"src/routes/bank/[slug]/+page.server.ts"
 	],
@@ -12,7 +33,13 @@
 	"/card/[slug]": [
 		"src/routes/card/[slug]/+page.server.ts"
 	],
+	"/community": [],
+	"/info/credit-score": [],
 	"/search": [],
+	"/s/get-started": [],
+	"/s/personalize-my-experience": [],
+	"/s/rewards-tool": [],
+	"/s/unique-features": [],
 	"/table": [],
 	"/table/[slug]": [
 		"src/routes/table/[slug]/+page.server.ts"

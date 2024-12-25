@@ -1,13 +1,17 @@
 <script lang="ts">
     import type { ModifiedCardObject, RewardSet, UserType } from "$lib/types";
     export let cards:ModifiedCardObject[];
-    export let title: "Your" | "Potential";
     import { redemption } from "$lib/fields";
     import Reward from "./Reward.svelte";
+    import { getCachedImage } from "$lib/stores";
 
     export let localUser:UserType;
 
     let categories:{[Key: string]:Array<RewardSet>} = {}
+
+    let totalAnnualFee = 0
+    
+    let lowestAPRCard = cards[0]
     
     cards.forEach(card => { 
         if (card.card_rewards && card.card_redemption) {
@@ -40,6 +44,11 @@
                 }
             }
         }
+        if (card.card_af) {
+            if (typeof card.card_af === "string") totalAnnualFee += parseInt(card.card_af)
+            else totalAnnualFee+=card.card_af 
+        }
+
     });
 
     let sortedKeys: string[] = Object.keys(categories).sort((a, b) => {
@@ -49,16 +58,20 @@
 
 </script>
 
-{#if Object.keys(categories).length > 0}
-    <div class="dark:text-white-warm">
-        <div class="text-xl text-center md:text-center mb-8 md:mb-0">{title} Rewards:</div>
-        <div class="text-sm mb-8 text-center md:text-center hidden md:block">Click boxes to reveal</div>
-        <ul class="flex md:flex-row flex-col md:flex-wrap">
+<div class="dark:text-white-warm basis-4/6">
+    <div class="flex flex-col lg:flex-row justify-between items-center gap-x-6 pb-2">
+        <div class="py-4 my-4 shadow-all-xl lg:my-0 border divide-x-2 divide-inherit w-full dark:shadow-theme-shadow-dark lg:rounded-md dark:border dark:border-theme-text-white border-x-0 lg:border-x flex flex-row items-start justify-evenly">
+            <div class="text-xl flex flex-col items-center basis-1/2 text-center">Total Annual Fee {#if cards.length > 0}<span>${totalAnnualFee}</span>{/if}</div>
+            <div class="text-xl flex flex-col items-center basis-1/2 text-center">Lowest APR Card {#if cards.length > 0}<img class="h-8 w-12 rounded-[0.15rem]" style="background-color:{lowestAPRCard.card_color}" src="../../storage/{lowestAPRCard.card_url}.jpeg" alt="{lowestAPRCard.card_name}">{/if}</div>
+        </div>
+    </div>
+    {#if Object.keys(categories).length > 0}  
+        <ul class="flex flex-row flex-wrap gap-4 px-4 mt-4">
             {#each sortedKeys as category}
                 <li>
                     <Reward categories={categories} category={category}></Reward>
                 </li>
             {/each}
         </ul>
-    </div>
-{/if}
+    {/if}
+</div>

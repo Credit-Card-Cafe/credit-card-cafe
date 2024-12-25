@@ -26,8 +26,8 @@
  * ```
  */
 declare module '$env/static/private' {
-	export const FIREBASE_SERVER_CONFIG: string;
-	export const MANPATH: string;
+	export const VITE_SUPABASE_KEY: string;
+	export const VITE_SUPABASE_URL: string;
 	export const TERM_PROGRAM: string;
 	export const NODE: string;
 	export const INIT_CWD: string;
@@ -98,7 +98,7 @@ declare module '$env/static/private' {
  * ```
  */
 declare module '$env/static/public' {
-	export const PUBLIC_FIREBASE_CLIENT_CONFIG: string;
+	export const PUBLIC_API_URL: string;
 }
 
 /**
@@ -115,8 +115,8 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
-		FIREBASE_SERVER_CONFIG: string;
-		MANPATH: string;
+		VITE_SUPABASE_KEY: string;
+		VITE_SUPABASE_URL: string;
 		TERM_PROGRAM: string;
 		NODE: string;
 		INIT_CWD: string;
@@ -192,7 +192,7 @@ declare module '$env/dynamic/private' {
  */
 declare module '$env/dynamic/public' {
 	export const env: {
-		PUBLIC_FIREBASE_CLIENT_CONFIG: string;
+		PUBLIC_API_URL: string;
 		[key: `PUBLIC_${string}`]: string | undefined;
 	}
 }

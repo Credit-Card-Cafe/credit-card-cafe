@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getCardsFromIDList } from "$lib/functions";
+    import { getCardsFromIDList, getCardsFromURLList } from "$lib/functions";
     import Table from "./components/Table.svelte";
     import { localUserData } from "$lib/stores";
     import { convertJSONtoUser } from "$lib/functions";
@@ -12,15 +12,20 @@
         table_setting_queries: localUser.table_setting_queries,
         table_setting_userselection: localUser.table_setting_userselection
     }
+    
 </script>
 
 <!-- <main> tag in Table component-->
-{#if localUser}
+{#if localUser && localUser.wallet && localUser.wallet.length > 0 || localUser.tracking && localUser.tracking.length > 0}
     {#await getCardsFromIDList([...localUser.wallet, ...localUser.tracking])}
-        <Table tablelist={[]} walletIDList={[]} trackingIDList={[]} bind:settings={tableSettingsData}></Table>
+        <Table tablelist={[]} walletIDList={[]} trackingIDList={[]} bind:settings={tableSettingsData} tableCall={0}></Table>
     {:then tableList} 
-        <Table tablelist={tableList} walletIDList={localUser.wallet} trackingIDList={localUser.tracking} settings={tableSettingsData}></Table>
+        <Table tablelist={tableList} walletIDList={localUser.wallet} trackingIDList={localUser.tracking} settings={tableSettingsData} tableCall={0}></Table>
     {/await}
 {:else}
-    <div>Sign up / Log in to compare cards! (Although we should be able to do this without an account)</div>
+    {#await getCardsFromURLList(['bofa-ccr', 'chase-freedom-unlimited', 'penfed-platinum'])}
+    <Table tablelist={[]} walletIDList={[]} trackingIDList={[]} bind:settings={tableSettingsData} tableCall={2}></Table>
+    {:then tableList} 
+    <Table tablelist={tableList} walletIDList={[]} trackingIDList={[]} settings={tableSettingsData} tableCall={2}></Table>
+    {/await}
 {/if}

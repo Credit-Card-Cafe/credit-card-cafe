@@ -5,8 +5,8 @@
 </script>
 
 {#if card.card_subv}
-    <div id="physical" class="mb-8 lg:p-6">
-        <div class="text-3xl mb-4">Sign-up Bonus:</div>
-        {card.card_subv}{#if card.card_redemption}{redemption[card.card_redemption]} bonus {card.card_redemption}{/if} if you spend ${card.card_subq} in {card.card_subt} months. 
+    <div id="physical" class="p-6 shadow-all-xl dark:shadow-theme-shadow-dark lg:rounded-2xl flex flex-col items-center ">
+        <div class="text-3xl mb-8">Sign-up Bonus:</div>
+        {card.card_subv.toLocaleString()}{#if card.card_redemption}{redemption[card.card_redemption]} bonus {card.card_redemption}{/if} if you spend ${card.card_subq?.toLocaleString()} in {card.card_subt} months. 
     </div>
 {/if}

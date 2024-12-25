@@ -1,19 +1,17 @@
 import { type CardObject } from "$lib/types";
-import { getOneCardByID } from "../database/read_cards";
-
+import { getOneCardByURL } from "./api/cards/cards";
 
 export const load = async () => {
-  const cardsOnPage = ["10003", "10002", "10015"]
-    let cards:CardObject[] = []
+  const cardsOnPage = ["amex-platinum","discover-it","amex-gold","penfed-platinum","bofa-pr","bofa-ccr","sapphire-preferred", "chase-freedom-unlimited","bofa-travel","chase-freedom-flex","chase-ink-unlimited"]
+  const cardsInStackList = ["sapphire-preferred", "penfed-platinum", "bofa-pr"]
+  const cardStackList = await Promise.all(
+    cardsInStackList.map(url => getOneCardByURL(url))
+  ).then(cards => cards.filter((card): card is CardObject => card !== null && card !== undefined));
 
-    cardsOnPage.forEach(id => {
-      getOneCardByID(id).then((card) => {
-        if (card) cards.push(card)
-      })
-    });
   return {
-    cards: cards,
+    cards: cardsOnPage,
+    cardStackList: cardStackList
   }
 };
 
-//export const prerender = true;
+export const prerender = true;

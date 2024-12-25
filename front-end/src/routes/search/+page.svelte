@@ -7,7 +7,7 @@
 
 </script>
 
-<main>
+<main class="bg-theme-white dark:text-theme-text-white dark:bg-theme-black pt-16 lg:pt-24">
 {#if hasQuery}
 <SearchResults query={q}></SearchResults>
 {/if}

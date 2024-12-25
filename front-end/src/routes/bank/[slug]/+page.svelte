@@ -17,11 +17,10 @@
 </svelte:head>
 
 {#if bank}
-  <main id="bank" class="flex flex-col items-center md:block">
+  <main id="bank" class="bg-theme-white dark:text-theme-text-white dark:bg-theme-black flex flex-col items-center md:block">
     <div class="mb-12"><BankInfo bank={bank}></BankInfo></div>
     {#if creditCards}
-      <div class="block md:hidden"><CardStack cards={creditCards} showTrackCard={true} allowCardFanning={false}></CardStack></div>
-      <div class="hidden md:block lg:grid grid-cols-1 gap-4 justify-center pt-8 md:grid-cols-2 md:gap-12 lg:gap-6 lg:grid-cols-3">
+      <div class="flex flex-col lg:grid gap-4 justify-center pt-8 gap-6 grid-cols-3">
             {#each creditCards as card}<CreditCard card={card} showTrackCard={true}></CreditCard>{/each}
       </div>
     {/if}

@@ -1,10 +1,11 @@
 <script lang="ts">
-    import type { ModifiedCardObject } from "$lib/types";
+    import { type ModifiedCardObject } from "$lib/types";
     import { lists, redemption } from "$lib/fields";
     import { beforeUpdate } from "svelte";
     export let card:ModifiedCardObject;
     import { localUserData } from "$lib/stores";
     import { convertJSONtoUser } from "$lib/functions";
+    
 
     $: localUser = convertJSONtoUser($localUserData);
 
@@ -43,19 +44,21 @@
 
     let showCustomRewards = false;
     let showDefaultRewards = true;
+
 </script>
 
 {#if card.card_rewards}
-    <div class="mb-8 lg:p-6">
-        <div class="text-3xl mb-4">Rewards</div>
-        <div class="my-2 lg:my-0 flex flex-col justify-start flex-wrap">
+    <div class="p-6 shadow-all-xl dark:shadow-theme-shadow-dark lg:rounded-2xl flex flex-col items-center col-span-2">
+
+        <div class="text-3xl mb-8">Rewards</div>
+        <div class="my-2 lg:my-0 flex flex-row justify-start flex-wrap">
             {#if custom && card.card_custom}
-                <button on:click={() => showCustomRewards = !showCustomRewards} class="m-1 lg:m-2 p-2 bg-black/[0.1] rounded-md text-center border border-white-warm hover:border-theme-green hover:bg-black/[0.4] transition-all">{#if showCustomRewards}Hide{:else}Show{/if} Custom Rewards Options</button>
+                <button on:click={() => showCustomRewards = !showCustomRewards} class="m-1 lg:m-2 p-2 bg-black/[0.1] rounded-md text-center border border-theme-text-white hover:border-theme-green hover:bg-black/[0.4] transition-all">{#if showCustomRewards}Hide{:else}Show{/if} Custom Rewards Options</button>
                 {#if showCustomRewards}
                     <div class="flex flex-col">
                         {#each Object.keys(card.card_custom) as reward}
                             <button class={(userCustomChoice == reward) ? "outline outline-theme-green m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center" : "custom_rewards" } on:click={() => setCustomReward(reward)}>
-                                <div class="border border-white-warm rounded-md p-2 dark:bg-main-gray bg-alt dark:text-white-warm text-center mr-4">
+                                <div class="border border-theme-text-white rounded-md p-2 dark:bg-main-gray bg-alt dark:text-theme-text-white text-center mr-4">
                                     {#if card.card_redemption} 
                                         {card.card_custom[reward]}{redemption[card.card_redemption]}
                                     {:else}
@@ -72,7 +75,7 @@
                     </div>
                 {:else if userCustomChoice}
                     <button class="m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center">
-                        <div class="border border-white-warm rounded-md p-2 dark:bg-main-gray bg-alt dark:text-white-warm text-center mr-4">
+                        <div class="border border-theme-text-white rounded-md p-2 dark:bg-main-gray bg-alt dark:text-theme-text-white text-center mr-4">
                             {#if card.card_redemption} 
                                 {card.card_custom[userCustomChoice]}{redemption[card.card_redemption]}
                             {:else}
@@ -85,20 +88,20 @@
                     </button>
                 {/if}
             {/if}
-                {#each Object.keys(card.card_rewards) as reward}
-                    {#if reward != "custom"}
-                        <div class="m-2 p-2 bg-black/[0.1] rounded-md inline-flex flex-row items-center">
-                            <div class="border border-white-warm rounded-md p-2 dark:bg-main-gray bg-alt dark:text-white-warm text-center mr-4">
-                                {#if card.card_redemption} 
-                                    {card.card_rewards[reward]}{redemption[card.card_redemption]}
-                                {:else}
-                                    {card.card_rewards[reward]}x
-                                {/if}
-                            </div>
-                            <div class="rounded-md mb-0">{lists.rewardCategories[reward]}</div>
+            {#each Object.keys(card.card_rewards) as reward}
+                {#if reward != "custom"}
+                    <div class="m-2 py-2 px-4 border border-theme-text-white rounded-md inline-flex flex-row items-center justify-between gap-x-2">
+                        <div class="rounded-md dark:bg-main-gray dark:text-theme-text-white text-center">
+                            {#if card.card_redemption} 
+                                {card.card_rewards[reward]}{redemption[card.card_redemption]}
+                            {:else}
+                                {card.card_rewards[reward]}x
+                            {/if}
                         </div>
-                    {/if}
-                {/each}
+                        <div class="rounded-md mb-0">{lists.rewardCategories[reward]}</div>
+                    </div>
+                {/if}
+            {/each}
         </div>
     </div>
     {/if}

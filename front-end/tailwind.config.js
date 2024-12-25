@@ -3,6 +3,7 @@ const colors = require('tailwindcss/colors')
 
 module.exports = {
   content: ['./src/**/*.{html,js,svelte,ts}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -24,7 +25,7 @@ module.exports = {
         "theme-darkgray": "#373737",
         "theme-darkgray-hov": "#2c2c2c",
         "theme-shadow": "#656b67",
-        "theme-shadow-dark": "#2e302f",
+        "theme-shadow-dark": "#4a4a4a",
       },
       boxShadow: {
         't-sm': '0 -1px 2px 0 rgba(0, 0, 0, 0.05)',

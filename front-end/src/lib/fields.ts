@@ -35,29 +35,30 @@ export const redemption: {[key:string]:string} = {
 
 export const lists: {[Key: string]:{[Key: string]: string}} = {
   rewardCategories: {
-    custom: "Customizable Rewards",
+    custom: "Customizable Rewards", // if the credit card has custom options, add 'custom': 0 to the rewards object
     grocery: "Grocery",
+    supermarket: "Supermarket",
     online: "Online Shopping",
     online_grocery: "Online Grocery Shopping",
     travel: "Travel",
     travel_portal: "Travel Through Card's Portal",
     flights_portal: "Flights through Card's Portal",
-    gas: "Gas Station",
-    ev: "Electric Vehicle Charging",
-    gas_ev: "Gas Station + EV Charging",
-    streaming: "Streaming",
-    utilities: "Utility",
+    gas: "Gas Station", //exclusively gas stations 
+    ev: "Electric Vehicle Charging", //exclusively EV charging stations 
+    gas_ev: "Gas Station + EV Charging", 
+    streaming: "Streaming", // just streaming
+    utilities: "Utility", // Home utilities 
     car: "Car Rental",
     airline: "Airline",
     dining: "Restaurants / Dining",
     home: "Home Improvement",
-    default: "All Purchases",
+    default: "All Purchases", // "everything else" ,"other purchases" etc... 
     drug: "Drug Store",
-    self: "Through Card's Company",
-    high_spend: "Highest spend",
-    rotating: "Rotating Category",
-    wholesale: "Wholesale Club",
-    superstore: "Superstore",
-    entertainment: "Entertainment",
+    self: "Through Card's Company", // Mostly for store cards 
+    high_spend: "Highest spend", //Highest spend category over a given period 
+    rotating: "Rotating Category", //Categories of rewards rotate every given period 
+    wholesale: "Wholesale Club", //Costco, Sams Club, BJs etc..
+    superstore: "Superstore", //Target + Walmart, but not wholesale 
+    entertainment: "Entertainment", //Movies, Theater, Streaming included 
   },
 };

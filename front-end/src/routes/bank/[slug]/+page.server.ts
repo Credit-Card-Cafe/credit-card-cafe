@@ -1,6 +1,6 @@
-import {getOneBankByURL } from '../../../database/read_banks.js';
-import { getCardsFromBankName } from '../../../database/read_cards.js';
 import type { CardObject } from '$lib/types.js';
+import { getOneBankByURL } from '../../api/banks/banks.js';
+import { getCardsFromBankName } from '../../api/cards/cards.js';
 
 export const load = async ({ params }) => {
   let bank = await getOneBankByURL(params.slug);
